@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "example-mod",
+  "version": "${version}",
+
+  "name": "example mod",
+  "description": "enter a description here",
+  "authors": [
+    "YourNameHere"
+  ],
+  "contact": {
+  },
+
+  "license": "LGPL-3.0",
+  "icon": "assets/example/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.example.example.Entrypoint::initialize"
+    ]
+  },
+  "mixins": [
+    "example.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4"
+  }
+}
