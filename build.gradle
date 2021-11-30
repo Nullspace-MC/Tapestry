@@ -44,7 +44,7 @@ loom {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    mappings "me.copetan:feather:${project.feather_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     implementation 'org.lwjgl.lwjgl:lwjgl_util:2.9.0'
