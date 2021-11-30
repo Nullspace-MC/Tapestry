@@ -1,4 +1,4 @@
-package org.example.example;
+package net.nullspace_mc.tapestry;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

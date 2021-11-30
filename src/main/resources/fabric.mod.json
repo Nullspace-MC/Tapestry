@@ -1,27 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "example-mod",
+  "id": "tapestry",
   "version": "${version}",
 
-  "name": "example mod",
-  "description": "enter a description here",
+  "name": "Tapestry",
+  "description": "A Fabric-Carpet-like mod for old Minecraft versions",
   "authors": [
-    "YourNameHere"
+    "Pineapplecake"
   ],
   "contact": {
+    "sources": "https://github.com/Nullspace-MC/Tapestry",
+    "issues": "https://github.com/Nullspace-MC/Tapestry/issues"
   },
 
-  "license": "LGPL-3.0",
+  "license": "MIT",
   "icon": "assets/example/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "org.example.example.Entrypoint::initialize"
+      "net.nullspace_mc.tapestry.Entrypoint::initialize"
     ]
   },
   "mixins": [
-    "example.mixins.json"
+    "tapestry.mixins.json"
   ],
 
   "depends": {
