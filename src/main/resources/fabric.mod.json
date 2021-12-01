@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.nullspace_mc.tapestry.Entrypoint::initialize"
+      "net.nullspace_mc.tapestry.Tapestry::initialize"
     ]
   },
   "mixins": [
