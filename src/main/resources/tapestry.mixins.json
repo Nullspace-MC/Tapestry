@@ -4,7 +4,7 @@
   "package": "net.nullspace_mc.tapestry.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "StructureFeatureMixin"
+    "feature.fortressspawningfix.StructureFeatureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,4 +1,4 @@
-package net.nullspace_mc.tapestry.mixin;
+package net.nullspace_mc.tapestry.mixin.feature.fortressspawningfix;
 
 import java.util.Iterator;
 import java.util.Map;
