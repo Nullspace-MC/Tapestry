@@ -15,6 +15,6 @@ public class Tapestry {
 
     public static void onSetLevelName() {
         LOGGER.info("Applying rules from tapestry.conf");
-        SettingsManager.applyRulesFromConf();
+        SettingsManager.applyConf();
     }
 }

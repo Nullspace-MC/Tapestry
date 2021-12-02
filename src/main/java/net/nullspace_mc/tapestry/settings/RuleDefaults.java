@@ -26,5 +26,4 @@ interface RuleDefaults {
     static @interface BugFix {
         String value() default "true";
     }
-
 }

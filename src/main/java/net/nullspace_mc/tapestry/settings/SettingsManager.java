@@ -11,9 +11,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -27,86 +26,14 @@ public class SettingsManager {
 
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public static final HashMap<String, Field> rules = new HashMap<String, Field>();
-    public static final HashMap<String, String> defaults = new HashMap<String, String>();
+    public static final HashMap<String, ParsedRule> rules = new HashMap<String, ParsedRule>();
 
     public static void parseRules() {
-        for (Field field : Settings.class.getFields()) {
-            if (field.isAnnotationPresent(Rule.class)) {
-                Rule rule = field.getAnnotation(Rule.class);
-                String name = rule.name().isEmpty() ? field.getName() : rule.name();
-
-                if(field.getModifiers() != (Modifier.PUBLIC | Modifier.STATIC)) {
-                    throw new AssertionError("Access modifiers of rule field \"" + name + "\" should be \"public static\"");
-                }
-
-                if (field.getType() != boolean.class && field.getType() != int.class && field.getType() != double.class && field.getType() != String.class) {
-                    throw new AssertionError("Rule \"" + name + "\" has invalid type");
-                }
-
-                Object def;
-
-                try {
-                    def = field.get(null);
-                } catch(ReflectiveOperationException e) {
-                    throw new AssertionError(e);
-                }
-
-                if(def == null) {
-                    throw new AssertionError("Rule \"" + name + "\" has null default value");
-                }
-
-                if (field.getType() != boolean.class) {
-                    boolean containsDefault = false;
-
-                    for (String option : rule.options()) {
-                        Object val;
-
-                        if(field.getType() == int.class) {
-                            try {
-                                val = Integer.parseInt(option);
-                            } catch(NumberFormatException e) {
-                                throw new AssertionError("Rule \"" + name + "\" has invalid option \"" + option + "\"");
-                            }
-                        } else if(field.getType() == double.class) {
-                            try {
-                                val = Double.parseDouble(option);
-                            } catch(NumberFormatException e) {
-                                throw new AssertionError("Rule \"" + name + "\" has invalid option \"" + option + "\"");
-                            }
-                        } else {
-                            val = option;
-                        }
-
-                        if (val.equals(def)) {
-                            containsDefault = true;
-                        }
-                    }
-
-                    if (!containsDefault) {
-                        throw new AssertionError("Default value of \"" + def + "\" for rule \"" + name + "\" is not included in its options.");
-                    }
-                }
-
-                String validator = rule.validator();
-
-                if(!validator.isEmpty()) {
-                    Method method;
-
-                    try {
-                        method = Settings.class.getDeclaredMethod(validator, field.getType());
-                    } catch(NoSuchMethodException e) {
-                        throw new AssertionError("Validator \"" + validator + "\" for rule \"" + name + "\" doesn't exist");
-                    }
-
-                    if(!Modifier.isStatic(method.getModifiers()) || method.getReturnType() != boolean.class) {
-                        throw new AssertionError("Validator \"" + validator + "\" for rule \"" + name + "\" must be a static method returning a boolean");
-                    }
-                }
-
-                rules.put(name.toLowerCase(Locale.ENGLISH), field);
-                defaults.put(name.toLowerCase(Locale.ENGLISH), String.valueOf(def));
-            }
+        for(Field f : Settings.class.getDeclaredFields()) {
+            Rule r = f.getAnnotation(Rule.class);
+            if(r == null) continue;
+            ParsedRule pr = new ParsedRule(r, f);
+            rules.put(pr.name.toLowerCase(Locale.ENGLISH), pr);
         }
     }
 
@@ -114,153 +41,31 @@ public class SettingsManager {
         return rules.containsKey(ruleName.toLowerCase(Locale.ENGLISH));
     }
 
-    public static String get(String ruleName) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
 
-        if(field == null) {
+    public static String getRule(String ruleName) {
+        ParsedRule pr = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
+
+        if(pr == null) {
             return "false";
         }
 
         try {
-            return String.valueOf(field.get(null));
+            return String.valueOf(pr.field.get(null));
         } catch(ReflectiveOperationException e) {
             throw new AssertionError(e);
         }
     }
 
-    public static String getDescription(String ruleName) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
-
-        if(field == null) {
-            return "Error";
-        }
-
-        return field.getAnnotation(Rule.class).desc();
-    }
-
-    public static RuleCategory[] getCategories(String ruleName) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
-
-        if(field == null) {
-            return new RuleCategory[0];
-        }
-
-        return field.getAnnotation(Rule.class).category();
-    }
-
-    public static String getDefault(String ruleName) {
-        String def = defaults.get(ruleName.toLowerCase(Locale.ENGLISH));
-        return def == null ? "false" : locked && ruleName.startsWith("command") ? "false" : def;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static String[] getOptions(String ruleName) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
-
-        if(field == null || field.getType() == boolean.class) {
-            return new String[] {"false", "true"};
-        } else {
-            return field.getAnnotation(Rule.class).options();
-        }
-    }
-
-    public static String[] getExtraInfo(String ruleName) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
-
-        if(field == null) {
-            return new String[0];
-        }
-
-        return field.getAnnotation(Rule.class).extra();
-    }
-
-    public static String getActualName(String ruleName) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
-
-        if(field == null) {
-            return "null";
-        }
-
-        String name = field.getAnnotation(Rule.class).name();
-        return name.isEmpty() ? field.getName() : name;
-    }
-
-    public static boolean isDouble(String ruleName) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
-
-        if(field == null) {
-            return false;
-        } else {
-            return field.getType() == double.class;
-        }
-    }
-
-    @SuppressWarnings("unchecked")
     public static boolean set(String ruleName, String value) {
-        Field field = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
-
-        if(field == null) {
-            return false;
-        }
-
-        Class<?> fieldType = field.getType();
-        Object newValue;
-
-        if(fieldType == boolean.class) {
-            if("true".equalsIgnoreCase(value)) {
-                newValue = true;
-            } else if("false".equalsIgnoreCase(value)) {
-                newValue = false;
-            } else {
-                return false;
-            }
-        } else if(fieldType == int.class) {
-            try {
-                newValue = new Integer(value);
-            } catch(NumberFormatException e) {
-                return false;
-            }
-        } else if(fieldType == double.class) {
-            try {
-                newValue = new Double(value);
-            } catch(NumberFormatException e) {
-                return false;
-            }
-        } else if(fieldType == String.class) {
-            newValue = value;
-        } else {
-            throw new AssertionError("Rule \"" + ruleName + "\" has an invalid type");
-        }
-
-        String validatorMethod = field.getDeclaredAnnotation(Rule.class).validator();
-
-        if(!validatorMethod.isEmpty()) {
-            try {
-                Method validator = Settings.class.getDeclaredMethod(validatorMethod, field.getType());
-
-                if(!((Boolean)validator.invoke(null, newValue))) {
-                    return false;
-                }
-            } catch(ReflectiveOperationException e) {
-                throw new AssertionError(e);
-            }
-        }
-
-        try {
-            field.set(null, newValue);
-        } catch(ReflectiveOperationException e) {
-            throw new AssertionError(e);
-        }
-
-        return true;
+        return rules.get(ruleName.toLowerCase(Locale.ENGLISH)).setValue(value);
     }
 
     public static String[] findNonDefault() {
-        ArrayList<String> nonDefault = new ArrayList<String>();
+        List<String> nonDefault = new LinkedList<String>();
 
-        for(String rule : rules.keySet()) {
-            if(!get(rule).equalsIgnoreCase(getDefault(rule))) {
-                nonDefault.add(getActualName(rule));
+        for(ParsedRule rule : rules.values()) {
+            if(!rule.getValueString().equalsIgnoreCase(rule.def)) {
+                nonDefault.add(rule.name);
             }
         }
 
@@ -270,17 +75,17 @@ public class SettingsManager {
 
     public static String[] findAll(String filter) {
         String actualFilter = filter == null ? null : filter.toLowerCase(Locale.ENGLISH);
-        ArrayList<String> filtered = new ArrayList<String>();
+        List<String> filtered = new LinkedList<String>();
 
-        for(String rule : rules.keySet()) {
-            if(actualFilter == null || rule.contains(actualFilter)) {
-                filtered.add(rule);
+        for(Map.Entry<String, ParsedRule> rule : rules.entrySet()) {
+            if(actualFilter == null || rule.getKey().contains(actualFilter)) {
+                filtered.add(rule.getKey());
                 continue;
             }
 
-            for(RuleCategory ctgy : getCategories(rule)) {
+            for(RuleCategory ctgy : rule.getValue().category) {
                 if(ctgy.name().equalsIgnoreCase(actualFilter)) {
-                    filtered.add(rule);
+                    filtered.add(rule.getKey());
                     break;
                 }
             }
@@ -289,48 +94,45 @@ public class SettingsManager {
         return filtered.toArray(new String[0]);
     }
 
-    public static void resetToUserDefaults() {
-        resetToVanilla();
-        applyRulesFromConf();
-    }
-
     public static void resetToVanilla() {
-        for(String rule : rules.keySet()) {
-            set(rule, getDefault(rule));
+        for(ParsedRule rule : rules.values()) {
+            rule.setValue(rule.def);
         }
     }
 
-    public static void resetToBugFixes() {
+    public static void resetToConf() {
         resetToVanilla();
-
-        for(Map.Entry<String, Field> rule : rules.entrySet()) {
-            if(rule.getValue().isAnnotationPresent(RuleDefaults.BugFix.class)) {
-                set(rule.getKey(), rule.getValue().getAnnotation(RuleDefaults.BugFix.class).value());
-            }
-        }
+        applyConf();
     }
 
     public static void resetToSurvival() {
         resetToVanilla();
-
-        for(Map.Entry<String, Field> rule : rules.entrySet()) {
-            if(rule.getValue().isAnnotationPresent(RuleDefaults.Survival.class)) {
-                set(rule.getKey(), rule.getValue().getAnnotation(RuleDefaults.Survival.class).value());
+        for(ParsedRule rule : rules.values()) {
+            if(rule.field.isAnnotationPresent(RuleDefaults.Survival.class)) {
+                rule.setValue(rule.field.getAnnotation(RuleDefaults.Survival.class).value());
             }
         }
     }
 
     public static void resetToCreative() {
         resetToVanilla();
-
-        for(Map.Entry<String, Field> rule : rules.entrySet()) {
-            if(rule.getValue().isAnnotationPresent(RuleDefaults.Creative.class)) {
-                set(rule.getKey(), rule.getValue().getAnnotation(RuleDefaults.Creative.class).value());
+        for(ParsedRule rule : rules.values()) {
+            if(rule.field.isAnnotationPresent(RuleDefaults.Creative.class)) {
+                rule.setValue(rule.field.getAnnotation(RuleDefaults.Creative.class).value());
             }
         }
     }
 
-    public static void applyRulesFromConf() {
+    public static void resetToBugFix() {
+        resetToVanilla();
+        for(ParsedRule rule : rules.values()) {
+            if(rule.field.isAnnotationPresent(RuleDefaults.BugFix.class)) {
+                rule.setValue(rule.field.getAnnotation(RuleDefaults.BugFix.class).value());
+            }
+        }
+    }
+
+    public static void applyConf() {
         Map<String, String> conf = readConf();
         boolean is_locked = locked;
         locked = false;
@@ -339,13 +141,13 @@ public class SettingsManager {
             LOGGER.info("Tapestry is locked by the administrator");
         }
 
-        for(String key : conf.keySet()) {
-            if(!set(key, conf.get(key))) {
-                LOGGER.error("The value of " + conf.get(key) + " for " + key + " is not valid - ignoring...");
+        for(Map.Entry<String, String> entry : conf.entrySet()) {
+            if(!rules.get(entry.getKey()).setValue(entry.getValue())) {
+                LOGGER.error("The value of " + entry.getValue() + " for " + entry.getKey() + " is not valid - ignoring...");
             }
             else
             {
-                LOGGER.info("Loaded rule " + key + " as " + conf.get(key) + " from tapestry.conf");
+                LOGGER.info("Loaded rule " + entry.getKey() + " as " + entry.getValue() + " from tapestry.conf");
             }
         }
 
@@ -370,11 +172,11 @@ public class SettingsManager {
 
                 if(fields.length > 1) {
                     if(!hasRule(fields[0])) {
-                        LOGGER.error("[Tapesty]: Rule " + fields[0] + " is not valid - ignoring...");
+                        LOGGER.error("Rule " + fields[0] + " is not valid - ignoring...");
                         continue;
                     }
 
-                    result.put(fields[0], fields[1]);
+                    result.put(fields[0].toLowerCase(Locale.ENGLISH), fields[1]);
                 }
             }
 
@@ -439,10 +241,10 @@ public class SettingsManager {
     }
 
     public static String[] findStartupOverrides() {
-        ArrayList<String> res = new ArrayList<String>();
+        List<String> res = new LinkedList<String>();
 
         if(locked) {
-            return res.toArray(new String[0]);
+            return new String[0];
         }
 
         Map <String, String> def = readConf();

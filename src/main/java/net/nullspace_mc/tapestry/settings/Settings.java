@@ -1,5 +1,16 @@
 package net.nullspace_mc.tapestry.settings;
 
+/**
+ * Place Tapestry rules in this class
+ * Rules must be public static and have a type of one of:
+ * - boolean
+ * - int
+ * - long
+ * - float
+ * - double
+ * - String
+ * The initial value of the field will be the default value of the rule
+ */
 public class Settings {
     @Rule(
         desc = "Fix that allows nether brick spawning in all fortresses",
@@ -10,11 +21,17 @@ public class Settings {
     @RuleDefaults.BugFix
     public static boolean fortressSpawningFix = false;
 
-    private static boolean validatePositive(int value) {
-        return value > 0;
+    static class PositiveValidator extends Validator<Integer> {
+        @Override
+        boolean validate(Integer value) {
+            return value > 0;
+        }
     }
 
-    private static boolean validateNonNegative(int value) {
-        return value >= 0;
+    static class NonNegativeValidator extends Validator<Integer> {
+        @Override
+        boolean validate(Integer value) {
+            return value >= 0;
+        }
     }
 }

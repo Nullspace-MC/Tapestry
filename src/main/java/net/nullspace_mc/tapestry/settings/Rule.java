@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
  * The field must be public static and have a type of one of:
  * - boolean
  * - int
+ * - long
+ * - float
  * - double
  * - String
  * The initial value of the field will be the default value of the rule
@@ -44,14 +46,7 @@ import java.lang.annotation.Target;
     String[] options() default {};
 
     /**
-     * The name of the validator method called when the rule is changed
-     * The validator method must:
-     * - be declared in Settings.java
-     * - be static
-     * - have a return type of boolean
-     * - have a single parameter whose type is the same as that of the rule field
-     * The validator returns true if the value of the rule is accepted, and false otherwise
+     * The class containing the validator method called when the rule is changed
      */
-    String validator() default "";
-
+    Class<? extends Validator>[] validator() default {};
 }
