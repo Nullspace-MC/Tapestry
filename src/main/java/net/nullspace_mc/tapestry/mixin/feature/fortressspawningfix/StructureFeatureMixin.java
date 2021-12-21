@@ -20,14 +20,14 @@ public abstract class StructureFeatureMixin extends Generatable {
     private Map field_9695;
 
     @Invoker("method_1688")
-    abstract void invokeMethod_1688(World world);
+    protected abstract void invokeMethod_1688(World world);
     
     /**
      * Fixes the check for intersection with a structure bounding
      * box for the purpose of fortress mob nether brick spawning
      */
     @Inject(method = "method_9012", at = @At("HEAD"), cancellable = true)
-    public void fixBBCheck(final int x, final int y, final int z, final CallbackInfoReturnable<Boolean> cir) {
+    private void fixBBCheck(final int x, final int y, final int z, final CallbackInfoReturnable<Boolean> cir) {
         if(Settings.fortressSpawningFix) {
             this.invokeMethod_1688(this.field_1850);
             final Iterator structIter = this.field_9695.values().iterator();

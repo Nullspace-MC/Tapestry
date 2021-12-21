@@ -13,6 +13,12 @@ package net.nullspace_mc.tapestry.settings;
  */
 public class Settings {
     @Rule(
+        desc = "Disables arrow despawning",
+        category = RuleCategory.CREATIVE
+    )
+    public static boolean arrowsPersist = false;
+
+    @Rule(
         desc = "Fix that allows nether brick spawning in all fortresses",
         category = RuleCategory.FIX
     )

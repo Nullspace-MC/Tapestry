@@ -6,6 +6,7 @@
   "mixins": [
     "core.CommandManagerMixin",
     "core.MinecraftServerMixin",
+    "feature.arrowspersist.ArrowEntityMixin",
     "feature.fortressspawningfix.StructureFeatureMixin"
   ],
   "injectors": {
