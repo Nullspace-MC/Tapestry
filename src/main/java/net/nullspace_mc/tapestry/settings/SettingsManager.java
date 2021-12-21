@@ -56,6 +56,10 @@ public class SettingsManager {
         }
     }
 
+    public static ParsedRule getParsedRule(String ruleName) {
+        return rules.get(ruleName.toLowerCase(Locale.ENGLISH));
+    }
+
     public static boolean set(String ruleName, String value) {
         return rules.get(ruleName.toLowerCase(Locale.ENGLISH)).setValue(value);
     }

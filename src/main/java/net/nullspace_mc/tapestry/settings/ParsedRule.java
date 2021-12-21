@@ -21,7 +21,7 @@ public class ParsedRule<T> {
         this.desc = r.desc();
         this.extra = r.extra();
         this.category = r.category();
-        this.options = r.options();
+        this.options = f.getType() == boolean.class ? new String[] {"true", "false"} : r.options();
 
         try {
             this.def = String.valueOf(f.get(null));

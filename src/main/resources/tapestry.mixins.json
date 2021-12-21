@@ -4,6 +4,7 @@
   "package": "net.nullspace_mc.tapestry.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "core.CommandManagerMixin",
     "core.MinecraftServerMixin",
     "feature.fortressspawningfix.StructureFeatureMixin"
   ],
