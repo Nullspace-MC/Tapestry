@@ -23,7 +23,7 @@ import net.nullspace_mc.tapestry.settings.RuleCategory;
 import net.nullspace_mc.tapestry.settings.SettingsManager;
 
 public class TapCommand extends TapestryAbstractCommand {
-    public String getCommandName() {
+    public String getName() {
         return "tap";
     }
 
@@ -148,31 +148,31 @@ public class TapCommand extends TapestryAbstractCommand {
         if("use".equalsIgnoreCase(args[0])) {
             if("default".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToConf();
-                method_10772(source, "Set all rules to user defaults", new Object[0]);
+                sendFeedback(source, "Set all rules to user defaults", new Object[0]);
                 return;
             }
 
             if("vanilla".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToVanilla();
-                method_10772(source, "Set all rules to vanilla", new Object[0]);
+                sendFeedback(source, "Set all rules to vanilla", new Object[0]);
                 return;
             }
 
             if("survival".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToSurvival();
-                method_10772(source, "Set all rules to survival defaults", new Object[0]);
+                sendFeedback(source, "Set all rules to survival defaults", new Object[0]);
                 return;
             }
 
             if("creative".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToCreative();
-                method_10772(source, "Set all rules to creative defaults", new Object[0]);
+                sendFeedback(source, "Set all rules to creative defaults", new Object[0]);
                 return;
             }
 
             if("bugfixes".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToBugFix();
-                method_10772(source, "Set all rules to bugfix defaults", new Object[0]);
+                sendFeedback(source, "Set all rules to bugfix defaults", new Object[0]);
                 return;
             }
 
@@ -198,7 +198,7 @@ public class TapCommand extends TapestryAbstractCommand {
                     SettingsManager.addOrSetOverride(current, SettingsManager.getRule(current));
                 }
 
-                method_10772(source, "All current rules will be set upon restart", new Object[0]);
+                sendFeedback(source, "All current rules will be set upon restart", new Object[0]);
                 return;
             }
 
@@ -213,7 +213,7 @@ public class TapCommand extends TapestryAbstractCommand {
             boolean success = SettingsManager.addOrSetOverride(args[1], args[2]);
 
             if(success) {
-                method_10772(source, args[1] + " will default to: " + args[2], new Object[0]);
+                sendFeedback(source, args[1] + " will default to: " + args[2], new Object[0]);
             } else {
                 throw new CommandException(args[2] + " is not a legal value for " + args[1], new Object[0]);
             }
@@ -231,14 +231,14 @@ public class TapCommand extends TapestryAbstractCommand {
                     SettingsManager.removeOverride(override);
                 }
 
-                method_10772(source, "All rules will not be set upon restart", new Object[0]);
+                sendFeedback(source, "All rules will not be set upon restart", new Object[0]);
                 return;
             }
 
             boolean success = SettingsManager.removeOverride(args[1]);
 
             if(success) {
-                method_10772(source, args[1] + " will not be set upon restart", new Object[0]);
+                sendFeedback(source, args[1] + " will not be set upon restart", new Object[0]);
             } else {
                 throw new CommandException("Unknown rule: " + args[1], new Object[0]);
             }
@@ -379,11 +379,11 @@ public class TapCommand extends TapestryAbstractCommand {
                 categories[i] = categoryEnums[i].toString().toLowerCase(Locale.ENGLISH);
             }
 
-            return method_10786(args, categories);
+            return getMatchingArgs(args, categories);
         }
 
         if(args.length == 2 && "use".equalsIgnoreCase(args[0])) {
-            return method_10786(args, new String[] {"survival", "creative", "default", "vanilla", "bugfixes"});
+            return getMatchingArgs(args, new String[] {"survival", "creative", "default", "vanilla", "bugfixes"});
         }
 
         String tag = null;
@@ -411,7 +411,7 @@ public class TapCommand extends TapestryAbstractCommand {
                 lst.add("list");
             }
 
-            return method_10786(args, lst.toArray(new String[0]));
+            return getMatchingArgs(args, lst.toArray(new String[0]));
         }
 
         if(args.length == 2 && !"defaults".equalsIgnoreCase(args[0])) {
@@ -424,7 +424,7 @@ public class TapCommand extends TapestryAbstractCommand {
                 }
 
                 setDefaultOpts[setDefaultOpts.length - 1] = "current";
-                return method_10786(args, setDefaultOpts);
+                return getMatchingArgs(args, setDefaultOpts);
             }
 
             if("removeDefault".equalsIgnoreCase(args[0])) {
@@ -436,14 +436,14 @@ public class TapCommand extends TapestryAbstractCommand {
                 }
 
                 removeDefaultOpts[removeDefaultOpts.length - 1] = "all";
-                return method_10786(args, removeDefaultOpts);
+                return getMatchingArgs(args, removeDefaultOpts);
             }
 
-            return method_10786(args, SettingsManager.getParsedRule(args[0]).options);
+            return getMatchingArgs(args, SettingsManager.getParsedRule(args[0]).options);
         }
 
         if(args.length == 3 && "setDefault".equalsIgnoreCase(args[0])) {
-            return method_10786(args, SettingsManager.getParsedRule(args[1]).options);
+            return getMatchingArgs(args, SettingsManager.getParsedRule(args[1]).options);
         }
 
         return Collections.<String>emptyList();

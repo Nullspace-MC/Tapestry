@@ -52,18 +52,18 @@ public abstract class FlatChunkGeneratorMixin {
     /**
      * Swap layers for setBlockMeta call
      */
-    @Inject(method = "getChunk", locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/ChunkSection;setBlockMeta(IIII)V"))
-    private void swapSetBlockMeta(int chunkX, int chunkZ, CallbackInfoReturnable cir, Chunk chunk, int y, Block block, int csIdx, ChunkSection cs, int x, int z) {
+    @Inject(method = "getChunk", locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/ChunkSection;setBlockMetadata(IIII)V"))
+    private void swapSetBlockMetadata(int chunkX, int chunkZ, CallbackInfoReturnable cir, Chunk chunk, int y, Block block, int csIdx, ChunkSection cs, int x, int z) {
         if(Settings.chunkPattern && fullLayers == 2 && y < 2 && ((chunkX ^ chunkZ) & 1) != 0) {
-            cs.setBlockMeta(x, y & 15, z, this.field_9617[1 - y]);
+            cs.setBlockMetadata(x, y & 15, z, this.field_9617[1 - y]);
         } else {
-            cs.setBlockMeta(x, y & 15, z, this.field_9617[y]);
+            cs.setBlockMetadata(x, y & 15, z, this.field_9617[y]);
         }
     }
 
     /**
      * Disable original setBlockMeta call
      */
-    @Redirect(method = "getChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/ChunkSection;setBlockMeta(IIII)V"))
-    private void disableSetBlockMeta(ChunkSection cs, int x, int y, int z, int m) {}
+    @Redirect(method = "getChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/ChunkSection;setBlockMetadata(IIII)V"))
+    private void disableSetBlockMetadata(ChunkSection cs, int x, int y, int z, int m) {}
 }
