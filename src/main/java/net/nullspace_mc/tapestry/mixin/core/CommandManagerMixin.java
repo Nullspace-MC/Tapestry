@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class CommandManagerMixin extends CommandRegistry {
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void registerCommands(CallbackInfo ci) {
+    private void registerCommands(CallbackInfo ci) {
         this.registerCommand(new TapCommand());
     }
 }

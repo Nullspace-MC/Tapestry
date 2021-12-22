@@ -19,6 +19,13 @@ public class Settings {
     public static boolean arrowsPersist = false;
 
     @Rule(
+        desc = "Generates superflat worlds with a chunk-aligned checkerboard pattern",
+        extra = "For superflat presets with 2 layers, the layers will be exchanged for the alternate-colored chunks",
+        category = RuleCategory.CREATIVE
+    )
+    public static boolean chunkPattern = false;
+
+    @Rule(
         desc = "Fix that allows nether brick spawning in all fortresses",
         category = RuleCategory.FIX
     )
