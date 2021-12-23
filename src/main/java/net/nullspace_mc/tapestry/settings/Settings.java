@@ -26,6 +26,12 @@ public class Settings {
     public static boolean chunkPattern = false;
 
     @Rule(
+        desc = "Enables/Disables explosion block breaking",
+        category = RuleCategory.CREATIVE
+    )
+    public static boolean explosionBlockBreaking = true;
+
+    @Rule(
         desc = "Fix that allows nether brick spawning in all fortresses",
         category = RuleCategory.FIX
     )

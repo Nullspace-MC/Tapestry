@@ -8,6 +8,7 @@
     "core.MinecraftServerMixin",
     "feature.arrowspersist.ArrowEntityMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
+    "feature.explosionblockbreaking.ExplosionMixin",
     "feature.fortressspawningfix.StructureFeatureMixin"
   ],
   "injectors": {

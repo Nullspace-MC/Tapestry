@@ -366,7 +366,7 @@ public class TapCommand extends TapestryAbstractCommand {
         }
     }
 
-    public List method_8398(CommandSource source, String[] args) {
+    public List getSuggestions(CommandSource source, String[] args) {
         if(SettingsManager.locked) {
             return Collections.<String>emptyList();
         }

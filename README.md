@@ -17,10 +17,20 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`explosionBlockBreaking`
+* Enables/Disables explosion block breaking
+* Type: `boolean`
+* Default: `true`
+
 `fortressSpawningFix`
 * Fix that allows nether brick spawning in all fortresses
 * Type: `boolean`
 * Default: `false`
+
+### Commands
+| Command Name | Description                |
+| ------------ | -------------------------- |
+| tap          | Used for configuring rules |
 
 ## License
 
