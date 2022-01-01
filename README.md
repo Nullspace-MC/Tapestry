@@ -30,7 +30,7 @@ A Fabric-Carpet-like mod for old Minecraft versions
 ### Commands
 | Command Name | Description                |
 | ------------ | -------------------------- |
-| tap          | Used for configuring rules |
+| `tap`        | Used for configuring rules |
 
 ## License
 
