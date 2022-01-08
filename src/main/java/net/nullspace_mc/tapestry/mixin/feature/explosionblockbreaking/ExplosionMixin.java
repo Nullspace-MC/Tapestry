@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Explosion.class)
 public abstract class ExplosionMixin {
     @Shadow
-    private List field_9114;
+    private List affectedBlocks;
 
     @Inject(method = "affectWorld", at = @At("HEAD"))
     private void clearAffectedBlocks(boolean bl, CallbackInfo ci) {
         if(!Settings.explosionBlockBreaking) {
-            field_9114.clear();
+            affectedBlocks.clear();
         }
     }
 }

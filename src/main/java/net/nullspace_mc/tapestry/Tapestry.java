@@ -13,7 +13,7 @@ public class Tapestry {
         SettingsManager.parseRules();
     }
 
-    public static void onSetLevelName() {
+    public static void onStart() {
         LOGGER.info("Applying rules from tapestry.conf");
         SettingsManager.applyConf();
     }
