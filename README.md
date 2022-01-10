@@ -27,6 +27,12 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`kaboVillageMarker`
+* Enables interoperability with [KaboPC's Village Marker Mod](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1288327-village-marker-mod)
+* Players must relog for changes to take effect
+* Type: `boolean`
+* Default: `false`
+
 ### Commands
 | Command Name | Description                |
 | ------------ | -------------------------- |

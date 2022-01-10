@@ -40,6 +40,14 @@ public class Settings {
     @RuleDefaults.BugFix
     public static boolean fortressSpawningFix = false;
 
+    @Rule(
+        desc = "Enables interoperability with KaboPC's Village Marker Mod",
+        extra = "Players must relog for changes to take effect",
+        category = RuleCategory.CREATIVE
+    )
+    @RuleDefaults.Creative
+    public static boolean kaboVillageMarker = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {

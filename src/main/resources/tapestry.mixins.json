@@ -9,7 +9,13 @@
     "feature.arrowspersist.ArrowEntityMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
     "feature.explosionblockbreaking.ExplosionMixin",
-    "feature.fortressspawningfix.StructureFeatureMixin"
+    "feature.fortressspawningfix.StructureFeatureMixin",
+    "feature.kabovillagemarker.PlayerManagerMixin",
+    "feature.kabovillagemarker.ServerLoginNetworkHandlerMixin",
+    "feature.kabovillagemarker.ServerPlayNetworkHandlerMixin",
+    "feature.kabovillagemarker.ServerWorldMixin",
+    "feature.kabovillagemarker.VillageMixin",
+    "feature.kabovillagemarker.VillageStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1

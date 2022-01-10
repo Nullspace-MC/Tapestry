@@ -27,7 +27,7 @@ public abstract class FlatChunkGeneratorMixin {
     private int fullLayers = 0;
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/layer/FlatWorldLayer;method_8983()I"))
-    private void countFullLayer(World world, long l, boolean bl, String string, CallbackInfo bi) {
+    private void countFullLayer(World world, long l, boolean bl, String string, CallbackInfo ci) {
         ++fullLayers;
     }
 
