@@ -48,6 +48,13 @@ public class Settings {
     @RuleDefaults.Creative
     public static boolean kaboVillageMarker = false;
 
+    @Rule(
+            desc = "Sets ",
+            category = RuleCategory.CREATIVE
+    )
+    public static int loggerRefreshRate = 20;
+
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
