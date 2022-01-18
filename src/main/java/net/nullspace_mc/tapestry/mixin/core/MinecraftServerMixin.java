@@ -14,4 +14,9 @@ public abstract class MinecraftServerMixin {
     public void onStart(CallbackInfo ci) {
         Tapestry.onStart();
     }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    public void onTick(CallbackInfo ci) {
+        Tapestry.onTick();
+    }
 }
