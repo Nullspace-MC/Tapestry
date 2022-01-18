@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import net.minecraft.command.AbstractCommand;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
@@ -37,11 +36,12 @@ public class TapCommand extends TapestryAbstractCommand {
 
     private Text displayInteractiveSetting(String ruleName) {
         ParsedRule rule = SettingsManager.getParsedRule(ruleName);
+        String name = rule.name;
         String def = rule.def;
         String val = rule.getValueString();
-        Text out = new LiteralText(" - " + ruleName + " ");
+        Text out = new LiteralText(" - " + name + " ");
         out.getStyle().setColor(TextFormattingStyle.WHITE);
-        out.getStyle().setClickEvent(new ClickEvent(ClickEventAction.RUN_COMMAND, "/tap " + ruleName));
+        out.getStyle().setClickEvent(new ClickEvent(ClickEventAction.RUN_COMMAND, "/tap " + name));
         Text hoverText = new LiteralText(rule.desc);
         hoverText.getStyle().setColor(TextFormattingStyle.YELLOW);
         out.getStyle().setHoverEvent(new HoverEvent(Action.SHOW_TEXT, hoverText));
@@ -57,7 +57,7 @@ public class TapCommand extends TapestryAbstractCommand {
             }
 
             if(!option.equalsIgnoreCase(val)) {
-                opt.getStyle().setClickEvent(new ClickEvent(ClickEventAction.RUN_COMMAND, "/tap " + ruleName + " " + option));
+                opt.getStyle().setClickEvent(new ClickEvent(ClickEventAction.RUN_COMMAND, "/tap " + name + " " + option));
                 Text optHoverText = new LiteralText("Switch to " + option);
                 optHoverText.getStyle().setColor(TextFormattingStyle.WHITE);
                 opt.getStyle().setHoverEvent(new HoverEvent(Action.SHOW_TEXT, optHoverText));
@@ -115,7 +115,7 @@ public class TapCommand extends TapestryAbstractCommand {
                     }
 
                     delimit = true;
-                    String ctgyName = ctgy.name().toLowerCase(Locale.ENGLISH);
+                    String ctgyName = ctgy.name().toLowerCase();
                     Text category = new LiteralText("[" + ctgyName + "]");
                     category.getStyle().setColor(TextFormattingStyle.AQUA);
                     Text ctgyHoverText = new LiteralText("List all " + ctgyName + " settings");
@@ -213,9 +213,9 @@ public class TapCommand extends TapestryAbstractCommand {
             boolean success = SettingsManager.addOrSetOverride(args[1], args[2]);
 
             if(success) {
-                sendFeedback(source, args[1] + " will default to: " + args[2], new Object[0]);
+                sendFeedback(source, SettingsManager.getParsedRule(args[1]).name + " will default to: " + args[2], new Object[0]);
             } else {
-                throw new CommandException(args[2] + " is not a legal value for " + args[1], new Object[0]);
+                throw new CommandException(args[2] + " is not a legal value for " + SettingsManager.getParsedRule(args[1]).name, new Object[0]);
             }
 
             return;
@@ -238,7 +238,7 @@ public class TapCommand extends TapestryAbstractCommand {
             boolean success = SettingsManager.removeOverride(args[1]);
 
             if(success) {
-                sendFeedback(source, args[1] + " will not be set upon restart", new Object[0]);
+                sendFeedback(source, SettingsManager.getParsedRule(args[1]).name + " will not be set upon restart", new Object[0]);
             } else {
                 throw new CommandException("Unknown rule: " + args[1], new Object[0]);
             }
@@ -257,14 +257,14 @@ public class TapCommand extends TapestryAbstractCommand {
                 throw new IncorrectUsageException(getUsageTranslationKey(source));
             }
 
-            Text successMsg = new LiteralText(args[0] + ": " + SettingsManager.getRule(args[0]) + ", ");
+            Text successMsg = new LiteralText(SettingsManager.getParsedRule(args[0]).name + ": " + SettingsManager.getRule(args[0]) + ", ");
             successMsg.getStyle().setColor(TextFormattingStyle.WHITE);
             Text setDefault = new LiteralText("[change permanently?]");
             setDefault.getStyle().setColor(TextFormattingStyle.AQUA);
             Text setDefaultHoverText = new LiteralText("Click to keep the rule in tapestry.conf to save across restarts");
             setDefaultHoverText.getStyle().setColor(TextFormattingStyle.WHITE);
             setDefault.getStyle().setHoverEvent(new HoverEvent(Action.SHOW_TEXT, setDefaultHoverText));
-            setDefault.getStyle().setClickEvent(new ClickEvent(ClickEventAction.SUGGEST_COMMAND, "/tap setDefault " + args[0] + " " + args[1]));
+            setDefault.getStyle().setClickEvent(new ClickEvent(ClickEventAction.SUGGEST_COMMAND, "/tap setDefault " + SettingsManager.getParsedRule(args[0]).name + " " + args[1]));
             successMsg.append(setDefault);
             source.sendMessage(successMsg);
             return;
@@ -303,7 +303,7 @@ public class TapCommand extends TapestryAbstractCommand {
                 }
 
                 delimit = true;
-                String tagName = ctgy.name().toLowerCase(Locale.ENGLISH);
+                String tagName = ctgy.name().toLowerCase();
                 Text tagText = new LiteralText("[" + tagName + "]");
                 tagText.getStyle().setColor(TextFormattingStyle.AQUA);
                 Text tagHoverText = new LiteralText("list all " + tagName + " rules");
@@ -352,7 +352,7 @@ public class TapCommand extends TapestryAbstractCommand {
                 Text optHoverText = new LiteralText("Switch to " + o);
                 optHoverText.getStyle().setColor(TextFormattingStyle.GRAY);
                 opt.getStyle().setHoverEvent(new HoverEvent(Action.SHOW_TEXT, optHoverText));
-                opt.getStyle().setClickEvent(new ClickEvent(ClickEventAction.SUGGEST_COMMAND, "/tap " + args[0] + " " + o));
+                opt.getStyle().setClickEvent(new ClickEvent(ClickEventAction.SUGGEST_COMMAND, "/tap " + SettingsManager.getParsedRule(args[0]).name + " " + o));
                 options.append(opt);
             }
 
@@ -376,7 +376,7 @@ public class TapCommand extends TapestryAbstractCommand {
             String[] categories = new String[categoryEnums.length];
 
             for(int i = 0; i < categoryEnums.length; i++) {
-                categories[i] = categoryEnums[i].toString().toLowerCase(Locale.ENGLISH);
+                categories[i] = categoryEnums[i].toString().toLowerCase();
             }
 
             return getMatchingArgs(args, categories);

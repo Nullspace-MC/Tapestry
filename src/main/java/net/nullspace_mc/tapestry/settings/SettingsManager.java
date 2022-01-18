@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;
@@ -33,17 +32,17 @@ public class SettingsManager {
             Rule r = f.getAnnotation(Rule.class);
             if(r == null) continue;
             ParsedRule pr = new ParsedRule(r, f);
-            rules.put(pr.name.toLowerCase(Locale.ENGLISH), pr);
+            rules.put(pr.name.toLowerCase(), pr);
         }
     }
 
     public static boolean hasRule(String ruleName) {
-        return rules.containsKey(ruleName.toLowerCase(Locale.ENGLISH));
+        return rules.containsKey(ruleName.toLowerCase());
     }
 
 
     public static String getRule(String ruleName) {
-        ParsedRule pr = rules.get(ruleName.toLowerCase(Locale.ENGLISH));
+        ParsedRule pr = rules.get(ruleName.toLowerCase());
 
         if(pr == null) {
             return "false";
@@ -57,11 +56,11 @@ public class SettingsManager {
     }
 
     public static ParsedRule getParsedRule(String ruleName) {
-        return rules.get(ruleName.toLowerCase(Locale.ENGLISH));
+        return rules.get(ruleName.toLowerCase());
     }
 
     public static boolean set(String ruleName, String value) {
-        return rules.get(ruleName.toLowerCase(Locale.ENGLISH)).setValue(value);
+        return rules.get(ruleName.toLowerCase()).setValue(value);
     }
 
     public static String[] findNonDefault() {
@@ -78,18 +77,18 @@ public class SettingsManager {
     }
 
     public static String[] findAll(String filter) {
-        String actualFilter = filter == null ? null : filter.toLowerCase(Locale.ENGLISH);
+        String actualFilter = filter == null ? null : filter.toLowerCase();
         List<String> filtered = new LinkedList<String>();
 
         for(Map.Entry<String, ParsedRule> rule : rules.entrySet()) {
             if(actualFilter == null || rule.getKey().contains(actualFilter)) {
-                filtered.add(rule.getKey());
+                filtered.add(rule.getValue().name);
                 continue;
             }
 
             for(RuleCategory ctgy : rule.getValue().category) {
                 if(ctgy.name().equalsIgnoreCase(actualFilter)) {
-                    filtered.add(rule.getKey());
+                    filtered.add(rule.getValue().name);
                     break;
                 }
             }
@@ -146,7 +145,7 @@ public class SettingsManager {
         }
 
         for(Map.Entry<String, String> entry : conf.entrySet()) {
-            if(!rules.get(entry.getKey()).setValue(entry.getValue())) {
+            if(!rules.get(entry.getKey().toLowerCase()).setValue(entry.getValue())) {
                 LOGGER.error("The value of " + entry.getValue() + " for " + entry.getKey() + " is not valid - ignoring...");
             }
             else
@@ -180,7 +179,7 @@ public class SettingsManager {
                         continue;
                     }
 
-                    result.put(fields[0].toLowerCase(Locale.ENGLISH), fields[1]);
+                    result.put(rules.get(fields[0].toLowerCase()).name, fields[1]);
                 }
             }
 
