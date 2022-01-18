@@ -33,10 +33,16 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`loggerRefreshRate`
+* Sets the rate at which loggers refresh
+* Type: `int`
+* Default: `20`
+
 ### Commands
-| Command Name | Description                |
-| ------------ | -------------------------- |
-| `tap`        | Used for configuring rules |
+| Command Name | Description                      |
+| ------------ | -------------------------------- |
+| `log`        | Subscribes the player to loggers |
+| `tap`        | Used for configuring rules       |
 
 ## License
 

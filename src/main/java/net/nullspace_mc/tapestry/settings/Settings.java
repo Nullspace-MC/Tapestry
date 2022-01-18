@@ -49,7 +49,7 @@ public class Settings {
     public static boolean kaboVillageMarker = false;
 
     @Rule(
-            desc = "Sets ",
+            desc = "Sets the rate at which loggers refresh",
             category = RuleCategory.CREATIVE
     )
     public static int loggerRefreshRate = 20;
