@@ -1,6 +1,5 @@
 package net.nullspace_mc.tapestry;
 
-import net.minecraft.server.MinecraftServer;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
 import net.nullspace_mc.tapestry.settings.SettingsManager;
 import org.apache.logging.log4j.LogManager;
@@ -18,5 +17,9 @@ public class Tapestry {
     public static void onStart() {
         LOGGER.info("Applying rules from tapestry.conf");
         SettingsManager.applyConf();
+    }
+
+    public static void onTick() {
+        LoggerRegistry.tickLoggers();
     }
 }

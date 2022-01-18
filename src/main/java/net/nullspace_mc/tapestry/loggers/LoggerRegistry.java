@@ -40,7 +40,7 @@ public class LoggerRegistry {
         if (server.getTicks() % Settings.loggerRefreshRate == 0) updateHudLoggers(server);
     }
 
-    public static void appendArrayListOfText(Text text, ArrayList<Text> array) {
+    private static void appendArrayListOfText(Text text, ArrayList<Text> array) {
         if (array.isEmpty()) return;
         Iterator<Text> ite = array.iterator();
         Text textToAppend = ite.next();
@@ -65,6 +65,8 @@ public class LoggerRegistry {
 
             // Concatenate all information and send to the client
             appendArrayListOfText(info, hudUpdate);
+            if (info.asString().isEmpty() && info.getSiblings().stream().allMatch(sibling -> ((Text)sibling).asString().isEmpty())) // If the content of info is empty, no need to send anything to the client
+                return;
             player.networkHandler.sendPacket(new GameMessageS2CPacket(info));
         }
     }
