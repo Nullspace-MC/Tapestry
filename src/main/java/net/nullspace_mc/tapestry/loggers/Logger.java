@@ -53,4 +53,19 @@ public class Logger {
         if (isPlayerSubscribed(playerName)) unsubscribePlayer(playerName);
         else subscibePlayer(playerName);
     }
+
+    public void onLogCommand(String playerName, String channel) {
+        if (isPlayerSubscribed(playerName) && !channelSubscriptions.get(playerName).equals(channel)) // Player is logged, but changes channel
+            channelSubscriptions.put(playerName, channel);
+
+        else if (!isPlayerSubscribed(playerName)) { // Player isn't logged
+            subscibePlayer(playerName);
+            channelSubscriptions.put(playerName, channel);
+        }
+
+        else { // Player is logged, gets unsubscribed
+            unsubscribePlayer(playerName);
+            channelSubscriptions.remove(playerName);
+        }
+    }
 }
