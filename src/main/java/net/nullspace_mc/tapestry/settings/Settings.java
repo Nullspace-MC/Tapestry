@@ -54,6 +54,12 @@ public class Settings {
     )
     public static int loggerRefreshRate = 20;
 
+    @Rule(
+            desc = "Enables hopper counters",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean hopperCounter = false;
+
 
     static class PositiveValidator extends Validator<Integer> {
         @Override
