@@ -35,6 +35,7 @@ public abstract class HopperBlockEntityMixin extends BlockEntity {
                 if (stack == null) continue;
                 CounterRegistry.getCounter(getCounterColor()).addToCounter(stack.getName(), stack.count);
             }
+            inventory = new ItemStack[5];
         }
     }
 
