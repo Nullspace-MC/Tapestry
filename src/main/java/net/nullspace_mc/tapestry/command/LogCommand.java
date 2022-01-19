@@ -54,7 +54,12 @@ public class LogCommand extends TapestryAbstractCommand {
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1];
         if (args.length == 1) suggestions.addAll(LoggerRegistry.getAllLoggersName());
-        else if (args.length == 2) suggestions.addAll(LoggerRegistry.getLoggerFromName(args[1]).getAvailableChannels());
+        else if (args.length == 2) {
+            Logger logger = LoggerRegistry.getLoggerFromName(args[1]);
+            if (logger != null) {
+                suggestions.addAll(logger.getAvailableChannels());
+            }
+        }
         suggestions.removeIf(suggestion -> !suggestion.startsWith(prefix));
         return suggestions;
     }

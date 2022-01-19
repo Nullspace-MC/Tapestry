@@ -24,6 +24,7 @@ public class CounterCommand extends TapestryAbstractCommand {
 
     @Override
     public void execute(CommandSource source, String[] args) {
+        if (args.length == 0) throw new IncorrectUsageException(getUsageTranslationKey(source));
         if (!CounterRegistry.getCounterColors().contains(args[0]) || args.length > 2) throw new IncorrectUsageException(getUsageTranslationKey(source));
         if (args.length == 1) sendCounterInfo(args[0], source);
         else if (args[1].equals("reset")) {

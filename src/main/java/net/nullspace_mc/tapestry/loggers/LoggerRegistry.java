@@ -54,6 +54,7 @@ public class LoggerRegistry {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static void updateHudLoggers(MinecraftServer server) {
         for (Object element : server.getPlayerManager().players) {
             if (!(element instanceof ServerPlayerEntity)) continue;
