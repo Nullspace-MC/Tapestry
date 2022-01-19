@@ -49,7 +49,7 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Default: `20`
 
 `repeatingCommandBlock`
-* Allows a command block with a diamond ore block underneath to execute it's command every tick
+* Allows a command block with a diamond ore block underneath to execute its command every tick
 * Tyoe: `boolean`
 * Default: `false`
 
