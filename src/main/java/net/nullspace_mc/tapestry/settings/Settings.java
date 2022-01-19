@@ -41,6 +41,13 @@ public class Settings {
     public static boolean fortressSpawningFix = false;
 
     @Rule(
+            desc = "Enables hopper counters",
+            category = RuleCategory.CREATIVE
+    )
+    @RuleDefaults.Creative
+    public static boolean hopperCounter = false;
+
+    @Rule(
         desc = "Enables interoperability with KaboPC's Village Marker Mod",
         extra = "Players must relog for changes to take effect",
         category = RuleCategory.CREATIVE
@@ -53,13 +60,6 @@ public class Settings {
             category = RuleCategory.CREATIVE
     )
     public static int loggerRefreshRate = 20;
-
-    @Rule(
-            desc = "Enables hopper counters",
-            category = RuleCategory.CREATIVE
-    )
-    public static boolean hopperCounter = false;
-
 
     static class PositiveValidator extends Validator<Integer> {
         @Override
