@@ -6,6 +6,7 @@
   "mixins": [
     "core.CommandManagerMixin",
     "core.MinecraftServerMixin",
+    "counter.HopperBlockEntityMixin",
     "feature.arrowspersist.ArrowEntityMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
     "feature.explosionblockbreaking.ExplosionMixin",
