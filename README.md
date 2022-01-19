@@ -17,6 +17,11 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`creativeNoClip`
+* Enables creative player noclip with a compatible client-side mod
+* Type: `boolean`
+* Default: `false`
+
 `explosionBlockBreaking`
 * Enables/Disables explosion block breaking
 * Type: `boolean`

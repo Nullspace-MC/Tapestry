@@ -26,6 +26,13 @@ public class Settings {
     public static boolean chunkPattern = false;
 
     @Rule(
+        desc = "Enables creative player noclip with a compatible client-side mod",
+        category = RuleCategory.CREATIVE
+    )
+    @RuleDefaults.Creative
+    public static boolean creativeNoClip = false;
+
+    @Rule(
         desc = "Enables/Disables explosion block breaking",
         category = RuleCategory.CREATIVE
     )

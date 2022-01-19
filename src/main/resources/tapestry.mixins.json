@@ -9,6 +9,7 @@
     "counter.HopperBlockEntityMixin",
     "feature.arrowspersist.ArrowEntityMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
+    "feature.creativenoclip.ServerPlayNetworkHandlerMixin",
     "feature.explosionblockbreaking.ExplosionMixin",
     "feature.fortressspawningfix.StructureFeatureMixin",
     "feature.kabovillagemarker.PlayerManagerMixin",
