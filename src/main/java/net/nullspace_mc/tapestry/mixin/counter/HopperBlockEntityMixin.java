@@ -42,7 +42,7 @@ public abstract class HopperBlockEntityMixin extends BlockEntity {
     private String getCounterColor() {
         int[] pos = posFacing();
         int metadata = world.getBlockMetadata(pos[0], pos[1], pos[2]);
-        return DyeItem.colors[DyeItem.colors.length - metadata];
+        return DyeItem.colors[DyeItem.colors.length - metadata - 1];
     }
 
     private boolean isHopperCounter() {
