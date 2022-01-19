@@ -68,6 +68,12 @@ public class Settings {
     )
     public static int loggerRefreshRate = 20;
 
+    @Rule(
+            desc = "Enables repeating command blocs",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean repeatingCommandBlock = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {

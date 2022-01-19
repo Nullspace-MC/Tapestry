@@ -17,7 +17,8 @@
     "feature.kabovillagemarker.ServerPlayNetworkHandlerMixin",
     "feature.kabovillagemarker.ServerWorldMixin",
     "feature.kabovillagemarker.VillageMixin",
-    "feature.kabovillagemarker.VillageStateMixin"
+    "feature.kabovillagemarker.VillageStateMixin",
+    "feature.repeatingCommandBlock.CommandBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
