@@ -92,6 +92,12 @@ public class Settings {
     )
     public static boolean liquidDamageDisabled = false;
 
+    @Rule(
+            desc = "Makes redstone dust update order random",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean randomRedstoneDust = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
