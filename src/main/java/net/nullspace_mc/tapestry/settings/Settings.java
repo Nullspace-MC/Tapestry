@@ -86,6 +86,12 @@ public class Settings {
     )
     public static boolean repeaterHalfDelay = false;
 
+    @Rule(
+            desc = "Disables fluid flowing breaking blocks",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean liquidDamageDisabled = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {

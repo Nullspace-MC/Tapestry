@@ -19,6 +19,7 @@
     "feature.kabovillagemarker.ServerWorldMixin",
     "feature.kabovillagemarker.VillageMixin",
     "feature.kabovillagemarker.VillageStateMixin",
+    "feature.liquiddamagedisabled.FlowingFluidBlockMixin",
     "feature.repeaterhalfdelay.RedstoneDiodeBlockMixin",
     "feature.repeatingcommandblock.CommandBlockMixin",
     "tick.MinecraftServerMixin"
