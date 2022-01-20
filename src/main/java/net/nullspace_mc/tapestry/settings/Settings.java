@@ -74,6 +74,36 @@ public class Settings {
     )
     public static boolean repeatingCommandBlock = false;
 
+    @Rule(
+            desc = "Enables instant command blocs",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean instantCommandBlock = false;
+
+    @Rule(
+            desc = "Allows repeater to have half of their usual delay",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean repeaterHalfDelay = false;
+
+    @Rule(
+            desc = "Disables fluid flowing breaking blocks",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean liquidDamageDisabled = false;
+
+    @Rule(
+            desc = "Makes redstone dust update order random",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean randomRedstoneDust = false;
+
+    @Rule(
+            desc = "Allows to always eat cake",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean alwaysEatCake = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
