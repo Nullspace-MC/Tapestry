@@ -74,6 +74,12 @@ public class Settings {
     )
     public static boolean repeatingCommandBlock = false;
 
+    @Rule(
+            desc = "Enables instant command blocs",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean instantCommandBlock = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {

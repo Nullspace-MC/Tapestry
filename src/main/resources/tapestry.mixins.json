@@ -12,6 +12,7 @@
     "feature.creativenoclip.ServerPlayNetworkHandlerMixin",
     "feature.explosionblockbreaking.ExplosionMixin",
     "feature.fortressspawningfix.StructureFeatureMixin",
+    "feature.instantcommandblock.CommandBlockMixin",
     "feature.kabovillagemarker.PlayerManagerMixin",
     "feature.kabovillagemarker.ServerLoginNetworkHandlerMixin",
     "feature.kabovillagemarker.ServerPlayNetworkHandlerMixin",
