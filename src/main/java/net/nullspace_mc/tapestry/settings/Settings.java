@@ -98,6 +98,12 @@ public class Settings {
     )
     public static boolean randomRedstoneDust = false;
 
+    @Rule(
+            desc = "Allows to always eat cake",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean alwaysEatCake = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {

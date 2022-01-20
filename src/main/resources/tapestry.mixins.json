@@ -7,6 +7,7 @@
     "core.CommandManagerMixin",
     "core.MinecraftServerMixin",
     "counter.HopperBlockEntityMixin",
+    "feature.alwayseatcake.CakeBlockMixin",
     "feature.arrowspersist.ArrowEntityMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
     "feature.creativenoclip.ServerPlayNetworkHandlerMixin",
