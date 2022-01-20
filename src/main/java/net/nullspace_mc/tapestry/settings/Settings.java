@@ -80,6 +80,12 @@ public class Settings {
     )
     public static boolean instantCommandBlock = false;
 
+    @Rule(
+            desc = "Allows repeater to have half of their usual delay",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean repeaterHalfDelay = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
