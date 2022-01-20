@@ -20,7 +20,8 @@
     "feature.kabovillagemarker.VillageMixin",
     "feature.kabovillagemarker.VillageStateMixin",
     "feature.repeaterhalfdelay.RedstoneDiodeBlockMixin",
-    "feature.repeatingcommandblock.CommandBlockMixin"
+    "feature.repeatingcommandblock.CommandBlockMixin",
+    "tick.MinecraftServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

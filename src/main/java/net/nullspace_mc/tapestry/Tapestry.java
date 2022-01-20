@@ -1,6 +1,7 @@
 package net.nullspace_mc.tapestry;
 
 import net.nullspace_mc.tapestry.counter.CounterRegistry;
+import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
 import net.nullspace_mc.tapestry.settings.SettingsManager;
 import org.apache.logging.log4j.LogManager;
@@ -23,5 +24,6 @@ public class Tapestry {
 
     public static void onTick() {
         LoggerRegistry.tickLoggers();
+        TickSpeedHelper.refresh();
     }
 }

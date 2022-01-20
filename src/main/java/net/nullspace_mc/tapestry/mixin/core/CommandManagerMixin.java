@@ -5,6 +5,7 @@ import net.minecraft.server.command.CommandRegistry;
 import net.nullspace_mc.tapestry.command.CounterCommand;
 import net.nullspace_mc.tapestry.command.LogCommand;
 import net.nullspace_mc.tapestry.command.TapCommand;
+import net.nullspace_mc.tapestry.command.TickCommand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,5 +19,6 @@ public abstract class CommandManagerMixin extends CommandRegistry {
         this.registerCommand(new TapCommand());
         this.registerCommand(new LogCommand());
         this.registerCommand(new CounterCommand());
+        this.registerCommand(new TickCommand());
     }
 }
