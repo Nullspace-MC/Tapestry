@@ -1,5 +1,9 @@
 package net.nullspace_mc.tapestry.loggers;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.HashMap;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.entity.ServerPlayerEntity;
@@ -8,8 +12,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 import net.nullspace_mc.tapestry.util.MathUtil;
-
-import java.util.*;
 
 public class LoggerRegistry {
     private static final Map<String /* Logger name */, Logger /* Logger */> loggerRegistry = new HashMap<>();
