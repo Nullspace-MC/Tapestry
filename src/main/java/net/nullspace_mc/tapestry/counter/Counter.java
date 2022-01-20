@@ -22,6 +22,7 @@ public class Counter {
     }
 
     public void resetCounter() {
+        tickStart = MinecraftServer.getServer().getTicks();
         itemCounters.clear();
         totalCount = 0;
     }

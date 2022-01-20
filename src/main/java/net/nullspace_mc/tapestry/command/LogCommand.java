@@ -52,7 +52,7 @@ public class LogCommand extends TapestryAbstractCommand {
     @Override
     public List getSuggestions(CommandSource source, String[] args) {
         ArrayList<String> suggestions = new ArrayList<>();
-        String prefix = args[args.length-1];
+        String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(LoggerRegistry.getAllLoggersName());
         else if (args.length == 2) {
             Logger logger = LoggerRegistry.getLoggerFromName(args[1]);

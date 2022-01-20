@@ -1,4 +1,4 @@
-package net.nullspace_mc.tapestry.mixin.feature.repeatingCommandBlock;
+package net.nullspace_mc.tapestry.mixin.feature.repeatingcommandblock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWithEntity;

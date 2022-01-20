@@ -19,26 +19,50 @@ public class CounterCommand extends TapestryAbstractCommand {
 
     @Override
     public String getUsageTranslationKey(CommandSource source) {
-        return "/counter <channel> reset";
+        return "/counter <channel|all> [reset]";
     }
 
     @Override
     public void execute(CommandSource source, String[] args) {
         if (args.length == 0) throw new IncorrectUsageException(getUsageTranslationKey(source));
-        if (!CounterRegistry.getCounterColors().contains(args[0]) || args.length > 2) throw new IncorrectUsageException(getUsageTranslationKey(source));
-        if (args.length == 1) sendCounterInfo(args[0], source);
-        else if (args[1].equals("reset")) {
-            CounterRegistry.getCounter(args[0]).resetCounter();
-            source.sendMessage(new LiteralText(String.format("Counter %s reset", args[0])));
+        if (!args[0].equalsIgnoreCase("all") && !CounterRegistry.getCounterColors().contains(args[0].toLowerCase())) throw new IncorrectUsageException("Unrecognized counter \"" + args[0] + "\"");
+
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("all")) {
+                boolean none = true;
+                for (String color : CounterRegistry.getCounterColors()) {
+                    if (CounterRegistry.getCounter(color).getTotalCount() != 0) {
+                        sendCounterInfo(color, source);
+                        none = false;
+                    }
+                }
+                if (none) source.sendMessage(new LiteralText("All counters empty"));
+            } else {
+                sendCounterInfo(args[0].toLowerCase(), source);
+            }
+        } else if (args.length == 2 && args[1].equalsIgnoreCase("reset")) {
+            if (args[0].equalsIgnoreCase("all")) {
+                for (String color : CounterRegistry.getCounterColors()) {
+                    CounterRegistry.getCounter(color).resetCounter();
+                }
+                source.sendMessage(new LiteralText("All counters reset"));
+            } else {
+                CounterRegistry.getCounter(args[0].toLowerCase()).resetCounter();
+                source.sendMessage(new LiteralText(String.format("Counter %s reset", args[0].toLowerCase())));
+            }
+        } else {
+            throw new IncorrectUsageException(getUsageTranslationKey(source));
         }
     }
 
     @Override
     public List<String> getSuggestions(CommandSource source, String[] args) {
-        String prefix = args[args.length - 1];
+        String prefix = args[args.length - 1].toLowerCase();
         List<String> suggestions = new ArrayList<>();
-        if (args.length == 1) suggestions.addAll(CounterRegistry.getCounterColors());
-        else if (args.length == 2) suggestions.add("reset");
+        if (args.length == 1) {
+            suggestions.addAll(CounterRegistry.getCounterColors());
+            suggestions.add("all");
+        } else if (args.length == 2) suggestions.add("reset");
         suggestions.removeIf(suggestion -> !suggestion.startsWith(prefix));
         return suggestions;
     }

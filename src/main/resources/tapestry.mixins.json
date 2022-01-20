@@ -18,7 +18,7 @@
     "feature.kabovillagemarker.ServerWorldMixin",
     "feature.kabovillagemarker.VillageMixin",
     "feature.kabovillagemarker.VillageStateMixin",
-    "feature.repeatingCommandBlock.CommandBlockMixin"
+    "feature.repeatingcommandblock.CommandBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

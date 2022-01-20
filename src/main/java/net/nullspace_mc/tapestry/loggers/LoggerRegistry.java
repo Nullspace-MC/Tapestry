@@ -2,8 +2,9 @@ package net.nullspace_mc.tapestry.loggers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.entity.ServerPlayerEntity;
