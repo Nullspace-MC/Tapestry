@@ -6,6 +6,11 @@ A Fabric-Carpet-like mod for old Minecraft versions
 
 ### Rules
 
+`alwaysEatCake`
+* Allows player to always eat cake
+* Type" `boolean`
+* Default: `false`
+
 `arrowsPersist`
 * Disables arrows despawning after 1 minute in the ground
 * Type: `boolean`
@@ -37,9 +42,20 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`instantCommandBlock`
+* Enables intant command blocks
+* A command block will run instantly if it is on top of a redstone ore block
+* Type: `boolean`
+* Default: `false`
+
 `kaboVillageMarker`
 * Enables interoperability with [KaboPC's Village Marker Mod](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1288327-village-marker-mod)
 * Players must relog for changes to take effect
+* Type: `boolean`
+* Default: `false`
+
+`liquidDamageDisabled`
+* Disables fluid flowing breaking blocks
 * Type: `boolean`
 * Default: `false`
 
@@ -48,16 +64,30 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `int`
 * Default: `20`
 
+`randomRedstoneDust`
+* Makes redstone dust update order random
+* Type: `boolean`
+* Default: `false`
+
+`repeaterHalfDelay`
+* Allows repeater to have half of their usual delay
+* A repeater's delay is halved if it is on top of a redstone ore block
+* Type: `boolean`
+* Default: `false`
+
 `repeatingCommandBlock`
-* Allows a command block with a diamond ore block underneath to execute its command every tick
-* Tyoe: `boolean`
+* Enables repeating command blocks
+* A command block will run every tick if it is on top of a diamond ore block
+* Type: `boolean`
 * Default: `false`
 
 ### Commands
 | Command Name | Description                      |
 | ------------ | -------------------------------- |
+| `counter`    | Controls hopper counters         |
 | `log`        | Subscribes the player to loggers |
 | `tap`        | Used for configuring rules       |
+| `tick`       | Controls tick rate/tick warp     |
 
 ## License
 
