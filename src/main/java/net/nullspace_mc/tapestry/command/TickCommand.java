@@ -17,36 +17,28 @@ public class TickCommand extends TapestryAbstractCommand {
 
     @Override
     public String getUsageTranslationKey(CommandSource source) {
-        return "/tick rate|warp <tick_rate>|<amount_of_ticks>";
+        return "/tick rate [tickRate] | /tick warp [advance]";
+    }
+
+    @Override
+    public int getPermissionLevel() {
+        return 2;
     }
 
     @Override
     public void execute(CommandSource source, String[] args) {
         if (args.length == 0 | args.length > 2) throw new IncorrectUsageException(getUsageTranslationKey(source));
         if (args[0].equals("rate")) {
-            if (args.length == 1) {
-                TickSpeedHelper.setTickRate(20);
-            } else {
-                try {
-                    TickSpeedHelper.setTickRate(Integer.parseInt(args[1]));
-                } catch (NumberFormatException ignored) {
-                    throw new IncorrectUsageException(getUsageTranslationKey(source));
-                }
+            if (args.length == 2) {
+                TickSpeedHelper.setTickRate(parseDouble(source, args[1], 0.05D));
             }
+            sendFeedback(source, String.format("Current tick rate is %.1f", TickSpeedHelper.tickRate), new Object[0]);
         } else if (args[0].equals("warp")) {
-            if (args.length == 1) {
-                TickSpeedHelper.startTickWarp(Integer.MAX_VALUE - MinecraftServer.getServer().getTicks());
-            } else {
-                if (args[1].equals("stop")) {
-                    TickSpeedHelper.startTickWarp(0);
-                } else {
-                    try {
-                        TickSpeedHelper.startTickWarp(Integer.parseInt(args[1]));
-                    } catch (NumberFormatException ignored) {
-                        throw new IncorrectUsageException(getUsageTranslationKey(source));
-                    }
-                }
+            long ticksToWarp = args.length == 2 ? (args[1].equalsIgnoreCase("stop") ? 0 : (long)parseInt(source, args[1], 0)) : (TickSpeedHelper.warping ? 0L : -1L);
+            if (ticksToWarp != 0) {
+                sendFeedback(source, "Started tick warp", new Object[0]);
             }
+            TickSpeedHelper.startTickWarp(source, ticksToWarp);
         } else throw new IncorrectUsageException(getUsageTranslationKey(source));
     }
 

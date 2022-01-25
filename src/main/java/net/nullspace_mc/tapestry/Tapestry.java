@@ -24,6 +24,5 @@ public class Tapestry {
 
     public static void onTick() {
         LoggerRegistry.tickLoggers();
-        TickSpeedHelper.refresh();
     }
 }
