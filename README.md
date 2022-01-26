@@ -32,6 +32,16 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `true`
 
+`fillLimit`
+* Volume limit of the fill/clone commands
+* Type: `int`
+* Default: `32768`
+
+`fillUpdates`
+* Determines whether fill/clone/setblock send block updates
+* Type: `boolean`
+* Default: `true`
+
 `fortressSpawningFix`
 * Fix that allows nether brick spawning in all fortresses
 * Type: `boolean`
@@ -85,6 +95,7 @@ A Fabric-Carpet-like mod for old Minecraft versions
 | Command Name | Description                      |
 | ------------ | -------------------------------- |
 | `counter`    | Controls hopper counters         |
+| `fill`       | Backport of `fill` from 1.8      |
 | `log`        | Subscribes the player to loggers |
 | `tap`        | Used for configuring rules       |
 | `tick`       | Controls tick rate/tick warp     |

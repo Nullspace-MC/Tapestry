@@ -45,6 +45,21 @@ public class Settings {
     public static boolean explosionBlockBreaking = true;
 
     @Rule(
+        desc = "Volume limit of the fill/clone commands",
+        category = RuleCategory.CREATIVE,
+        options = {"32768", "250000", "1000000"},
+        validator = NonNegativeValidator.class
+    )
+    @RuleDefaults.Creative("1000000")
+    public static int fillLimit = 32768;
+
+    @Rule(
+        desc = "Determines whether fill/clone/setblock send block updates",
+        category = RuleCategory.CREATIVE
+    )
+    public static boolean fillUpdates = true;
+
+    @Rule(
         desc = "Fix that allows nether brick spawning in all fortresses",
         category = {RuleCategory.CREATIVE, RuleCategory.FIX}
     )
