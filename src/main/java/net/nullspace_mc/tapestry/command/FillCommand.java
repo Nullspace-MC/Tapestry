@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.nullspace_mc.tapestry.helpers.InventoryHelper;
+import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
 public class FillCommand extends TapestryAbstractCommand {
@@ -113,6 +114,8 @@ public class FillCommand extends TapestryAbstractCommand {
                                     }
                                 } else if (x != minPos.x && x != maxPos.x && y != minPos.y && y != maxPos.y && z != minPos.z && z != maxPos.z) {
                                     if (args[8].equals("hollow")) {
+                                        SetBlockHelper.applyFillOrientationFixRule = true;
+                                        SetBlockHelper.applyFillUpdatesRule = true;
                                         world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, 2);
                                         list.add(pos);
                                     }
@@ -126,10 +129,14 @@ public class FillCommand extends TapestryAbstractCommand {
                                     InventoryHelper.clearInventory((Inventory)blockEntity);
                                 }
 
-                                world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, block == Blocks.AIR ? 2 : 4);
+                                SetBlockHelper.applyFillOrientationFixRule = true;
+                                SetBlockHelper.applyFillUpdatesRule = true;
+                                world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, 2);
                                 if (block == Blocks.AIR) ++volume;
                             }
 
+                            SetBlockHelper.applyFillOrientationFixRule = true;
+                            SetBlockHelper.applyFillUpdatesRule = true;
                             if (world.setBlockWithMetadata(x, y, z, block, meta, 2)) {
                                 list.add(pos);
                                 ++volume;

@@ -54,6 +54,15 @@ public class Settings {
     public static int fillLimit = 32768;
 
     @Rule(
+        desc = "Fixes the orientation of chests, furnaces, etc. placed via command",
+        extra = "Specifically, this fixes MC-31365",
+        category = {RuleCategory.CREATIVE, RuleCategory.FIX}
+    )
+    @RuleDefaults.Creative
+    @RuleDefaults.BugFix
+    public static boolean fillOrientationFix = false;
+
+    @Rule(
         desc = "Determines whether fill/clone/setblock send block updates",
         category = RuleCategory.CREATIVE
     )
@@ -110,7 +119,7 @@ public class Settings {
     public static boolean randomRedstoneDust = false;
 
     @Rule(
-            desc = "Allows repeater to have half of their usual delay",
+            desc = "Allows repeaters to have half of their usual delay",
             extra = "A repeater's delay is halved if it is on top of a redstone ore block",
             category = RuleCategory.CREATIVE
     )

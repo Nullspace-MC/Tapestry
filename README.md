@@ -37,6 +37,12 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `int`
 * Default: `32768`
 
+`fillOrientationFix`
+* Fixes the orientation of chests, furnaces, etc. placed via command
+* Specifically, this fixes [MC-31365](https://bugs.mojang.com/browse/MC-31365)
+* Type: `boolean`
+* Default: `false`
+
 `fillUpdates`
 * Determines whether fill/clone/setblock send block updates
 * Type: `boolean`
