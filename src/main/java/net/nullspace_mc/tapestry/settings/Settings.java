@@ -139,6 +139,12 @@ public class Settings {
     )
     public static boolean repeatingCommandBlock = false;
 
+    @Rule(
+            desc = "Enables info command",
+            category = RuleCategory.COMMAND
+    )
+    public static boolean infoCommand = true;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
