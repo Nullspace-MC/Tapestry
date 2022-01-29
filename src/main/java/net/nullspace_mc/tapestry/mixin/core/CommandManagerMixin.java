@@ -7,6 +7,7 @@ import net.nullspace_mc.tapestry.command.FillCommand;
 import net.nullspace_mc.tapestry.command.LogCommand;
 import net.nullspace_mc.tapestry.command.TapCommand;
 import net.nullspace_mc.tapestry.command.TickCommand;
+import net.nullspace_mc.tapestry.command.InfoCommand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,5 +23,6 @@ public abstract class CommandManagerMixin extends CommandRegistry {
         this.registerCommand(new LogCommand());
         this.registerCommand(new CounterCommand());
         this.registerCommand(new TickCommand());
+        this.registerCommand(new InfoCommand());
     }
 }
