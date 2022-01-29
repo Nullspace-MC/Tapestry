@@ -3,18 +3,22 @@ package net.nullspace_mc.tapestry.command;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.IncorrectUsageException;
+import net.minecraft.command.NotFoundException;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.nullspace_mc.tapestry.mixin.core.BlockEntityMixin;
+import net.nullspace_mc.tapestry.settings.Settings;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class InfoCommand extends TapestryAbstractCommand {
@@ -30,6 +34,7 @@ public class InfoCommand extends TapestryAbstractCommand {
 
     @Override
     public void execute(CommandSource source, String[] args) {
+        if (!Settings.infoCommand) throw new NotFoundException();
         if (args[0].equals("block")) {
             if (args.length != 4) throw new IncorrectUsageException(getUsageTranslationKey(source));
             sendBlockInfo(source, args);
@@ -40,6 +45,7 @@ public class InfoCommand extends TapestryAbstractCommand {
 
     @Override
     public List getSuggestions(CommandSource source, String[] args) {
+        if (!Settings.infoCommand) return Collections.emptyList();
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(Arrays.asList("block"));
