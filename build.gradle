@@ -103,7 +103,3 @@ publishing {
         // mavenLocal()
     }
 }
-
-compileJava {
-    options.compilerArgs << '-Xlint:unchecked'
-}
