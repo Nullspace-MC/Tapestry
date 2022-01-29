@@ -16,7 +16,6 @@
     "feature.bettercompletions.SpreadPlayersCommandMixin",
     "feature.bettercompletions.SummonCommandMixin",
     "feature.bettercompletions.TestForBlockCommandMixin",
-    "feature.bettercompletions.TeleportCommandMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
     "feature.creativenoclip.ServerPlayNetworkHandlerMixin",
     "feature.explosionblockbreaking.ExplosionMixin",
