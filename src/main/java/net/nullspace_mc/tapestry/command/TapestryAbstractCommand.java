@@ -13,7 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public abstract class TapestryAbstractCommand extends AbstractCommand {
-    public BlockPos parseBlockPos(CommandSource source, String[] args, int startIdx) {
+    public static BlockPos parseBlockPos(CommandSource source, String[] args, int startIdx) {
         int x = source.getBlockPos().x;
         int y = source.getBlockPos().y;
         int z = source.getBlockPos().z;
@@ -23,7 +23,7 @@ public abstract class TapestryAbstractCommand extends AbstractCommand {
         return new BlockPos(x, y, z);
     }
 
-    public List<String> getCoordinateSuggestions(CommandSource source, String[] args, int idx) {
+    public static List<String> getCoordinateSuggestions(CommandSource source, String[] args, int idx) {
         HitResult hit = null;
         if (source instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)source;

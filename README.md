@@ -8,12 +8,17 @@ A Fabric-Carpet-like mod for old Minecraft versions
 
 `alwaysEatCake`
 * Allows player to always eat cake
-* Type" `boolean`
+* Type: `boolean`
 * Default: `false`
 
 `arrowsPersist`
 * Disables arrows despawning after 1 minute in the ground
 * Type: `boolean`
+* Default: `false`
+
+`betterCompletions`
+* Adds improved tab completions to vanilla commands
+* Type: `booelan`
 * Default: `false`
 
 `chunkPattern`
@@ -86,7 +91,7 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Default: `false`
 
 `repeaterHalfDelay`
-* Allows repeater to have half of their usual delay
+* Allows repeaters to have half of their usual delay
 * A repeater's delay is halved if it is on top of a redstone ore block
 * Type: `boolean`
 * Default: `false`
