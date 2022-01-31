@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ChunkMixin {
     @Inject(
             method = "setBlockWithMetadata",
-            at = @At("TAIL")
+            at = @At("RETURN")
     )
     private void stopFixOrientation(int x, int y, int z, Block block, int metadata, CallbackInfoReturnable cir) {
         SetBlockHelper.applyFillOrientationFixRule = false;

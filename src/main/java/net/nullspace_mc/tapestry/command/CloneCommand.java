@@ -210,6 +210,22 @@ public class CloneCommand extends TapestryAbstractCommand {
         }
     }
 
+    public List getSuggestions(CommandSource source, String[] args) {
+        if (args.length > 0 && args.length <= 3) {
+            return getCoordinateSuggestions(source, args, 0);
+        } else if (args.length > 3 && args.length <= 6) {
+            return getCoordinateSuggestions(source, args, 3);
+        } else if (args.length > 6 && args.length <= 9) {
+            return getCoordinateSuggestions(source, args, 6);
+        } else if (args.length == 10) {
+            return getMatchingArgs(args, new String[]{"replace", "masked", "filtered"});
+        } else if (args.length == 11) {
+            return getMatchingArgs(args, new String[]{"normal", "force", "move"});
+        } else {
+            return args.length == 12 && "filtered".equals(args[9]) ? getMatchingArgs(args, Block.REGISTRY.keySet()) : null;
+        }
+    }
+
     static class BlockInfo {
         public final BlockPos pos;
         public final Block block;

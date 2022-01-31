@@ -8,7 +8,9 @@ import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Chunk.class)
 public abstract class ChunkMixin {
@@ -38,6 +40,13 @@ public abstract class ChunkMixin {
         if (!SetBlockHelper.applyFillUpdatesRule || Settings.fillUpdates) {
             instance.onBlockAdded(world, x, y, z);
         }
+    }
+
+    @Inject(
+            method = "setBlockWithMetadata",
+            at = @At("RETURN")
+    )
+    private void startFillUpdates(int x, int y, int z, Block block, int metadata, CallbackInfoReturnable cir) {
         SetBlockHelper.applyFillUpdatesRule = false;
     }
 }
