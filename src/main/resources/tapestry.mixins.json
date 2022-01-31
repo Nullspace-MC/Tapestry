@@ -17,6 +17,7 @@
     "feature.bettercompletions.SummonCommandMixin",
     "feature.bettercompletions.TestForBlockCommandMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
+    "feature.clonecommand.ServerWorldMixin",
     "feature.creativenoclip.ServerPlayNetworkHandlerMixin",
     "feature.explosionblockbreaking.ExplosionMixin",
     "feature.fillorientationfix.ChestBlockMixin",
