@@ -13,6 +13,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public abstract class TapestryAbstractCommand extends AbstractCommand {
+
+    /**
+     * Parse an x, y, z triple from command arguments
+     *
+     * @param source    The command sender
+     * @param args      The command arguments
+     * @param startIdx  The index in args[] of the x coordinate of the desired coordinate triple
+     * @return Returns a BlockPos corresponding to the coordinates specified in the command
+     */
     public static BlockPos parseBlockPos(CommandSource source, String[] args, int startIdx) {
         int x = source.getBlockPos().x;
         int y = source.getBlockPos().y;
@@ -23,6 +32,14 @@ public abstract class TapestryAbstractCommand extends AbstractCommand {
         return new BlockPos(x, y, z);
     }
 
+    /**
+     * Get tab completions for coordinates based on the block that the player is looking at
+     *
+     * @param source    The command sender
+     * @param args      The command arguments
+     * @param idx       The index in args[] where the x coordinate of the desired coordinate triple is expected to be
+     * @return Returna a List containing the coordinate to suggest
+     */
     public static List<String> getCoordinateSuggestions(CommandSource source, String[] args, int idx) {
         HitResult hit = null;
         if (source instanceof PlayerEntity) {
@@ -57,6 +74,7 @@ public abstract class TapestryAbstractCommand extends AbstractCommand {
     /**
      * Added so the compiler would stop crying
      */
+    @Override
     public int compareTo(Object object) {
         if(object instanceof Command) {
             return super.compareTo((Command)object);

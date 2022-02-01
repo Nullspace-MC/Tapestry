@@ -1,5 +1,9 @@
 package net.nullspace_mc.tapestry.command;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.text.LiteralText;
@@ -8,12 +12,8 @@ import net.nullspace_mc.tapestry.counter.CounterRegistry;
 import net.nullspace_mc.tapestry.settings.Settings;
 import net.nullspace_mc.tapestry.util.MathUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 public class CounterCommand extends TapestryAbstractCommand {
+
     @Override
     public String getName() {
         return "counter";

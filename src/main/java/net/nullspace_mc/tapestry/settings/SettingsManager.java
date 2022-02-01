@@ -21,6 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class SettingsManager {
+
     public static boolean locked = false;
 
     public static final Logger LOGGER = LogManager.getLogger();
@@ -28,9 +29,9 @@ public class SettingsManager {
     public static final HashMap<String, ParsedRule> rules = new HashMap<String, ParsedRule>();
 
     public static void parseRules() {
-        for(Field f : Settings.class.getDeclaredFields()) {
+        for (Field f : Settings.class.getDeclaredFields()) {
             Rule r = f.getAnnotation(Rule.class);
-            if(r == null) continue;
+            if (r == null) continue;
             ParsedRule pr = new ParsedRule(r, f);
             rules.put(pr.name.toLowerCase(), pr);
         }
@@ -44,13 +45,13 @@ public class SettingsManager {
     public static String getRule(String ruleName) {
         ParsedRule pr = rules.get(ruleName.toLowerCase());
 
-        if(pr == null) {
+        if (pr == null) {
             return "false";
         }
 
         try {
             return String.valueOf(pr.field.get(null));
-        } catch(ReflectiveOperationException e) {
+        } catch (ReflectiveOperationException e) {
             throw new AssertionError(e);
         }
     }
@@ -66,8 +67,8 @@ public class SettingsManager {
     public static String[] findNonDefault() {
         List<String> nonDefault = new LinkedList<String>();
 
-        for(ParsedRule rule : rules.values()) {
-            if(!rule.getValueString().equalsIgnoreCase(rule.def)) {
+        for (ParsedRule rule : rules.values()) {
+            if (!rule.getValueString().equalsIgnoreCase(rule.def)) {
                 nonDefault.add(rule.name);
             }
         }
@@ -80,14 +81,14 @@ public class SettingsManager {
         String actualFilter = filter == null ? null : filter.toLowerCase();
         List<String> filtered = new LinkedList<String>();
 
-        for(Map.Entry<String, ParsedRule> rule : rules.entrySet()) {
-            if(actualFilter == null || rule.getKey().contains(actualFilter)) {
+        for (Map.Entry<String, ParsedRule> rule : rules.entrySet()) {
+            if (actualFilter == null || rule.getKey().contains(actualFilter)) {
                 filtered.add(rule.getValue().name);
                 continue;
             }
 
-            for(RuleCategory ctgy : rule.getValue().category) {
-                if(ctgy.name().equalsIgnoreCase(actualFilter)) {
+            for (RuleCategory ctgy : rule.getValue().category) {
+                if (ctgy.name().equalsIgnoreCase(actualFilter)) {
                     filtered.add(rule.getValue().name);
                     break;
                 }
@@ -98,7 +99,7 @@ public class SettingsManager {
     }
 
     public static void resetToVanilla() {
-        for(ParsedRule rule : rules.values()) {
+        for (ParsedRule rule : rules.values()) {
             rule.setValue(rule.def);
         }
     }
@@ -110,8 +111,8 @@ public class SettingsManager {
 
     public static void resetToSurvival() {
         resetToVanilla();
-        for(ParsedRule rule : rules.values()) {
-            if(rule.field.isAnnotationPresent(RuleDefaults.Survival.class)) {
+        for (ParsedRule rule : rules.values()) {
+            if (rule.field.isAnnotationPresent(RuleDefaults.Survival.class)) {
                 rule.setValue(rule.field.getAnnotation(RuleDefaults.Survival.class).value());
             }
         }
@@ -119,8 +120,8 @@ public class SettingsManager {
 
     public static void resetToCreative() {
         resetToVanilla();
-        for(ParsedRule rule : rules.values()) {
-            if(rule.field.isAnnotationPresent(RuleDefaults.Creative.class)) {
+        for (ParsedRule rule : rules.values()) {
+            if (rule.field.isAnnotationPresent(RuleDefaults.Creative.class)) {
                 rule.setValue(rule.field.getAnnotation(RuleDefaults.Creative.class).value());
             }
         }
@@ -128,8 +129,8 @@ public class SettingsManager {
 
     public static void resetToBugFix() {
         resetToVanilla();
-        for(ParsedRule rule : rules.values()) {
-            if(rule.field.isAnnotationPresent(RuleDefaults.BugFix.class)) {
+        for (ParsedRule rule : rules.values()) {
+            if (rule.field.isAnnotationPresent(RuleDefaults.BugFix.class)) {
                 rule.setValue(rule.field.getAnnotation(RuleDefaults.BugFix.class).value());
             }
         }
@@ -140,16 +141,14 @@ public class SettingsManager {
         boolean is_locked = locked;
         locked = false;
 
-        if(is_locked) {
+        if (is_locked) {
             LOGGER.info("Tapestry is locked by the administrator");
         }
 
-        for(Map.Entry<String, String> entry : conf.entrySet()) {
-            if(!rules.get(entry.getKey().toLowerCase()).setValue(entry.getValue())) {
+        for (Map.Entry<String, String> entry : conf.entrySet()) {
+            if (!rules.get(entry.getKey().toLowerCase()).setValue(entry.getValue())) {
                 LOGGER.error("The value of " + entry.getValue() + " for " + entry.getKey() + " is not valid - ignoring...");
-            }
-            else
-            {
+            } else {
                 LOGGER.info("Loaded rule " + entry.getKey() + " as " + entry.getValue() + " from tapestry.conf");
             }
         }
@@ -164,17 +163,17 @@ public class SettingsManager {
             String line = "";
             Map<String, String> result = new HashMap<String, String>();
 
-            while((line = b.readLine()) != null) {
+            while ((line = b.readLine()) != null) {
                 line = line.replaceAll("\\r|\\n", "");
 
-                if("locked".equalsIgnoreCase(line)) {
+                if ("locked".equalsIgnoreCase(line)) {
                     locked = true;
                 }
 
                 String[] fields = line.split("\\s+", 2);
 
-                if(fields.length > 1) {
-                    if(!hasRule(fields[0])) {
+                if (fields.length > 1) {
+                    if (!hasRule(fields[0])) {
                         LOGGER.error("Rule " + fields[0] + " is not valid - ignoring...");
                         continue;
                     }
@@ -185,9 +184,9 @@ public class SettingsManager {
 
             b.close();
             return result;
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             return new HashMap<String, String>();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return new HashMap<String, String>();
         }
@@ -202,23 +201,23 @@ public class SettingsManager {
             File rules_file = MinecraftServer.getServer().getFile("tapestry.conf");
             FileWriter fw = new FileWriter(rules_file);
 
-            for(String key : values.keySet()) {
+            for (String key : values.keySet()) {
                 fw.write(key + " " + values.get(key) + "\n");
             }
 
             fw.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             LOGGER.error("Failed to write tapestry.conf");
         }
     }
 
     public static boolean addOrSetOverride(String ruleName, String ruleValue) {
-        if(locked) {
+        if (locked) {
             return false;
         }
 
-        if(hasRule(ruleName)) {
+        if (hasRule(ruleName)) {
             Map<String, String> conf = readConf();
             conf.put(ruleName, ruleValue);
             writeConf(conf);
@@ -229,11 +228,11 @@ public class SettingsManager {
     }
 
     public static boolean removeOverride(String ruleName) {
-        if(locked) {
+        if (locked) {
             return false;
         }
 
-        if(hasRule(ruleName)) {
+        if (hasRule(ruleName)) {
             Map<String, String> conf = readConf();
             conf.remove(ruleName);
             writeConf(conf);
@@ -246,14 +245,14 @@ public class SettingsManager {
     public static String[] findStartupOverrides() {
         List<String> res = new LinkedList<String>();
 
-        if(locked) {
+        if (locked) {
             return new String[0];
         }
 
         Map <String, String> def = readConf();
 
-        for(String rule : def.keySet()) {
-            if(hasRule(rule)) {
+        for (String rule : def.keySet()) {
+            if (hasRule(rule)) {
                 res.add(rule);
             }
         }

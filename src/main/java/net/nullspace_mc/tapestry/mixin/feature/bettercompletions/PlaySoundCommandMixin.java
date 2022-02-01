@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(PlaySoundCommand.class)
 public abstract class PlaySoundCommandMixin extends AbstractCommand {
+
     public List getSuggestions(CommandSource source, String[] args) {
         if (Settings.betterCompletions) {
             if (args.length == 2) {

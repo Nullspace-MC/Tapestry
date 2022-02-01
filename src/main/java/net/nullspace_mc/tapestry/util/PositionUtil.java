@@ -4,7 +4,6 @@ import net.minecraft.util.math.Direction;
 
 public class PositionUtil {
 
-
     /**
      * Offset the position given through x, y and z parameters, by 1 blocks in the desired direction
      *

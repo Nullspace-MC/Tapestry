@@ -14,6 +14,7 @@ import net.minecraft.village.VillageState;
 import org.apache.commons.io.Charsets;
 
 public class KaboVillageMarker {
+
     private static HashMap<String, ServerPlayerEntity> players = new HashMap<String, ServerPlayerEntity>();
     private static int id = 0;
     private boolean shouldUpdateClients = false;
@@ -43,24 +44,24 @@ public class KaboVillageMarker {
         String dim = this.dataString.split(":")[0];
 
         int numSubstrings = (int)Math.ceil((double)this.dataString.length() / 10000.0D);
-        for(int i = 0; i < numSubstrings; ++i) {
+        for (int i = 0; i < numSubstrings; ++i) {
                 dataStringList.add(id + "<" + dim + ":" + (i+1) + ":" + numSubstrings + ">" + this.dataString.substring(10000*i, Math.min(10000*(i+1), this.dataString.length())));
         }
 
-        for(String data : dataStringList) {
+        for (String data : dataStringList) {
             try {
                 CustomPayloadS2CPacket packet = new CustomPayloadS2CPacket("KVM|Data", data.getBytes(Charsets.UTF_8));
 
-                for(String playerName : this.players.keySet()) {
+                for (String playerName : this.players.keySet()) {
                     ServerPlayerEntity player = this.players.get(playerName);
 
-                    if(player != null && packet != null) {
+                    if (player != null && packet != null) {
                         player.networkHandler.sendPacket(packet);
-                    } else if(player == null) {
+                    } else if (player == null) {
                         players.remove(playerName);
                     }
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -74,16 +75,16 @@ public class KaboVillageMarker {
         List villages = villageState.getVillages();
         data = data + this.dimension + ":";
 
-        for(Iterator i = villages.iterator(); i.hasNext();) {
+        for (Iterator i = villages.iterator(); i.hasNext();) {
             Object villageObj = i.next();
-            if(villageObj instanceof Village) {
+            if (villageObj instanceof Village) {
                 Village village = (Village)villageObj;
                 data = data + village.getRadius() + ";" + village.getMinPos().x + "," + village.getMinPos().y + "," + village.getMinPos().z + ";";
                 List doors = village.getDoors();
 
-                for(Iterator j = doors.iterator(); j.hasNext();) {
+                for (Iterator j = doors.iterator(); j.hasNext();) {
                     Object doorObj  = j.next();
-                    if(doorObj instanceof VillageDoor) {
+                    if (doorObj instanceof VillageDoor) {
                         VillageDoor door = (VillageDoor)doorObj;
                         data = data + door.posX + "," + door.posY + "," + door.posZ + ";";
                     }

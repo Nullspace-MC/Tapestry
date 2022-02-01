@@ -24,18 +24,23 @@ import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
 public class CloneCommand extends TapestryAbstractCommand {
+
+    @Override
     public String getName() {
         return "clone";
     }
 
+    @Override
     public int getPermissionLevel() {
         return Settings.commandClone ? 2 : 5;
     }
 
+    @Override
     public String getUsageTranslationKey(CommandSource source) {
         return "/clone <x1> <y1> <z1> <x2> <y2> <z2> <x> <y> <z> [maskMode] [cloneMode]";
     }
 
+    @Override
     public void execute(CommandSource source, String[] args) {
         if (args.length < 9) {
             throw new IncorrectUsageException(getUsageTranslationKey(source), new Object[0]);
@@ -211,6 +216,7 @@ public class CloneCommand extends TapestryAbstractCommand {
         }
     }
 
+    @Override
     public List getSuggestions(CommandSource source, String[] args) {
         if (!Settings.commandClone) return Collections.emptyList();
         if (args.length > 0 && args.length <= 3) {

@@ -12,6 +12,7 @@ package net.nullspace_mc.tapestry.settings;
  * The initial value of the field will be the default value of the rule
  */
 public class Settings {
+
     @Rule(
             desc = "Allows player to always eat cake",
             category = RuleCategory.CREATIVE

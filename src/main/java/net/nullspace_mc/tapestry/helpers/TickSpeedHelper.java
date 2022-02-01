@@ -5,6 +5,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.server.MinecraftServer;
 
 public class TickSpeedHelper {
+
     public static double tickRate = 20D;
     public static long mspt = 50L;
 

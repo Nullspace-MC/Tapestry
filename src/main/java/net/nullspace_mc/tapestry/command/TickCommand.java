@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TickCommand extends TapestryAbstractCommand {
+
     @Override
     public String getName() {
         return "tick";

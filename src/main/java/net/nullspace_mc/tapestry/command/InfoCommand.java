@@ -1,5 +1,9 @@
 package net.nullspace_mc.tapestry.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,12 +20,8 @@ import net.nullspace_mc.tapestry.mixin.core.BlockEntityMixin;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class InfoCommand extends TapestryAbstractCommand {
+
     @Override
     public String getName() {
         return "info";

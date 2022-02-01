@@ -1,5 +1,6 @@
 package net.nullspace_mc.tapestry.mixin.feature.repeatingcommandblock;
 
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
@@ -13,15 +14,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Random;
-
 @Mixin(CommandBlock.class)
 public abstract class CommandBlockMixin extends BlockWithEntity {
+
     protected CommandBlockMixin(Material material) {
         super(material);
     }
 
-    @Shadow public abstract int getTickRate(World world);
+    @Shadow
+    public abstract int getTickRate(World world);
 
     @Inject(
             method = "scheduledTick",

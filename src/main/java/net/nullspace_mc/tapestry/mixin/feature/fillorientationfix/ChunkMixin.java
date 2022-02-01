@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Chunk.class)
 public abstract class ChunkMixin {
+
     @Inject(
             method = "setBlockWithMetadata",
             at = @At("RETURN")

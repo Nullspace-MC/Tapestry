@@ -9,7 +9,15 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin {
-    @Redirect(method = "onPlayerMove", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/entity/ServerPlayerEntity;isSleeping()Z", ordinal = 3))
+
+    @Redirect(
+            method = "onPlayerMove",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/server/entity/ServerPlayerEntity;isSleeping()Z",
+                    ordinal = 3
+            )
+    )
     private boolean addCreativeNoClipCheck(ServerPlayerEntity player) {
         return player.isSleeping() || (Settings.creativeNoClip && player.abilities.creativeMode);
     }

@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin extends World implements ServerWorldHelper {
+
     @Shadow
     private TreeSet scheduledTicksInOrder;
 

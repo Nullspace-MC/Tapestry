@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(SpreadPlayersCommand.class)
 public abstract class SpreadPlayersCommandMixin extends AbstractCommand {
+
     public List getSuggestions(CommandSource source, String[] args) {
         if (Settings.betterCompletions) {
             if (args.length == 1) {

@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(RedstoneDiodeBlock.class)
 public class RedstoneDiodeBlockMixin {
+
     @Redirect(
             method = "update",
             at = @At(

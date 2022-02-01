@@ -1,13 +1,14 @@
 package net.nullspace_mc.tapestry.counter;
 
-import net.minecraft.item.DyeItem;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import net.minecraft.item.DyeItem;
 
 public class CounterRegistry {
+
     private static final Map<String /* Counter color */, Counter> counters = new HashMap<>();
+
     public static Counter getCounter(String counterColor) {
         return counters.get(counterColor);
     }

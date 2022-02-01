@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ChestBlock.class)
 public abstract class ChestBlockMixin extends BlockWithEntity {
+
     protected ChestBlockMixin(Material material) {
         super(material);
     }

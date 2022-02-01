@@ -17,14 +17,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(CommandManager.class)
 public abstract class CommandManagerMixin extends CommandRegistry {
 
-    @Inject(method = "<init>", at = @At("TAIL"))
+    @Inject(
+            method = "<init>",
+            at = @At("TAIL")
+    )
     private void registerCommands(CallbackInfo ci) {
         this.registerCommand(new CloneCommand());
-        this.registerCommand(new FillCommand());
-        this.registerCommand(new TapCommand());
-        this.registerCommand(new LogCommand());
         this.registerCommand(new CounterCommand());
-        this.registerCommand(new TickCommand());
+        this.registerCommand(new FillCommand());
         this.registerCommand(new InfoCommand());
+        this.registerCommand(new LogCommand());
+        this.registerCommand(new TapCommand());
+        this.registerCommand(new TickCommand());
     }
 }

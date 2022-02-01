@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(CakeBlock.class)
 public class CakeBlockMixin {
+
     @Redirect(
             method = "tryEatCake",
             at = @At(

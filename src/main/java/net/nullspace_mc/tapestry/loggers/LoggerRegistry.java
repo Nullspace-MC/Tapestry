@@ -15,8 +15,8 @@ import net.nullspace_mc.tapestry.settings.Settings;
 import net.nullspace_mc.tapestry.util.MathUtil;
 
 public class LoggerRegistry {
-    private static final Map<String /* Logger name */, Logger /* Logger */> loggerRegistry = new HashMap<>();
 
+    private static final Map<String /* Logger name */, Logger /* Logger */> loggerRegistry = new HashMap<>();
 
     /**
      * Registers all loggers.

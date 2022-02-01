@@ -1,5 +1,8 @@
 package net.nullspace_mc.tapestry.command;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.entity.player.PlayerEntity;
@@ -7,11 +10,8 @@ import net.nullspace_mc.tapestry.loggers.Logger;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
 import net.nullspace_mc.tapestry.settings.Settings;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class LogCommand extends TapestryAbstractCommand {
+
     @Override
     public String getName() {
         return "log";

@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBlockEntityMixin extends BlockEntity {
 
-
-    @Shadow private ItemStack[] inventory;
+    @Shadow
+    private ItemStack[] inventory;
 
     @Inject(
             method = "tick",
