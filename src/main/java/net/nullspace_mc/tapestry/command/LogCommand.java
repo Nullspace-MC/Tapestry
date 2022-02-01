@@ -39,11 +39,11 @@ public class LogCommand extends TapestryAbstractCommand {
         switch (args.length) {
             case 1:
                 if (logger.getIsChannelRequired()) throw new IncorrectUsageException(String.format("The logger %s requires a channel.", args[0]));
-                logger.onLogCommand(source.getName().asString());
+                logger.onLogCommand(source.getName().getString());
                 break;
             case 2:
                 if (!logger.getAvailableChannels().contains(args[1])) throw new IncorrectUsageException(String.format("The channel %s doesn't exist for the logger %s.", args[0], args[1]));
-                logger.onLogCommand(source.getName().asString(), args[1]);
+                logger.onLogCommand(source.getName().getString(), args[1]);
                 break;
             default:
                 throw new IncorrectUsageException(getUsageTranslationKey(source));

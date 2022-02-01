@@ -48,11 +48,11 @@ public class LoggerRegistry {
         Iterator<Text> ite = array.iterator();
         Text textToAppend = ite.next();
         while (true) {
-            boolean isTextEmpty = textToAppend.asString().isEmpty();
+            boolean isTextEmpty = textToAppend.getString().isEmpty();
             if (!isTextEmpty) text.append(textToAppend);
             if (ite.hasNext()) {
                 textToAppend = ite.next();
-                if (!isTextEmpty && !textToAppend.asString().isEmpty()) text.append("\n");
+                if (!isTextEmpty && !textToAppend.getString().isEmpty()) text.append("\n");
             } else break;
         }
     }
@@ -69,14 +69,14 @@ public class LoggerRegistry {
 
             // Concatenate all information and send to the client
             appendArrayListOfText(info, hudUpdate);
-            if (info.asString().isEmpty() && info.getSiblings().stream().allMatch(sibling -> ((Text)sibling).asString().isEmpty())) // If the content of info is empty, no need to send anything to the client
+            if (info.getString().isEmpty() && info.getSiblings().stream().allMatch(sibling -> ((Text)sibling).getString().isEmpty())) // If the content of info is empty, no need to send anything to the client
                 return;
             player.networkHandler.sendPacket(new GameMessageS2CPacket(info));
         }
     }
 
     private static Text tickTpsHud(MinecraftServer server, ServerPlayerEntity player) {
-        if (!getLoggerFromName("tps").isPlayerSubscribed(player.getName().asString())) return new LiteralText("");
+        if (!getLoggerFromName("tps").isPlayerSubscribed(player.getName().getString())) return new LiteralText("");
         double mspt = MathUtil.round(2, MathHelper.average(server.serverTickTimes) * 1.0E-6D);
         double tps = MathUtil.round(2, 1000 / mspt);
         if (tps > 20) tps = 20;

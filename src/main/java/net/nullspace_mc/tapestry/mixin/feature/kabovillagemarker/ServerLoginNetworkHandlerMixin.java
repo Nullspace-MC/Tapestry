@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class ServerLoginNetworkHandlerMixin {
 
     @Redirect(
-            method = "method_11359",
+            method = "setUuid",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/server/PlayerManager;onPlayerConnect(Lnet/minecraft/network/ClientConnection;Lnet/minecraft/server/entity/ServerPlayerEntity;)V"

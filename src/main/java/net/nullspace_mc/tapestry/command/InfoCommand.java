@@ -69,11 +69,11 @@ public class InfoCommand extends TapestryAbstractCommand {
             if (implementsInventory(blockEntity.getClass())) {
                 Inventory inv = (Inventory) blockEntity;
                 StringBuilder bobTheBuilder = new StringBuilder("Inventory > ");
-                for (int i = 1; i < inv.getInvSize() + 1; i++) {
-                    ItemStack item = inv.getInvStack(i - 1);
+                for (int i = 1; i < inv.getSize() + 1; i++) {
+                    ItemStack item = inv.getStack(i - 1);
                     if (item != null)   {
                         bobTheBuilder.append(String.format("[slot %d: %s, count: %d]", i, item.getName(), item.count));
-                        if (i != inv.getInvSize()) bobTheBuilder.append(", ");
+                        if (i != inv.getSize()) bobTheBuilder.append(", ");
                     }
                 }
                 if (bobTheBuilder.toString().equals("Inventory > ")) bobTheBuilder.append("The inventory is empty");

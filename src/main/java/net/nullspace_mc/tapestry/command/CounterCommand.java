@@ -71,7 +71,7 @@ public class CounterCommand extends TapestryAbstractCommand {
             suggestions.addAll(CounterRegistry.getCounterColors());
             suggestions.add("all");
         } else if (args.length == 2) suggestions.add("reset");
-        suggestions.removeIf(suggestion -> !suggestion.startsWith(prefix));
+        suggestions.removeIf(suggestion -> !suggestion.toLowerCase().startsWith(prefix));
         return suggestions;
     }
 
