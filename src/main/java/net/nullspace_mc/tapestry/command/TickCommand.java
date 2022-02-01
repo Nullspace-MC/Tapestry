@@ -50,7 +50,7 @@ public class TickCommand extends TapestryAbstractCommand {
         if (!Settings.commandTick) return Collections.emptyList();
         if (args.length > 2) return new ArrayList<>();
         List<String> suggestions = new ArrayList<>();
-        String prefix = args[args.length - 1];
+        String prefix = args[args.length - 1].toLowerCase();
         if (args.length == 1) suggestions.addAll(Arrays.asList("rate", "warp"));
         else if (args[0].equals("rate")) suggestions.addAll(Arrays.asList("20", "10", "40"));
         else if (args[0].equals("warp")) suggestions.addAll(Arrays.asList("3600", "72000", "stop"));
