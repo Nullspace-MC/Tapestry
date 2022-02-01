@@ -5,9 +5,11 @@ import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.text.LiteralText;
 import net.nullspace_mc.tapestry.counter.Counter;
 import net.nullspace_mc.tapestry.counter.CounterRegistry;
+import net.nullspace_mc.tapestry.settings.Settings;
 import net.nullspace_mc.tapestry.util.MathUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +17,11 @@ public class CounterCommand extends TapestryAbstractCommand {
     @Override
     public String getName() {
         return "counter";
+    }
+
+    @Override
+    public int getPermissionLevel() {
+        return Settings.commandCounter ? 2 : 5;
     }
 
     @Override
@@ -57,6 +64,7 @@ public class CounterCommand extends TapestryAbstractCommand {
 
     @Override
     public List<String> getSuggestions(CommandSource source, String[] args) {
+        if (!Settings.commandCounter) return Collections.emptyList();
         String prefix = args[args.length - 1].toLowerCase();
         List<String> suggestions = new ArrayList<>();
         if (args.length == 1) {

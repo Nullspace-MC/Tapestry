@@ -1,6 +1,7 @@
 package net.nullspace_mc.tapestry.command;
 
 import com.google.common.collect.Lists;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.minecraft.block.Block;
@@ -28,7 +29,7 @@ public class FillCommand extends TapestryAbstractCommand {
     }
 
     public int getPermissionLevel() {
-        return 2;
+        return Settings.commandFill ? 2 : 5;
     }
 
     public String getUsageTranslationKey(CommandSource source) {
@@ -176,6 +177,7 @@ public class FillCommand extends TapestryAbstractCommand {
     }
 
     public List getSuggestions(CommandSource source, String[] args) {
+        if (!Settings.commandFill) return Collections.emptyList();
         if (args.length > 0 && args.length <= 3) {
             return getCoordinateSuggestions(source, args, 0);
         } else if (args.length > 3 && args.length <= 6) {

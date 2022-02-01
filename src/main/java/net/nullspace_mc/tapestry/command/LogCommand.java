@@ -5,8 +5,10 @@ import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.entity.player.PlayerEntity;
 import net.nullspace_mc.tapestry.loggers.Logger;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
+import net.nullspace_mc.tapestry.settings.Settings;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LogCommand extends TapestryAbstractCommand {
@@ -22,7 +24,7 @@ public class LogCommand extends TapestryAbstractCommand {
 
     @Override
     public int getPermissionLevel() {
-        return 0;
+        return Settings.commandLog ? 0 : 5;
     }
 
     @Override
@@ -51,6 +53,7 @@ public class LogCommand extends TapestryAbstractCommand {
 
     @Override
     public List getSuggestions(CommandSource source, String[] args) {
+        if (!Settings.commandLog) return Collections.emptyList();
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(LoggerRegistry.getAllLoggersName());

@@ -1,6 +1,7 @@
 package net.nullspace_mc.tapestry.command;
 
 import com.google.common.collect.Lists;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CloneCommand extends TapestryAbstractCommand {
     }
 
     public int getPermissionLevel() {
-        return 2;
+        return Settings.commandClone ? 2 : 5;
     }
 
     public String getUsageTranslationKey(CommandSource source) {
@@ -211,6 +212,7 @@ public class CloneCommand extends TapestryAbstractCommand {
     }
 
     public List getSuggestions(CommandSource source, String[] args) {
+        if (!Settings.commandClone) return Collections.emptyList();
         if (args.length > 0 && args.length <= 3) {
             return getCoordinateSuggestions(source, args, 0);
         } else if (args.length > 3 && args.length <= 6) {

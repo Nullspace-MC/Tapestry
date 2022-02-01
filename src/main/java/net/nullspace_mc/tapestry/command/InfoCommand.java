@@ -28,13 +28,17 @@ public class InfoCommand extends TapestryAbstractCommand {
     }
 
     @Override
+    public int getPermissionLevel() {
+        return Settings.commandInfo ? 2 : 5;
+    }
+
+    @Override
     public String getUsageTranslationKey(CommandSource source) {
         return "/info <type> <target>";
     }
 
     @Override
     public void execute(CommandSource source, String[] args) {
-        if (!Settings.infoCommand) throw new NotFoundException();
         if (args[0].equals("block")) {
             if (args.length != 4) throw new IncorrectUsageException(getUsageTranslationKey(source));
             sendBlockInfo(source, args);
@@ -45,7 +49,7 @@ public class InfoCommand extends TapestryAbstractCommand {
 
     @Override
     public List getSuggestions(CommandSource source, String[] args) {
-        if (!Settings.infoCommand) return Collections.emptyList();
+        if (!Settings.commandInfo) return Collections.emptyList();
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(Arrays.asList("block"));
