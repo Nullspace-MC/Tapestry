@@ -102,6 +102,12 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`placeFilledCauldron`
+* Enables placing already filled cauldrons
+* Placing a cauldron named with a number will cause it to get that number as fill level
+* Type: `boolean`
+* Default: `false`
+
 ### Commands
 | Command Name | Description                      |
 | ------------ | -------------------------------- |

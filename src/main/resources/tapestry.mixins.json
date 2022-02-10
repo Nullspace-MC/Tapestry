@@ -37,6 +37,7 @@
     "feature.kabovillagemarker.VillageMixin",
     "feature.kabovillagemarker.VillageStateMixin",
     "feature.liquiddamagedisabled.FlowingFluidBlockMixin",
+    "feature.placefilledcauldron.CauldronBlockMixin",
     "feature.randomredstonedust.RedstoneWireBlockMixin",
     "feature.repeaterhalfdelay.RedstoneDiodeBlockMixin",
     "feature.repeatingcommandblock.CommandBlockMixin",
