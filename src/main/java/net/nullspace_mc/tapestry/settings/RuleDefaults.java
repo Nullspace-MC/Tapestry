@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
  * Annotations to denote which default configurations a rule falls into
  */
 interface RuleDefaults {
+
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
     static @interface Survival {

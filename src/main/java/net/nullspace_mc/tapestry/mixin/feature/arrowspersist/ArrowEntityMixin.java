@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ArrowEntity.class)
 public abstract class ArrowEntityMixin extends Entity {
+
     @Shadow
     private boolean inGround;
 
@@ -27,7 +28,7 @@ public abstract class ArrowEntityMixin extends Entity {
      */
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/ArrowEntity;remove()V"))
     private void conditionalRemove(ArrowEntity a) {
-        if(!this.inGround || (this.lifeTicks == 1200 && !Settings.arrowsPersist)) {
+        if (!this.inGround || (this.lifeTicks == 1200 && !Settings.arrowsPersist)) {
             this.remove();
         }
     }

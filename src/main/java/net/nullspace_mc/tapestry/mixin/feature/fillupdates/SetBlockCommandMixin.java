@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(SetBlockCommand.class)
 public abstract class SetBlockCommandMixin extends AbstractCommand {
+
     @Redirect(
             method = "execute",
             at = @At(

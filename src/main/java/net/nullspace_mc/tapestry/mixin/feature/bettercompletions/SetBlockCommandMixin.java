@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SetBlockCommand.class)
 public abstract class SetBlockCommandMixin extends AbstractCommand {
+
     @Inject(
         method = "getSuggestions",
         at = @At("HEAD"),

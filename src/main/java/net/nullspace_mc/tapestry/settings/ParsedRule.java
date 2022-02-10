@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ParsedRule<T> {
+
     public final Field field;
     public final String name;
     public final String desc;
@@ -25,16 +26,16 @@ public class ParsedRule<T> {
 
         try {
             this.def = String.valueOf(f.get(null));
-        } catch(ReflectiveOperationException e) {
+        } catch (ReflectiveOperationException e) {
             throw new AssertionError(e);
         }
 
-        for(Class<? extends Validator> v : r.validator()) {
+        for (Class<? extends Validator> v : r.validator()) {
             try {
                 Constructor<? extends Validator> constructor = v.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 validators.add((Validator<T>)constructor.newInstance());
-            } catch(ReflectiveOperationException e) {
+            } catch (ReflectiveOperationException e) {
                 throw new AssertionError(e);
             }
         }
@@ -43,7 +44,7 @@ public class ParsedRule<T> {
     public String getValueString() {
         try {
             return String.valueOf(this.field.get(null));
-        } catch(ReflectiveOperationException e) {
+        } catch (ReflectiveOperationException e) {
             throw new AssertionError(e);
         }
     }
@@ -55,33 +56,33 @@ public class ParsedRule<T> {
             Object newValue;
 
             try {
-                if(fieldType == boolean.class) {
+                if (fieldType == boolean.class) {
                     newValue = new Boolean(value);
-                } else if(fieldType == int.class) {
+                } else if (fieldType == int.class) {
                     newValue = new Integer(value);
-                } else if(fieldType == long.class) {
+                } else if (fieldType == long.class) {
                     newValue = new Long(value);
-                } else if(fieldType == float.class) {
+                } else if (fieldType == float.class) {
                     newValue = new Float(value);
-                } else if(fieldType == double.class) {
+                } else if (fieldType == double.class) {
                     newValue = new Double(value);
-                } else if(fieldType == String.class) {
+                } else if (fieldType == String.class) {
                     newValue = value;
                 } else {
                     throw new AssertionError("Rule \"" + this.name + "\" has an invalid type");
                 }
-            } catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 return false;
             }
 
-            for(Validator<T> validator : validators) {
-                if(!validator.validate((T)newValue)) {
+            for (Validator<T> validator : validators) {
+                if (!validator.validate((T)newValue)) {
                     return false;
                 }
             }
 
             this.field.set(null, newValue);
-        } catch(ReflectiveOperationException e) {
+        } catch (ReflectiveOperationException e) {
             return false;
         }
         return true;

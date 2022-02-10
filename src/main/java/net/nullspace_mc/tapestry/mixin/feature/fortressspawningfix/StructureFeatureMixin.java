@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(StructureFeature.class)
 public abstract class StructureFeatureMixin extends Generatable {
+
     @Shadow
     private Map structureMap;
 
@@ -26,7 +27,11 @@ public abstract class StructureFeatureMixin extends Generatable {
      * Fixes the check for intersection with a structure bounding
      * box for the purpose of fortress mob nether brick spawning
      */
-    @Inject(method = "isValidPlacement", at = @At("HEAD"), cancellable = true)
+    @Inject(
+            method = "isValidPlacement",
+            at = @At("HEAD"),
+            cancellable = true
+    )
     private void fixBBCheck(final int x, final int y, final int z, final CallbackInfoReturnable<Boolean> cir) {
         if(Settings.fortressSpawningFix) {
             this.invokeCreateFeatureTags(this.world);

@@ -13,22 +13,32 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Village.class)
 public abstract class VillageMixin {
+
     @Shadow
     private World world;
 
     private boolean shouldUpdateKaboVillageMarker = false;
 
-    @Inject(method = "setTicks", at = @At("TAIL"))
+    @Inject(
+            method = "setTicks",
+            at = @At("TAIL")
+    )
     private void updateKVM(int ticks, CallbackInfo ci) {
-        if(this.shouldUpdateKaboVillageMarker && Settings.kaboVillageMarker) {
+        if (this.shouldUpdateKaboVillageMarker && Settings.kaboVillageMarker) {
             ((VillageMarkerAccessor)this.world).getVillageMarker().flagForUpdate();
             this.shouldUpdateKaboVillageMarker = false;
         }
     }
 
-    @Inject(method = "tickDoors", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/Village;updateRadius()V"))
+    @Inject(
+            method = "tickDoors",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/village/Village;updateRadius()V"
+            )
+    )
     private void scheduleKVMUpdate(CallbackInfo ci) {
-        if(Settings.kaboVillageMarker) {
+        if (Settings.kaboVillageMarker) {
             this.shouldUpdateKaboVillageMarker = true;
         }
     }

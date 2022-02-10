@@ -11,7 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin {
-    @Inject(method = "remove", at = @At("TAIL"))
+
+    @Inject(
+            method = "remove",
+            at = @At("TAIL")
+    )
     private void removeKVMPlayer(ServerPlayerEntity player, CallbackInfo ci) {
         KaboVillageMarker.removePlayerFromList(player.getUuid().toString());
     }

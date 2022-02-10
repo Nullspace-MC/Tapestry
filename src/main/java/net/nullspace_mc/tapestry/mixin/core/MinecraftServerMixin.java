@@ -10,12 +10,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin {
     
-    @Inject(method = "start", at = @At("HEAD"))
+    @Inject(
+            method = "start",
+            at = @At("HEAD")
+    )
     public void onStart(CallbackInfo ci) {
         Tapestry.onStart();
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(
+            method = "tick",
+            at = @At("HEAD")
+    )
     public void onTick(CallbackInfo ci) {
         Tapestry.onTick();
     }

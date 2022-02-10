@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SpawnPointCommand.class)
 public abstract class SpawnPointCommandMixin extends AbstractCommand {
+
     @Inject(
         method = "getSuggestions",
         at = @At("HEAD"),

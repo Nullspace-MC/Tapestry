@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Logger {
+
     private final String name;
     private final Set<String /* Name of the player */> playersSubscribed;
     private final Map<String /* Name of the player */, String /* Name of the channel */> channelSubscriptions;

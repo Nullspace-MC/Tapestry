@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBlockEntityMixin extends BlockEntity {
 
-
-    @Shadow private ItemStack[] inventory;
+    @Shadow
+    private ItemStack[] inventory;
 
     @Inject(
             method = "tick",
@@ -42,7 +42,7 @@ public abstract class HopperBlockEntityMixin extends BlockEntity {
     private String getCounterColor() {
         int[] pos = posFacing();
         int metadata = world.getBlockMetadata(pos[0], pos[1], pos[2]);
-        return DyeItem.colors[DyeItem.colors.length - metadata - 1];
+        return DyeItem.TRANSLATION_KEYS[DyeItem.TRANSLATION_KEYS.length - metadata - 1];
     }
 
     private boolean isHopperCounter() {

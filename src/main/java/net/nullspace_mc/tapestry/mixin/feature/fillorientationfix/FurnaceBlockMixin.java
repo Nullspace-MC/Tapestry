@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(FurnaceBlock.class)
 public abstract class FurnaceBlockMixin extends BlockWithEntity {
+
     protected FurnaceBlockMixin(Material material) {
         super(material);
     }

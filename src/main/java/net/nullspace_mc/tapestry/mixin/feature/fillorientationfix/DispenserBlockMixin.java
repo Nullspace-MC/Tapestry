@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(DispenserBlock.class)
 public abstract class DispenserBlockMixin extends BlockWithEntity {
+
     protected DispenserBlockMixin(Material material) {
         super(material);
     }

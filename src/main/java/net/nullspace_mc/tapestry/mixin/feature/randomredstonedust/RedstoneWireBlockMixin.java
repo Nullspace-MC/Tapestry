@@ -1,5 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.feature.randomredstonedust;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.texture.ISprite;
 import net.minecraft.world.World;
@@ -11,11 +13,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 @Mixin(RedstoneWireBlock.class)
 public class RedstoneWireBlockMixin {
+
     @Inject(
             method = "update",
             at = @At(

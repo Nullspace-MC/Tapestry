@@ -1,11 +1,11 @@
 package net.nullspace_mc.tapestry.counter;
 
-import net.minecraft.server.MinecraftServer;
-
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.server.MinecraftServer;
 
 public class Counter {
+
     private final Map<String /* Item name */, Integer /* Item count */> itemCounters = new HashMap<>();
     private int tickStart;
     private int totalCount;

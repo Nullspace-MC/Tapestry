@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(SetWorldSpawnCommand.class)
 public abstract class SetWorldSpawnCommandMixin extends AbstractCommand {
+
     public List getSuggestions(CommandSource source, String[] args) {
         if (Settings.betterCompletions) {
             return TapestryAbstractCommand.getCoordinateSuggestions(source, args, 0);

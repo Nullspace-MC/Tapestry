@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin extends World implements VillageMarkerAccessor {
+
     private final KaboVillageMarker villageMarker = new KaboVillageMarker((ServerWorld)((World)this));
 
     public KaboVillageMarker getVillageMarker() {
@@ -34,13 +35,16 @@ public abstract class ServerWorldMixin extends World implements VillageMarkerAcc
         super(saveHandler, levelName, levelInfo, dimension, profiler);
     }
 
-    @Inject(method = "tick", at = @At("TAIL"))
+    @Inject(
+            method = "tick",
+            at = @At("TAIL")
+    )
     private void updateKVM(CallbackInfo ci) {
-        if(this.getTime() % 400L == 0L && Settings.kaboVillageMarker) {
+        if (this.getTime() % 400L == 0L && Settings.kaboVillageMarker) {
             this.villageMarker.flagForUpdate();
         }
 
-        if(this.villageMarker.needsUpdate() && Settings.kaboVillageMarker) {
+        if (this.villageMarker.needsUpdate() && Settings.kaboVillageMarker) {
             this.villageMarker.updateClients();
         }
     }

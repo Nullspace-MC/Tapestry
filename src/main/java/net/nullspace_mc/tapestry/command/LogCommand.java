@@ -1,15 +1,17 @@
 package net.nullspace_mc.tapestry.command;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.entity.player.PlayerEntity;
 import net.nullspace_mc.tapestry.loggers.Logger;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.nullspace_mc.tapestry.settings.Settings;
 
 public class LogCommand extends TapestryAbstractCommand {
+
     @Override
     public String getName() {
         return "log";
@@ -22,7 +24,7 @@ public class LogCommand extends TapestryAbstractCommand {
 
     @Override
     public int getPermissionLevel() {
-        return 0;
+        return Settings.commandLog ? 0 : 5;
     }
 
     @Override
@@ -37,11 +39,11 @@ public class LogCommand extends TapestryAbstractCommand {
         switch (args.length) {
             case 1:
                 if (logger.getIsChannelRequired()) throw new IncorrectUsageException(String.format("The logger %s requires a channel.", args[0]));
-                logger.onLogCommand(source.getName().asString());
+                logger.onLogCommand(source.getName().getString());
                 break;
             case 2:
                 if (!logger.getAvailableChannels().contains(args[1])) throw new IncorrectUsageException(String.format("The channel %s doesn't exist for the logger %s.", args[0], args[1]));
-                logger.onLogCommand(source.getName().asString(), args[1]);
+                logger.onLogCommand(source.getName().getString(), args[1]);
                 break;
             default:
                 throw new IncorrectUsageException(getUsageTranslationKey(source));
@@ -51,6 +53,7 @@ public class LogCommand extends TapestryAbstractCommand {
 
     @Override
     public List getSuggestions(CommandSource source, String[] args) {
+        if (!Settings.commandLog) return Collections.emptyList();
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(LoggerRegistry.getAllLoggersName());

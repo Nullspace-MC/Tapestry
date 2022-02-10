@@ -1,5 +1,9 @@
 package net.nullspace_mc.tapestry.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,15 +20,16 @@ import net.nullspace_mc.tapestry.mixin.core.BlockEntityMixin;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class InfoCommand extends TapestryAbstractCommand {
+
     @Override
     public String getName() {
         return "info";
+    }
+
+    @Override
+    public int getPermissionLevel() {
+        return Settings.commandInfo ? 2 : 5;
     }
 
     @Override
@@ -34,7 +39,6 @@ public class InfoCommand extends TapestryAbstractCommand {
 
     @Override
     public void execute(CommandSource source, String[] args) {
-        if (!Settings.infoCommand) throw new NotFoundException();
         if (args[0].equals("block")) {
             if (args.length != 4) throw new IncorrectUsageException(getUsageTranslationKey(source));
             sendBlockInfo(source, args);
@@ -45,7 +49,7 @@ public class InfoCommand extends TapestryAbstractCommand {
 
     @Override
     public List getSuggestions(CommandSource source, String[] args) {
-        if (!Settings.infoCommand) return Collections.emptyList();
+        if (!Settings.commandInfo) return Collections.emptyList();
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(Arrays.asList("block"));
@@ -65,11 +69,11 @@ public class InfoCommand extends TapestryAbstractCommand {
             if (implementsInventory(blockEntity.getClass())) {
                 Inventory inv = (Inventory) blockEntity;
                 StringBuilder bobTheBuilder = new StringBuilder("Inventory > ");
-                for (int i = 1; i < inv.getInvSize() + 1; i++) {
-                    ItemStack item = inv.getInvStack(i - 1);
+                for (int i = 1; i < inv.getSize() + 1; i++) {
+                    ItemStack item = inv.getStack(i - 1);
                     if (item != null)   {
                         bobTheBuilder.append(String.format("[slot %d: %s, count: %d]", i, item.getName(), item.count));
-                        if (i != inv.getInvSize()) bobTheBuilder.append(", ");
+                        if (i != inv.getSize()) bobTheBuilder.append(", ");
                     }
                 }
                 if (bobTheBuilder.toString().equals("Inventory > ")) bobTheBuilder.append("The inventory is empty");

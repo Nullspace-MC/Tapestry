@@ -4,6 +4,17 @@ A Fabric-Carpet-like mod for old Minecraft versions
 
 ## Features
 
+### Commands
+| Command Name | Description                                    |
+| ------------ | ---------------------------------------------- |
+| `clone`      | Backport of `clone` from 1.8                   |
+| `counter`    | Controls hopper counters                       |
+| `fill`       | Backport of `fill` from 1.8                    |
+| `info`       | Provides information about blocks and entities |
+| `log`        | Subscribes the player to loggers               |
+| `tap`        | Used for configuring rules                     |
+| `tick`       | Controls tick rate/tick warp                   |
+
 ### Rules
 
 `alwaysEatCake`
@@ -26,6 +37,36 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * For superflat presets with 2 layers, the layers will be exchanged for the alternate-colored chunks
 * Type: `boolean`
 * Default: `false`
+
+`commandClone`
+* Enables the `clone` command
+* Type: `boolean`
+* Default: `true`
+
+`commandCounter`
+* Enables the `counter` command
+* Type: `boolean`
+* Default: `true`
+
+`commandFill`
+* Enables the `fill` command
+* Type: `boolean`
+* Default: `true`
+
+`commandInfo`
+* Enables the `info` command
+* Type: `boolean`
+* Default: `true`
+
+`commandLog`
+* Enables the `log` command
+* Type: `boolean`
+* Default: `true`
+
+`commandTick`
+* Enables the `tick` command
+* Type: `boolean`
+* Default: `true`
 
 `creativeNoClip`
 * Enables creative player noclip with a compatible client-side mod

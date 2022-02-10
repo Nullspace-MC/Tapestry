@@ -4,12 +4,15 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
+import net.nullspace_mc.tapestry.settings.Settings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class TickCommand extends TapestryAbstractCommand {
+
     @Override
     public String getName() {
         return "tick";
@@ -22,7 +25,7 @@ public class TickCommand extends TapestryAbstractCommand {
 
     @Override
     public int getPermissionLevel() {
-        return 2;
+        return Settings.commandTick ? 2 : 5;
     }
 
     @Override
@@ -44,9 +47,10 @@ public class TickCommand extends TapestryAbstractCommand {
 
     @Override
     public List<String> getSuggestions(CommandSource source, String[] args) {
+        if (!Settings.commandTick) return Collections.emptyList();
         if (args.length > 2) return new ArrayList<>();
         List<String> suggestions = new ArrayList<>();
-        String prefix = args[args.length - 1];
+        String prefix = args[args.length - 1].toLowerCase();
         if (args.length == 1) suggestions.addAll(Arrays.asList("rate", "warp"));
         else if (args[0].equals("rate")) suggestions.addAll(Arrays.asList("20", "10", "40"));
         else if (args[0].equals("warp")) suggestions.addAll(Arrays.asList("3600", "72000", "stop"));

@@ -14,30 +14,34 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin {
+
     @Shadow
     private MinecraftServer server;
 
-    @Inject(method = "onCustomPayload", at = @At("HEAD"))
+    @Inject(
+            method = "onCustomPayload",
+            at = @At("HEAD")
+    )
     private void processKVMAnswer(CustomPayloadC2SPacket packet, CallbackInfo ci) {
-        if("KVM|Answer".equals(packet.getChannel()) && Settings.kaboVillageMarker) {
+        if ("KVM|Answer".equals(packet.getChannel()) && Settings.kaboVillageMarker) {
             try {
                 String data = new String(packet.getData());
                 Object[] players = this.server.getPlayerManager().players.toArray();
                 int numPlayers = players.length;
 
-                for(int i = 0; i < numPlayers; ++i) {
+                for (int i = 0; i < numPlayers; ++i) {
                     Object playerObj = players[i];
                     ServerPlayerEntity player = null;
                     
-                    if(playerObj instanceof ServerPlayerEntity) {
+                    if (playerObj instanceof ServerPlayerEntity) {
                         player = (ServerPlayerEntity)playerObj;
                     }
 
-                    if(player != null && player.getUuid().toString().equals(data)) {
+                    if (player != null && player.getUuid().toString().equals(data)) {
                         KaboVillageMarker.addPlayerToList(data, player);
                     }
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

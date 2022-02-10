@@ -14,17 +14,24 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ServerLoginNetworkHandler.class)
 public abstract class ServerLoginNetworkHandlerMixin {
-    @Redirect(method = "method_11359", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;onPlayerConnect(Lnet/minecraft/network/ClientConnection;Lnet/minecraft/server/entity/ServerPlayerEntity;)V"))
+
+    @Redirect(
+            method = "setUuid",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/server/PlayerManager;onPlayerConnect(Lnet/minecraft/network/ClientConnection;Lnet/minecraft/server/entity/ServerPlayerEntity;)V"
+            )
+    )
     private void pollKVMPlayer(PlayerManager pm, ClientConnection connection, ServerPlayerEntity player) {
         pm.onPlayerConnect(connection, player);
 
-        if(Settings.kaboVillageMarker) {
+        if (Settings.kaboVillageMarker) {
             try {
                 CustomPayloadS2CPacket packet = new CustomPayloadS2CPacket("KVM|Poll", "".getBytes(Charsets.UTF_8));
-                if(player != null && packet != null) {
+                if (player != null && packet != null) {
                     player.networkHandler.sendPacket(packet);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
