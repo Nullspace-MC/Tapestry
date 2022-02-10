@@ -152,6 +152,12 @@ public class Settings {
     )
     public static boolean placeFilledCauldron = false;
 
+    @Rule(
+            desc = "Enables to fill cauldrons with water bottles",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean bottleFilLCauldron = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
