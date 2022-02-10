@@ -177,6 +177,19 @@ public class Settings {
     )
     public static boolean repeatingCommandBlock = false;
 
+    @Rule(
+            desc = "Enables info command",
+            category = RuleCategory.COMMAND
+    )
+    public static boolean infoCommand = true;
+
+    @Rule(
+            desc = "Enables placing already filled cauldrons",
+            extra = "Placing a cauldron named with a number will cause it to get that number as fill level",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean placeFilledCauldron = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
