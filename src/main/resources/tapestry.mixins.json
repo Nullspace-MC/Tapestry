@@ -17,6 +17,7 @@
     "feature.bettercompletions.SpreadPlayersCommandMixin",
     "feature.bettercompletions.SummonCommandMixin",
     "feature.bettercompletions.TestForBlockCommandMixin",
+    "feature.bottlefillcauldron.CauldronBlockMixin",
     "feature.chunkpattern.FlatChunkGeneratorMixin",
     "feature.clonecommand.ServerWorldMixin",
     "feature.creativenoclip.ServerPlayNetworkHandlerMixin",

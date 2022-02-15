@@ -149,6 +149,11 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`bottleFilLCauldron`
+* Enables to fill cauldrons with water bottles
+* Type: `boolean`
+* Default: `false`
+
 ### Commands
 | Command Name | Description                      |
 | ------------ | -------------------------------- |
