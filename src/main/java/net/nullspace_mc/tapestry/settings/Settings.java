@@ -17,6 +17,7 @@ public class Settings {
             desc = "Allows player to always eat cake",
             category = RuleCategory.CREATIVE
     )
+    @RuleDefaults.Creative
     public static boolean alwaysEatCake = false;
 
     @Rule(
@@ -31,6 +32,14 @@ public class Settings {
     )
     @RuleDefaults.Creative
     public static boolean betterCompletions = false;
+
+    @Rule(
+            desc = "Enables filling cauldrons with water bottles",
+            category = RuleCategory.CREATIVE
+    )
+    @RuleDefaults.Survival
+    @RuleDefaults.Creative
+    public static boolean bottleFillCauldron = false;
 
     @Rule(
             desc = "Generates superflat worlds with a chunk-aligned checkerboard pattern",
@@ -54,6 +63,7 @@ public class Settings {
 
     @Rule(
             desc = "Enables the fill command",
+            extra = "Recommended to also enable fillOrientationFix",
             category = RuleCategory.COMMAND
     )
     public static boolean commandFill = true;
@@ -158,6 +168,14 @@ public class Settings {
     public static int loggerRefreshRate = 20;
 
     @Rule(
+            desc = "Enables placing already filled cauldrons",
+            extra = "Placing a cauldron named with a number will cause it to get that number as fill level",
+            category = RuleCategory.CREATIVE
+    )
+    @RuleDefaults.Creative
+    public static boolean placeFilledCauldron = false;
+
+    @Rule(
             desc = "Makes redstone dust update order random",
             category = RuleCategory.CREATIVE
     )
@@ -176,25 +194,6 @@ public class Settings {
             category = RuleCategory.CREATIVE
     )
     public static boolean repeatingCommandBlock = false;
-
-    @Rule(
-            desc = "Enables info command",
-            category = RuleCategory.COMMAND
-    )
-    public static boolean infoCommand = true;
-
-    @Rule(
-            desc = "Enables placing already filled cauldrons",
-            extra = "Placing a cauldron named with a number will cause it to get that number as fill level",
-            category = RuleCategory.CREATIVE
-    )
-    public static boolean placeFilledCauldron = false;
-
-    @Rule(
-            desc = "Enables to fill cauldrons with water bottles",
-            category = RuleCategory.CREATIVE
-    )
-    public static boolean bottleFilLCauldron = false;
 
     static class PositiveValidator extends Validator<Integer> {
         @Override

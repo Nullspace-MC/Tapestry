@@ -27,7 +27,7 @@ public abstract class CauldronBlockMixin {
     )
     private void onUse(World world, int x, int y, int z, PlayerEntity player, int dir, float dx, float dy, float dz, CallbackInfoReturnable<Boolean> cir) {
         ItemStack stack = player.inventory.getMainHandStack();
-        if (Settings.bottleFilLCauldron && stack.getItem() == Items.POTION) {
+        if (Settings.bottleFillCauldron && stack.getItem() == Items.POTION && stack.getDamage() == 0) {
             int metadata = world.getBlockMetadata(x, y, z);
             if (metadata < 3) {
                 this.setLevel(world, x, y, z, ++metadata);

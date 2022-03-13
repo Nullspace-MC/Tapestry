@@ -32,6 +32,11 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `booelan`
 * Default: `false`
 
+`bottleFillCauldron`
+* Enables filling cauldrons with water bottles
+* Type: `boolean`
+* Default: `false`
+
 `chunkPattern`
 * Generates superflat worlds with a chunk-aligned checkerboard pattern
 * For superflat presets with 2 layers, the layers will be exchanged for the alternate-colored chunks
@@ -40,6 +45,7 @@ A Fabric-Carpet-like mod for old Minecraft versions
 
 `commandClone`
 * Enables the `clone` command
+* Recommended to also enable `fillOrientationFix`
 * Type: `boolean`
 * Default: `true`
 
@@ -50,6 +56,7 @@ A Fabric-Carpet-like mod for old Minecraft versions
 
 `commandFill`
 * Enables the `fill` command
+* Recommended to also enable `fillOrientationFix`
 * Type: `boolean`
 * Default: `true`
 
@@ -126,6 +133,12 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `int`
 * Default: `20`
 
+`placeFilledCauldron`
+* Enables placing already filled cauldrons
+* Placing a cauldron named with a number will cause it to get that number as fill level
+* Type: `boolean`
+* Default: `false`
+
 `randomRedstoneDust`
 * Makes redstone dust update order random
 * Type: `boolean`
@@ -142,26 +155,6 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * A command block will run every tick if it is on top of a diamond ore block
 * Type: `boolean`
 * Default: `false`
-
-`placeFilledCauldron`
-* Enables placing already filled cauldrons
-* Placing a cauldron named with a number will cause it to get that number as fill level
-* Type: `boolean`
-* Default: `false`
-
-`bottleFilLCauldron`
-* Enables to fill cauldrons with water bottles
-* Type: `boolean`
-* Default: `false`
-
-### Commands
-| Command Name | Description                      |
-| ------------ | -------------------------------- |
-| `counter`    | Controls hopper counters         |
-| `fill`       | Backport of `fill` from 1.8      |
-| `log`        | Subscribes the player to loggers |
-| `tap`        | Used for configuring rules       |
-| `tick`       | Controls tick rate/tick warp     |
 
 ## License
 
