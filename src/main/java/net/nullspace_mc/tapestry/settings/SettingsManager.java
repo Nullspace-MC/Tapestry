@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;
@@ -26,7 +26,7 @@ public class SettingsManager {
 
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public static final HashMap<String, ParsedRule> rules = new HashMap<String, ParsedRule>();
+    public static final TreeMap<String, ParsedRule> rules = new TreeMap<String, ParsedRule>();
 
     public static void parseRules() {
         for (Field f : Settings.class.getDeclaredFields()) {
@@ -161,7 +161,7 @@ public class SettingsManager {
             File rules_file = MinecraftServer.getServer().getFile("tapestry.conf");
             BufferedReader b = new BufferedReader(new FileReader(rules_file));
             String line = "";
-            Map<String, String> result = new HashMap<String, String>();
+            Map<String, String> result = new TreeMap<String, String>();
 
             while ((line = b.readLine()) != null) {
                 line = line.replaceAll("\\r|\\n", "");
@@ -185,10 +185,10 @@ public class SettingsManager {
             b.close();
             return result;
         } catch (FileNotFoundException e) {
-            return new HashMap<String, String>();
+            return new TreeMap<String, String>();
         } catch (IOException e) {
             e.printStackTrace();
-            return new HashMap<String, String>();
+            return new TreeMap<String, String>();
         }
     }
 
