@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.nullspace_mc.tapestry.mixin.core.BlockEntityMixin;
+import net.nullspace_mc.tapestry.mixin.feature.infocommand.BlockEntityMixin;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -65,7 +65,7 @@ public class InfoCommand extends TapestryAbstractCommand {
         source.sendMessage(new LiteralText(String.format("Block > %s : %d", block.getTranslatedName(), world.getBlockMetadata(pos.x, pos.y, pos.z))));
         if (block instanceof BlockWithEntity) {
             BlockEntity blockEntity = world.getBlockEntity(pos.x, pos.y, pos.z);
-            source.sendMessage(new LiteralText("Block Entity > " + ((BlockEntityMixin)blockEntity).getTypeToId().get(blockEntity.getClass())));
+            source.sendMessage(new LiteralText("Block Entity > " + BlockEntityMixin.getTypeToId().get(blockEntity.getClass())));
             if (implementsInventory(blockEntity.getClass())) {
                 Inventory inv = (Inventory) blockEntity;
                 StringBuilder bobTheBuilder = new StringBuilder("Inventory > ");
