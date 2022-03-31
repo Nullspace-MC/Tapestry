@@ -1,5 +1,7 @@
 package net.nullspace_mc.tapestry.settings;
 
+import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
+
 /**
  * Place Tapestry rules in this class
  * Rules must be public static and have a type of one of:
@@ -15,7 +17,7 @@ public class Settings {
 
     @Rule(
             desc = "Allows player to always eat cake",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     @RuleDefaults.Creative
     public static boolean alwaysEatCake = false;
@@ -28,14 +30,14 @@ public class Settings {
 
     @Rule(
             desc = "Adds improved tab completions to vanilla commands",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     @RuleDefaults.Creative
     public static boolean betterCompletions = false;
 
     @Rule(
             desc = "Enables filling cauldrons with water bottles",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.SURVIVAL, RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     @RuleDefaults.Survival
     @RuleDefaults.Creative
@@ -44,7 +46,7 @@ public class Settings {
     @Rule(
             desc = "Generates superflat worlds with a chunk-aligned checkerboard pattern",
             extra = "For superflat presets with 2 layers, the layers will be exchanged for the alternate-colored chunks",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     public static boolean chunkPattern = false;
 
@@ -82,13 +84,27 @@ public class Settings {
 
     @Rule(
             desc = "Enables the tick command",
-            category = RuleCategory.COMMAND
+            category = RuleCategory.COMMAND,
+            validator = CommandTickValidator.class
     )
     public static boolean commandTick = true;
 
+    static class CommandTickValidator extends Validator<Boolean> {
+        @Override
+        boolean validate(Boolean value) {
+            if(!value) {
+                if(TickSpeedHelper.warping) {
+                    TickSpeedHelper.stopTickWarp();
+                }
+                TickSpeedHelper.setTickRate(20);
+            }
+            return true;
+        }
+    }
+
     @Rule(
             desc = "Enables creative player noclip with a compatible client-side mod",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     @RuleDefaults.Creative
     public static boolean creativeNoClip = false;
@@ -134,7 +150,7 @@ public class Settings {
 
     @Rule(
             desc = "Enables hopper counters",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     @RuleDefaults.Creative
     public static boolean hopperCounter = false;
@@ -142,14 +158,14 @@ public class Settings {
     @Rule(
             desc = "Enables instant command blocks",
             extra = "A command block will run instantly if it is on top of a redstone ore block",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     public static boolean instantCommandBlock = false;
 
     @Rule(
             desc = "Enables interoperability with KaboPC's Village Marker Mod",
             extra = "Players must relog for changes to take effect",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     @RuleDefaults.Creative
     public static boolean kaboVillageMarker = false;
@@ -170,7 +186,7 @@ public class Settings {
     @Rule(
             desc = "Enables placing already filled cauldrons",
             extra = "Placing a cauldron named with a number will cause it to get that number as fill level",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     @RuleDefaults.Creative
     public static boolean placeFilledCauldron = false;
@@ -184,14 +200,14 @@ public class Settings {
     @Rule(
             desc = "Allows repeaters to have half of their usual delay",
             extra = "A repeater's delay is halved if it is on top of a redstone ore block",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     public static boolean repeaterHalfDelay = false;
 
     @Rule(
             desc = "Enables repeating command blocks",
             extra = "A command block will run every tick if it is on top of a diamond ore block",
-            category = RuleCategory.CREATIVE
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
     public static boolean repeatingCommandBlock = false;
 
