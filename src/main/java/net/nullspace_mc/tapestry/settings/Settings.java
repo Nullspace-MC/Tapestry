@@ -198,6 +198,14 @@ public class Settings {
     public static boolean randomRedstoneDust = false;
 
     @Rule(
+            desc = "Sets the random tick speed",
+            category = RuleCategory.CREATIVE,
+            options = {"0", "3", "30000"},
+            validator = NonNegativeValidator.class
+    )
+    public static int randomTickSpeed = 3;
+
+    @Rule(
             desc = "Allows repeaters to have half of their usual delay",
             extra = "A repeater's delay is halved if it is on top of a redstone ore block",
             category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}

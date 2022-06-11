@@ -41,6 +41,7 @@
     "feature.liquiddamagedisabled.FlowingFluidBlockMixin",
     "feature.placefilledcauldron.CauldronBlockMixin",
     "feature.randomredstonedust.RedstoneWireBlockMixin",
+    "feature.randomtickspeed.ServerWorldMixin",
     "feature.repeaterhalfdelay.RedstoneDiodeBlockMixin",
     "feature.repeatingcommandblock.CommandBlockMixin",
     "tick.MinecraftServerMixin"
