@@ -144,6 +144,11 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`randomTickSpeed`
+* Sets the random tick speed
+* Type: `int`
+* Default: `false`
+
 `repeaterHalfDelay`
 * Allows repeaters to have half of their usual delay
 * A repeater's delay is halved if it is on top of a redstone ore block
