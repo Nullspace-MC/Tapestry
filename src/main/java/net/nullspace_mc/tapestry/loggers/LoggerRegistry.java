@@ -22,7 +22,7 @@ public class LoggerRegistry {
      * Registers all loggers.
      */
     public static void registerAllLoggers() {
-        registerLogger(new Logger("tps"));
+        registerLogger(new TPSLogger());
     }
 
     private static void registerLogger(Logger logger) {
@@ -64,8 +64,11 @@ public class LoggerRegistry {
             ServerPlayerEntity player = (ServerPlayerEntity) element;
             Text info = new LiteralText("");
             ArrayList<Text> hudUpdate = new ArrayList<>();
-
-            hudUpdate.add(tickTpsHud(server, player));
+            for(Logger logger : LoggerRegistry.loggerRegistry.values()) {
+                if(logger.isPlayerSubscribed(player.getName().getString())) {
+                    hudUpdate.add(logger.tickLogger(server, player));
+                }
+            }
 
             // Concatenate all information and send to the client
             appendArrayListOfText(info, hudUpdate);
@@ -73,13 +76,5 @@ public class LoggerRegistry {
                 return;
             player.networkHandler.sendPacket(new GameMessageS2CPacket(info));
         }
-    }
-
-    private static Text tickTpsHud(MinecraftServer server, ServerPlayerEntity player) {
-        if (!getLoggerFromName("tps").isPlayerSubscribed(player.getName().getString())) return new LiteralText("");
-        double mspt = MathUtil.round(2, MathHelper.average(server.serverTickTimes) * 1.0E-6D);
-        double tps = MathUtil.round(2, 1000 / mspt);
-        if (tps > 20) tps = 20;
-        return new LiteralText(String.format("TPS: %f MSPT: %f", tps, mspt));
     }
 }

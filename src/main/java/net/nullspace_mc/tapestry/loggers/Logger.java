@@ -4,26 +4,31 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.entity.ServerPlayerEntity;
+import net.minecraft.text.Text;
 
-public class Logger {
+public abstract class Logger {
 
-    private final String name;
     private final Set<String /* Name of the player */> playersSubscribed;
     private final Map<String /* Name of the player */, String /* Name of the channel */> channelSubscriptions;
     private final Set<String /* Name of the channel */> availableChannels;
     private final boolean isAChannelRequired;
 
-    public Logger(String name, Set<String> channels, boolean isAChannelRequired) {
-        this.name = name;
+    public Logger(Set<String> channels, boolean isAChannelRequired) {
         this.playersSubscribed = new HashSet<>();
         this.channelSubscriptions = new HashMap<>();
         this.availableChannels = channels;
         this.isAChannelRequired = isAChannelRequired;
     }
 
-    public Logger(String name) {
-        this(name, new HashSet<>(), false);
+    public Logger() {
+        this(new HashSet<>(), false);
     }
+
+    public abstract String getName();
+
+    public abstract Text tickLogger(MinecraftServer server, ServerPlayerEntity player);
 
     public boolean isPlayerSubscribed(String playerName) {
         return playersSubscribed.contains(playerName);
@@ -35,10 +40,7 @@ public class Logger {
 
     public void unsubscribePlayer(String playerName) {
         playersSubscribed.remove(playerName);
-    }
-
-    public String getName() {
-        return name;
+        channelSubscriptions.remove(playerName);
     }
 
     public Set<String> getAvailableChannels() {
