@@ -2,8 +2,8 @@ package net.nullspace_mc.tapestry.mixin.feature.kabovillagemarker;
 
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.entity.ServerPlayerEntity;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.server.entity.living.player.ServerPlayerEntity;
+import net.minecraft.server.network.handler.ServerPlayNetworkHandler;
 import net.nullspace_mc.tapestry.helpers.KaboVillageMarker;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;

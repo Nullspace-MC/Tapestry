@@ -1,8 +1,8 @@
 package net.nullspace_mc.tapestry.helpers;
 
-import net.minecraft.command.AbstractCommand;
-import net.minecraft.command.CommandSource;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.AbstractCommand;
+import net.minecraft.server.command.CommandSource;
 
 public class TickSpeedHelper {
 

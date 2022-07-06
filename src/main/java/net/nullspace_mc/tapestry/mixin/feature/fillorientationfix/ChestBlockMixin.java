@@ -1,6 +1,6 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillorientationfix;
 
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.BlockWithBlockEntity;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
@@ -11,14 +11,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ChestBlock.class)
-public abstract class ChestBlockMixin extends BlockWithEntity {
+public abstract class ChestBlockMixin extends BlockWithBlockEntity {
 
     protected ChestBlockMixin(Material material) {
         super(material);
     }
 
     @Redirect(
-            method = "onBlockAdded",
+            method = "onAdded",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/ChestBlock;updateState(Lnet/minecraft/world/World;III)V",

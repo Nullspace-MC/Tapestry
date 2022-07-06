@@ -5,14 +5,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.BlockWithBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.IncorrectUsageException;
-import net.minecraft.command.NotFoundException;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.command.CommandSource;
+import net.minecraft.server.command.exception.CommandException;
+import net.minecraft.server.command.exception.IncorrectUsageException;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,14 +32,14 @@ public class InfoCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public String getUsageTranslationKey(CommandSource source) {
+    public String getUsage(CommandSource source) {
         return "/info <type> <target>";
     }
 
     @Override
     public void execute(CommandSource source, String[] args) {
         if (args[0].equals("block")) {
-            if (args.length != 4) throw new IncorrectUsageException(getUsageTranslationKey(source));
+            if (args.length != 4) throw new IncorrectUsageException(getUsage(source));
             sendBlockInfo(source, args);
         } else {
             throw new IncorrectUsageException("Target not found");
@@ -63,7 +62,7 @@ public class InfoCommand extends TapestryAbstractCommand {
         World world = source.getWorld();
         Block block = world.getBlock(pos.x, pos.y, pos.z);
         source.sendMessage(new LiteralText(String.format("Block > %s : %d", block.getTranslatedName(), world.getBlockMetadata(pos.x, pos.y, pos.z))));
-        if (block instanceof BlockWithEntity) {
+        if (block instanceof BlockWithBlockEntity) {
             BlockEntity blockEntity = world.getBlockEntity(pos.x, pos.y, pos.z);
             source.sendMessage(new LiteralText("Block Entity > " + BlockEntityMixin.getTypeToId().get(blockEntity.getClass())));
             if (implementsInventory(blockEntity.getClass())) {

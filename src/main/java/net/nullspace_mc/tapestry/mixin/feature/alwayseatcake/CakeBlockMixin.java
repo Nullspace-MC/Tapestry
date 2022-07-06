@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.feature.alwayseatcake;
 
 import net.minecraft.block.CakeBlock;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.living.player.PlayerEntity;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +14,7 @@ public class CakeBlockMixin {
             method = "tryEatCake",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerEntity;canEat(Z)Z"
+                    target = "Lnet/minecraft/entity/living/player/PlayerEntity;canEat(Z)Z"
             )
     )
     private boolean alwaysAllowCakeEating(PlayerEntity instance, boolean b) {

@@ -1,8 +1,8 @@
 package net.nullspace_mc.tapestry.mixin.feature.bettercompletions;
 
 import java.util.List;
-import net.minecraft.command.AbstractCommand;
-import net.minecraft.command.CommandSource;
+import net.minecraft.server.command.AbstractCommand;
+import net.minecraft.server.command.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.PlaySoundCommand;
 import net.nullspace_mc.tapestry.command.TapestryAbstractCommand;

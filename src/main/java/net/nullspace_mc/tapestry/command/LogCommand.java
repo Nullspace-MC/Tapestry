@@ -3,9 +3,9 @@ package net.nullspace_mc.tapestry.command;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.IncorrectUsageException;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.server.command.CommandSource;
+import net.minecraft.server.command.exception.IncorrectUsageException;
 import net.nullspace_mc.tapestry.loggers.Logger;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
 import net.nullspace_mc.tapestry.settings.Settings;
@@ -18,7 +18,7 @@ public class LogCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public String getUsageTranslationKey(CommandSource source) {
+    public String getUsage(CommandSource source) {
         return "/log <logger> <channel>";
     }
 
@@ -30,23 +30,23 @@ public class LogCommand extends TapestryAbstractCommand {
     @Override
     public void execute(CommandSource source, String[] args) {
         if (!(source instanceof PlayerEntity)) return;
-        if (args.length == 0) throw new IncorrectUsageException(getUsageTranslationKey(source));
+        if (args.length == 0) throw new IncorrectUsageException(getUsage(source));
         if (!LoggerRegistry.getAllLoggersName().contains(args[0]))
-            throw new IncorrectUsageException(String.format("%s. Logger %s doesn't exist.", getUsageTranslationKey(source), args[0]));
+            throw new IncorrectUsageException(String.format("%s. Logger %s doesn't exist.", getUsage(source), args[0]));
 
         Logger logger = LoggerRegistry.getLoggerFromName(args[0]);
 
         switch (args.length) {
             case 1:
                 if (logger.getIsChannelRequired()) throw new IncorrectUsageException(String.format("The logger %s requires a channel.", args[0]));
-                logger.onLogCommand(source.getName().getString());
+                logger.onLogCommand(source.getName());
                 break;
             case 2:
                 if (!logger.getAvailableChannels().contains(args[1])) throw new IncorrectUsageException(String.format("The channel %s doesn't exist for the logger %s.", args[0], args[1]));
-                logger.onLogCommand(source.getName().getString(), args[1]);
+                logger.onLogCommand(source.getName(), args[1]);
                 break;
             default:
-                throw new IncorrectUsageException(getUsageTranslationKey(source));
+                throw new IncorrectUsageException(getUsage(source));
         }
 
     }

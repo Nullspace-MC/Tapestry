@@ -21,13 +21,13 @@ public abstract class CommandManagerMixin extends CommandRegistry {
             method = "<init>",
             at = @At("TAIL")
     )
-    private void registerCommands(CallbackInfo ci) {
-        this.registerCommand(new CloneCommand());
-        this.registerCommand(new CounterCommand());
-        this.registerCommand(new FillCommand());
-        this.registerCommand(new InfoCommand());
-        this.registerCommand(new LogCommand());
-        this.registerCommand(new TapCommand());
-        this.registerCommand(new TickCommand());
+    private void registers(CallbackInfo ci) {
+        this.register(new CloneCommand());
+        this.register(new CounterCommand());
+        this.register(new FillCommand());
+        this.register(new InfoCommand());
+        this.register(new LogCommand());
+        this.register(new TapCommand());
+        this.register(new TickCommand());
     }
 }

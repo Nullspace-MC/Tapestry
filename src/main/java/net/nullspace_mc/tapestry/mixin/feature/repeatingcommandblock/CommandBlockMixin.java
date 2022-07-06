@@ -2,7 +2,7 @@ package net.nullspace_mc.tapestry.mixin.feature.repeatingcommandblock;
 
 import java.util.Random;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.BlockWithBlockEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CommandBlock;
 import net.minecraft.block.material.Material;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CommandBlock.class)
-public abstract class CommandBlockMixin extends BlockWithEntity {
+public abstract class CommandBlockMixin extends BlockWithBlockEntity {
 
     protected CommandBlockMixin(Material material) {
         super(material);
@@ -25,7 +25,7 @@ public abstract class CommandBlockMixin extends BlockWithEntity {
     public abstract int getTickRate(World world);
 
     @Inject(
-            method = "scheduledTick",
+            method = "onScheduledTick",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;updateComparators(IIILnet/minecraft/block/Block;)V"

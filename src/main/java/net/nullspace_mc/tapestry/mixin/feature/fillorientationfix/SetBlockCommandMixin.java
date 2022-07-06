@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillorientationfix;
 
-import net.minecraft.command.AbstractCommand;
-import net.minecraft.command.CommandSource;
+import net.minecraft.server.command.AbstractCommand;
+import net.minecraft.server.command.CommandSource;
 import net.minecraft.server.command.SetBlockCommand;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;

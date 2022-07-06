@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.feature.creativenoclip;
 
-import net.minecraft.server.entity.ServerPlayerEntity;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.server.entity.living.player.ServerPlayerEntity;
+import net.minecraft.server.network.handler.ServerPlayNetworkHandler;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +14,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
             method = "onPlayerMove",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/server/entity/ServerPlayerEntity;isSleeping()Z",
+                    target = "Lnet/minecraft/server/entity/living/player/ServerPlayerEntity;isSleeping()Z",
                     ordinal = 3
             )
     )

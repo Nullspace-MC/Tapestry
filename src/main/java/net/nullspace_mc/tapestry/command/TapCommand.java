@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.command.AbstractCommand;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.IncorrectUsageException;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.server.command.AbstractCommand;
+import net.minecraft.server.command.CommandSource;
+import net.minecraft.server.command.exception.CommandException;
+import net.minecraft.server.command.exception.IncorrectUsageException;
 import net.minecraft.text.ClickAction;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.Formatting;
@@ -29,7 +29,7 @@ public class TapCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public String getUsageTranslationKey(CommandSource source) {
+    public String getUsage(CommandSource source) {
         return "/tap <rule> <value>";
     }
 
@@ -259,7 +259,7 @@ public class TapCommand extends TapestryAbstractCommand {
             boolean success = SettingsManager.set(args[0], args[1]);
 
             if (!success) {
-                throw new IncorrectUsageException(getUsageTranslationKey(source));
+                throw new IncorrectUsageException(getUsage(source));
             }
 
             Text successMsg = new LiteralText(SettingsManager.getParsedRule(args[0]).name + ": " + SettingsManager.getRule(args[0]) + ", ");

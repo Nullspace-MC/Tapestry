@@ -1,6 +1,6 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillorientationfix;
 
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.BlockWithBlockEntity;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(DispenserBlock.class)
-public abstract class DispenserBlockMixin extends BlockWithEntity {
+public abstract class DispenserBlockMixin extends BlockWithBlockEntity {
 
     protected DispenserBlockMixin(Material material) {
         super(material);
@@ -22,7 +22,7 @@ public abstract class DispenserBlockMixin extends BlockWithEntity {
     protected abstract void updateState(World world, int x, int y, int z);
 
     @Redirect(
-            method = "onBlockAdded",
+            method = "onAdded",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/DispenserBlock;updateState(Lnet/minecraft/world/World;III)V"

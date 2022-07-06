@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.entity.ServerPlayerEntity;
+import net.minecraft.server.entity.living.player.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
@@ -76,7 +76,7 @@ public class LoggerRegistry {
     }
 
     private static Text tickTpsHud(MinecraftServer server, ServerPlayerEntity player) {
-        if (!getLoggerFromName("tps").isPlayerSubscribed(player.getName().getString())) return new LiteralText("");
+        if (!getLoggerFromName("tps").isPlayerSubscribed(player.getName())) return new LiteralText("");
         double mspt = MathUtil.round(2, MathHelper.average(server.serverTickTimes) * 1.0E-6D);
         double tps = MathUtil.round(2, 1000 / mspt);
         if (tps > 20) tps = 20;

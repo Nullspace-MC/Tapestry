@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillupdates;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.entity.BlockEntityProvider;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
@@ -19,12 +19,12 @@ public abstract class ChunkMixin {
             method = "setBlockWithMetadata",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/Block;onBlockRemoved(Lnet/minecraft/world/World;IIILnet/minecraft/block/Block;I)V"
+                    target = "Lnet/minecraft/block/Block;onRemoved(Lnet/minecraft/world/World;IIILnet/minecraft/block/Block;I)V"
             )
     )
-    private void onBlockRemovedConditional(Block instance, World world, int x, int y, int z, Block block, int meta) {
+    private void onRemovedConditional(Block instance, World world, int x, int y, int z, Block block, int meta) {
         if (!SetBlockHelper.applyFillUpdatesRule || Settings.fillUpdates) {
-            instance.onBlockRemoved(world, x, y, z, block, meta);
+            instance.onRemoved(world, x, y, z, block, meta);
         } else if (instance instanceof BlockEntityProvider) {
             world.removeBlockEntity(x, y, z);
         }
@@ -34,12 +34,12 @@ public abstract class ChunkMixin {
             method = "setBlockWithMetadata",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/Block;onBlockAdded(Lnet/minecraft/world/World;III)V"
+                    target = "Lnet/minecraft/block/Block;onAdded(Lnet/minecraft/world/World;III)V"
             )
     )
-    private void onBlockAddedConditional(Block instance, World world, int x, int y, int z) {
+    private void onAddedConditional(Block instance, World world, int x, int y, int z) {
         if (!SetBlockHelper.applyFillUpdatesRule || Settings.fillUpdates) {
-            instance.onBlockAdded(world, x, y, z);
+            instance.onAdded(world, x, y, z);
         }
     }
 

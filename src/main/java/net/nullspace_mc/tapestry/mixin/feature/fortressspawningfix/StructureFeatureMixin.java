@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class StructureFeatureMixin extends Generatable {
 
     @Shadow
-    private Map structureMap;
+    private Map structures;
 
     @Invoker("createFeatureTags")
     protected abstract void invokeCreateFeatureTags(World world);
@@ -35,7 +35,7 @@ public abstract class StructureFeatureMixin extends Generatable {
     private void fixBBCheck(final int x, final int y, final int z, final CallbackInfoReturnable<Boolean> cir) {
         if(Settings.fortressSpawningFix) {
             this.invokeCreateFeatureTags(this.world);
-            final Iterator structIter = this.structureMap.values().iterator();
+            final Iterator structIter = this.structures.values().iterator();
             GeneratorConfig struct;
             boolean intersects = false;
 

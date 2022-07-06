@@ -7,15 +7,15 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.command.AbstractCommand;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtException;
 import net.minecraft.nbt.StringNbtReader;
+import net.minecraft.server.command.AbstractCommand;
+import net.minecraft.server.command.CommandSource;
+import net.minecraft.server.command.exception.CommandException;
+import net.minecraft.server.command.exception.IncorrectUsageException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -36,14 +36,14 @@ public class FillCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public String getUsageTranslationKey(CommandSource source) {
+    public String getUsage(CommandSource source) {
         return "/fill <x1> <y1> <z1> <x2> <y2> <z2> <block> [dataValue|state] [oldBlockHandling] [dataTag]";
     }
 
     @Override
     public void execute(CommandSource source, String[] args) {
         if (args.length < 7) {
-            throw new IncorrectUsageException(getUsageTranslationKey(source), new Object[0]);
+            throw new IncorrectUsageException(getUsage(source), new Object[0]);
         } else {
             BlockPos blockPos1 = parseBlockPos(source, args, 0);
             BlockPos blockPos2 = parseBlockPos(source, args, 3);

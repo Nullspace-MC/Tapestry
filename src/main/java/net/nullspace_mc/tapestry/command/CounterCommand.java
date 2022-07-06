@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.IncorrectUsageException;
+import net.minecraft.server.command.CommandSource;
+import net.minecraft.server.command.exception.IncorrectUsageException;
 import net.minecraft.text.LiteralText;
 import net.nullspace_mc.tapestry.counter.Counter;
 import net.nullspace_mc.tapestry.counter.CounterRegistry;
@@ -25,13 +25,13 @@ public class CounterCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public String getUsageTranslationKey(CommandSource source) {
+    public String getUsage(CommandSource source) {
         return "/counter <channel|all> [reset]";
     }
 
     @Override
     public void execute(CommandSource source, String[] args) {
-        if (args.length == 0) throw new IncorrectUsageException(getUsageTranslationKey(source));
+        if (args.length == 0) throw new IncorrectUsageException(getUsage(source));
         if (!args[0].equalsIgnoreCase("all") && !CounterRegistry.getCounterColors().contains(args[0].toLowerCase())) throw new IncorrectUsageException("Unrecognized counter \"" + args[0] + "\"");
 
         if (args.length == 1) {
@@ -58,7 +58,7 @@ public class CounterCommand extends TapestryAbstractCommand {
                 source.sendMessage(new LiteralText(String.format("Counter %s reset", args[0].toLowerCase())));
             }
         } else {
-            throw new IncorrectUsageException(getUsageTranslationKey(source));
+            throw new IncorrectUsageException(getUsage(source));
         }
     }
 

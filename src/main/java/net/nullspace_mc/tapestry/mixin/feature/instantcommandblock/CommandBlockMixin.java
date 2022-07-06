@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class CommandBlockMixin {
 
     @Shadow
-    public abstract void scheduledTick(World world, int x, int y, int z, Random rand);
+    public abstract void onScheduledTick(World world, int x, int y, int z, Random rand);
 
     @Redirect(
-            method = "neighborUpdate",
+            method = "onBlockUpdate",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;scheduleTick(IIILnet/minecraft/block/Block;I)V"
@@ -26,7 +26,7 @@ public abstract class CommandBlockMixin {
     )
     private void makeCommandBlockInstant(World world, int x, int y, int z, Block block, int delay) {
         if (Settings.instantCommandBlock && world.getBlock(x, y - 1, z) == Blocks.REDSTONE_ORE) {
-            scheduledTick(world, x, y, z, world.random);
+            onScheduledTick(world, x, y, z, world.random);
         } else {
             world.scheduleTick(x, y, z, block, delay);
         }

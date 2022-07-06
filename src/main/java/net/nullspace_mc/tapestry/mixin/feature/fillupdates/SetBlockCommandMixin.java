@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillupdates;
 
 import net.minecraft.block.Block;
-import net.minecraft.command.AbstractCommand;
+import net.minecraft.server.command.AbstractCommand;
 import net.minecraft.server.command.SetBlockCommand;
 import net.minecraft.world.World;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;

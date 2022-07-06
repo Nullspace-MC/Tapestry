@@ -2,10 +2,10 @@ package net.nullspace_mc.tapestry.command;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import net.minecraft.command.AbstractCommand;
-import net.minecraft.command.Command;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.server.command.AbstractCommand;
+import net.minecraft.server.command.Command;
+import net.minecraft.server.command.CommandSource;
 import net.minecraft.util.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;

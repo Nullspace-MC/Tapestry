@@ -1,8 +1,8 @@
 package net.nullspace_mc.tapestry.command;
 
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.IncorrectUsageException;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.CommandSource;
+import net.minecraft.server.command.exception.IncorrectUsageException;
 import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
@@ -19,7 +19,7 @@ public class TickCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public String getUsageTranslationKey(CommandSource source) {
+    public String getUsage(CommandSource source) {
         return "/tick rate [tickRate] | /tick warp [advance]";
     }
 
@@ -30,7 +30,7 @@ public class TickCommand extends TapestryAbstractCommand {
 
     @Override
     public void execute(CommandSource source, String[] args) {
-        if (args.length == 0 | args.length > 2) throw new IncorrectUsageException(getUsageTranslationKey(source));
+        if (args.length == 0 | args.length > 2) throw new IncorrectUsageException(getUsage(source));
         if (args[0].equals("rate")) {
             if (args.length == 2) {
                 TickSpeedHelper.setTickRate(parseDouble(source, args[1], 0.05D));
@@ -42,7 +42,7 @@ public class TickCommand extends TapestryAbstractCommand {
                 sendFeedback(source, "Started tick warp", new Object[0]);
             }
             TickSpeedHelper.startTickWarp(source, ticksToWarp);
-        } else throw new IncorrectUsageException(getUsageTranslationKey(source));
+        } else throw new IncorrectUsageException(getUsage(source));
     }
 
     @Override
