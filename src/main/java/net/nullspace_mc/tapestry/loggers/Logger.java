@@ -61,7 +61,7 @@ public abstract class Logger {
     }
 
     public void onLogCommand(String playerName, String channel) {
-        if (isPlayerSubscribed(playerName) && !channelSubscriptions.get(playerName).equals(channel)) // Player is logged, but changes channel
+        if (isPlayerSubscribed(playerName) && channelSubscriptions.containsKey(playerName) && !channelSubscriptions.get(playerName).equals(channel)) // Player is logged, but changes channel
             channelSubscriptions.put(playerName, channel);
 
         else if (!isPlayerSubscribed(playerName)) { // Player isn't logged
