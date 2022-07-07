@@ -42,7 +42,7 @@ public class LogCommand extends TapestryAbstractCommand {
                 logger.onLogCommand(source.getName());
                 break;
             case 2:
-                if (!logger.getAvailableChannels().contains(args[1])) throw new IncorrectUsageException(String.format("The channel %s doesn't exist for the logger %s.", args[0], args[1]));
+                if (!logger.getAvailableChannels().contains(args[1])) throw new IncorrectUsageException(String.format("The channel %s doesn't exist for the logger %s.", args[1], args[0]));
                 logger.onLogCommand(source.getName(), args[1]);
                 break;
             default:
@@ -58,7 +58,7 @@ public class LogCommand extends TapestryAbstractCommand {
         String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(LoggerRegistry.getAllLoggersName());
         else if (args.length == 2) {
-            Logger logger = LoggerRegistry.getLoggerFromName(args[1]);
+            Logger logger = LoggerRegistry.getLoggerFromName(args[0]);
             if (logger != null) {
                 suggestions.addAll(logger.getAvailableChannels());
             }
