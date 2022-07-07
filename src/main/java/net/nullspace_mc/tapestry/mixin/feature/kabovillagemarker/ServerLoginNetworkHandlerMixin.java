@@ -19,7 +19,7 @@ public abstract class ServerLoginNetworkHandlerMixin {
             method = "setUuid",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/server/PlayerManager;onPlayerConnect(Lnet/minecraft/network/Connection;Lnet/minecraft/server/entity/ServerPlayerEntity;)V"
+                    target = "Lnet/minecraft/server/PlayerManager;onPlayerConnect(Lnet/minecraft/network/Connection;Lnet/minecraft/server/entity/living/player/ServerPlayerEntity;)V"
             )
     )
     private void pollKVMPlayer(PlayerManager pm, Connection connection, ServerPlayerEntity player) {
