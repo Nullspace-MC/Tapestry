@@ -158,7 +158,7 @@ public class SettingsManager {
 
     private static Map<String, String> readConf() {
         try {
-            File rules_file = MinecraftServer.getServer().getFile("tapestry.conf");
+            File rules_file = MinecraftServer.getServer().getFile("config/tapestry.conf");
             BufferedReader b = new BufferedReader(new FileReader(rules_file));
             String line = "";
             Map<String, String> result = new TreeMap<String, String>();
@@ -198,7 +198,7 @@ public class SettingsManager {
         }
 
         try {
-            File rules_file = MinecraftServer.getServer().getFile("tapestry.conf");
+            File rules_file = MinecraftServer.getServer().getFile("config/tapestry.conf");
             FileWriter fw = new FileWriter(rules_file);
 
             for (String key : values.keySet()) {
