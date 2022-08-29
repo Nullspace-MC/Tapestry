@@ -16,9 +16,6 @@ public class Tapestry {
         SettingsManager.parseRules();
         LoggerRegistry.registerAllLoggers();
         CounterRegistry.setupCounters();
-    }
-
-    public static void onStart() {
         LOGGER.info("Applying rules from tapestry.conf");
         SettingsManager.applyConf();
     }
