@@ -161,6 +161,12 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`tcpNoDelay`
+* Forces connections to send small packets immediately instead of buffering them
+* Reduces latency in some cases
+* Type: `boolean`
+* Default: `false`
+
 ## License
 
 This mod is available under the MIT License

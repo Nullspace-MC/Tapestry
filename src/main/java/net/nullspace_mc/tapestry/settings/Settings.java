@@ -219,6 +219,13 @@ public class Settings {
     )
     public static boolean repeatingCommandBlock = false;
 
+    @Rule(
+            desc = "Forces connections to send small packets immediately instead of buffering them",
+            extra = "Reduces latency in some cases",
+            category = {RuleCategory.FIX}
+    )
+    public static boolean tcpNoDelay = false;
+
     static class PositiveValidator extends Validator<Integer> {
         @Override
         boolean validate(Integer value) {
