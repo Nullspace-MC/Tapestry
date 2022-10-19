@@ -2,15 +2,15 @@ package net.nullspace_mc.tapestry.loggers;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
-import net.minecraft.entity.living.mob.MobSpawnerHelper;
+
 import net.minecraft.entity.living.mob.MobSpawnGroup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.entity.living.player.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Formatting;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+
 import net.nullspace_mc.tapestry.helpers.MobSpawnerHelperHelper;
 
 public class MobCapLogger extends Logger {
@@ -60,7 +60,7 @@ public class MobCapLogger extends Logger {
     }
 
     private int getMobCount(MobSpawnGroup mobType, ServerWorld world) {
-        return world.getSpawnCap(mobType.getType());
+        return world.getEntityCount(mobType.getType());
     }
 
     private int getMobCap(MobSpawnGroup mobType, ServerWorld world) {

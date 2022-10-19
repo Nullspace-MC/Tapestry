@@ -1,17 +1,17 @@
 package net.nullspace_mc.tapestry.command;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.CommandSource;
-import net.minecraft.server.command.exception.IncorrectUsageException;
-import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
-import net.nullspace_mc.tapestry.settings.Settings;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class TickCommand extends TapestryAbstractCommand {
+import net.minecraft.server.command.exception.IncorrectUsageException;
+import net.minecraft.server.command.source.CommandSource;
+
+import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
+import net.nullspace_mc.tapestry.settings.Settings;
+
+public class TickCommand extends TapestryCommand {
 
     @Override
     public String getName() {
@@ -24,7 +24,7 @@ public class TickCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int getRequiredPermissionLevel() {
         return Settings.commandTick ? 2 : 5;
     }
 
@@ -35,11 +35,11 @@ public class TickCommand extends TapestryAbstractCommand {
             if (args.length == 2) {
                 TickSpeedHelper.setTickRate(parseDouble(source, args[1], 0.05D));
             }
-            sendFeedback(source, String.format("Current tick rate is %.1f", TickSpeedHelper.tickRate), new Object[0]);
+            sendSuccess(source, String.format("Current tick rate is %.1f", TickSpeedHelper.tickRate), new Object[0]);
         } else if (args[0].equals("warp")) {
             long ticksToWarp = args.length == 2 ? (args[1].equalsIgnoreCase("stop") ? 0 : (long)parseInt(source, args[1], 0)) : (TickSpeedHelper.warping ? 0L : -1L);
             if (ticksToWarp != 0) {
-                sendFeedback(source, "Started tick warp", new Object[0]);
+                sendSuccess(source, "Started tick warp", new Object[0]);
             }
             TickSpeedHelper.startTickWarp(source, ticksToWarp);
         } else throw new IncorrectUsageException(getUsage(source));

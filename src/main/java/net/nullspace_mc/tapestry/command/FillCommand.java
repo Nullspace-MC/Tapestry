@@ -1,9 +1,11 @@
 package net.nullspace_mc.tapestry.command;
 
-import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,18 +14,17 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtException;
 import net.minecraft.nbt.StringNbtReader;
-import net.minecraft.server.command.AbstractCommand;
-import net.minecraft.server.command.CommandSource;
 import net.minecraft.server.command.exception.CommandException;
 import net.minecraft.server.command.exception.IncorrectUsageException;
+import net.minecraft.server.command.source.CommandSource;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
 import net.nullspace_mc.tapestry.helpers.InventoryHelper;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
-public class FillCommand extends TapestryAbstractCommand {
+public class FillCommand extends TapestryCommand {
 
     @Override
     public String getName() {
@@ -31,7 +32,7 @@ public class FillCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int getRequiredPermissionLevel() {
         return Settings.commandFill ? 2 : 5;
     }
 
@@ -47,7 +48,7 @@ public class FillCommand extends TapestryAbstractCommand {
         } else {
             BlockPos blockPos1 = parseBlockPos(source, args, 0);
             BlockPos blockPos2 = parseBlockPos(source, args, 3);
-            Block block = AbstractCommand.parseBlock(source, args[6]);
+            Block block = parseBlock(source, args[6]);
             int meta = 0;
             if (args.length >= 8) {
                 meta = parseInt(source, args[7], 0, 15);
@@ -59,11 +60,11 @@ public class FillCommand extends TapestryAbstractCommand {
             if (volume > Settings.fillLimit) {
                 throw new CommandException(String.format("Too many blocks in the specified area (%d > %d)", volume, Settings.fillLimit), new Object[0]);
             } else if (minPos.y >= 0 && maxPos.y < 256) {
-                World world = source.getWorld();
+                World world = source.getSourceWorld();
 
                 for (int z = minPos.z; z < maxPos.z + 16; z += 16) {
                     for (int x = minPos.x; x < maxPos.x + 16; x += 16) {
-                        if (!world.isInsideWorld(x, maxPos.y - minPos.y, z)) {
+                        if (!world.isLoaded(x, maxPos.y - minPos.y, z)) {
                             throw new CommandException("Cannot place blocks outside of the world", new Object[0]);
                         }
                     }
@@ -72,7 +73,7 @@ public class FillCommand extends TapestryAbstractCommand {
                 NbtCompound compoundTag = new NbtCompound();
                 boolean hasTag = false;
                 if (args.length >= 10 && block.hasBlockEntity()) {
-                    String tagString = getAsText(source, args, 9).getString();
+                    String tagString = parseText(source, args, 9).getString();
 
                     try {
                         NbtElement element = StringNbtReader.parse(tagString);
@@ -105,7 +106,7 @@ public class FillCommand extends TapestryAbstractCommand {
                                         }
                                     } else if (args[8].equals("replace") && !block.hasBlockEntity()) {
                                         if (args.length > 9) {
-                                            Block replaceTarget = AbstractCommand.parseBlock(source, args[9]);
+                                            Block replaceTarget = parseBlock(source, args[9]);
                                             if (world.getBlock(x, y, z) != replaceTarget) {
                                                 continue;
                                             }
@@ -173,7 +174,7 @@ public class FillCommand extends TapestryAbstractCommand {
                 if (volume <= 0) {
                     throw new CommandException("No blocks filled", new Object[0]);
                 } else {
-                    sendFeedback(source, String.format("%d blocks filled", volume), new Object[0]);
+                    sendSuccess(source, String.format("%d blocks filled", volume), new Object[0]);
                 }
             } else {
                 throw new CommandException("Cannot place blocks outside of the world", new Object[0]);
@@ -185,15 +186,15 @@ public class FillCommand extends TapestryAbstractCommand {
     public List getSuggestions(CommandSource source, String[] args) {
         if (!Settings.commandFill) return Collections.emptyList();
         if (args.length > 0 && args.length <= 3) {
-            return getCoordinateSuggestions(source, args, 0);
+            return suggestCoordinates(source, args, 0);
         } else if (args.length > 3 && args.length <= 6) {
-            return getCoordinateSuggestions(source, args, 3);
+            return suggestCoordinates(source, args, 3);
         } else if (args.length == 7) {
-            return getMatchingArgs(args, Block.REGISTRY.keySet());
+            return suggestMatching(args, Block.REGISTRY.keySet());
         } else if (args.length == 9) {
-            return getMatchingArgs(args, new String[]{"replace", "destroy", "keep", "hollow", "outline"});
+            return suggestMatching(args, new String[]{"replace", "destroy", "keep", "hollow", "outline"});
         } else {
-            return args.length == 10 && "replace".equals(args[8]) ? getMatchingArgs(args, Block.REGISTRY.keySet()) : null;
+            return args.length == 10 && "replace".equals(args[8]) ? suggestMatching(args, Block.REGISTRY.keySet()) : null;
         }
     }
 }

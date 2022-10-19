@@ -1,14 +1,12 @@
 package net.nullspace_mc.tapestry.mixin.feature.tcpnodelay;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelConfig;
-import io.netty.channel.ChannelOption;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Mixin(targets = "net.minecraft.server.network.RemoteChannelHandler")
+import net.nullspace_mc.tapestry.settings.Settings;
+
+@Mixin(targets = "net.minecraft.server.network.ServerNetworkIo$1")
 public class RemoteChannelHandlerMixin {
     
     @SuppressWarnings("unchecked")

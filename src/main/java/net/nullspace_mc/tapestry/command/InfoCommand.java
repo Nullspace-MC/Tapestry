@@ -4,22 +4,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWithBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.command.CommandSource;
-import net.minecraft.server.command.exception.CommandException;
 import net.minecraft.server.command.exception.IncorrectUsageException;
+import net.minecraft.server.command.source.CommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
 import net.nullspace_mc.tapestry.mixin.feature.infocommand.BlockEntityMixin;
 import net.nullspace_mc.tapestry.settings.Settings;
-import org.apache.commons.lang3.ArrayUtils;
 
-public class InfoCommand extends TapestryAbstractCommand {
+public class InfoCommand extends TapestryCommand {
 
     @Override
     public String getName() {
@@ -27,7 +29,7 @@ public class InfoCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int getRequiredPermissionLevel() {
         return Settings.commandInfo ? 2 : 5;
     }
 
@@ -52,16 +54,16 @@ public class InfoCommand extends TapestryAbstractCommand {
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1].toLowerCase();
         if (args.length == 1) suggestions.addAll(Arrays.asList("block"));
-        else if (args.length <= 4) suggestions.addAll(getCoordinateSuggestions(source, args, 1));
+        else if (args.length <= 4) suggestions.addAll(suggestCoordinates(source, args, 1));
         suggestions.removeIf(suggestion -> !suggestion.startsWith(prefix));
         return suggestions;
     }
 
     private void sendBlockInfo(CommandSource source, String[] args) {
         BlockPos pos = parseBlockPos(source, args, 1);
-        World world = source.getWorld();
+        World world = source.getSourceWorld();
         Block block = world.getBlock(pos.x, pos.y, pos.z);
-        source.sendMessage(new LiteralText(String.format("Block > %s : %d", block.getTranslatedName(), world.getBlockMetadata(pos.x, pos.y, pos.z))));
+        source.sendMessage(new LiteralText(String.format("Block > %s : %d", block.getDisplayName(), world.getBlockMetadata(pos.x, pos.y, pos.z))));
         if (block instanceof BlockWithBlockEntity) {
             BlockEntity blockEntity = world.getBlockEntity(pos.x, pos.y, pos.z);
             source.sendMessage(new LiteralText("Block Entity > " + BlockEntityMixin.getTypeToId().get(blockEntity.getClass())));
@@ -71,7 +73,7 @@ public class InfoCommand extends TapestryAbstractCommand {
                 for (int i = 1; i < inv.getSize() + 1; i++) {
                     ItemStack item = inv.getStack(i - 1);
                     if (item != null)   {
-                        bobTheBuilder.append(String.format("[slot %d: %s, count: %d]", i, item.getName(), item.count));
+                        bobTheBuilder.append(String.format("[slot %d: %s, count: %d]", i, item.getName(), item.size));
                         if (i != inv.getSize()) bobTheBuilder.append(", ");
                     }
                 }

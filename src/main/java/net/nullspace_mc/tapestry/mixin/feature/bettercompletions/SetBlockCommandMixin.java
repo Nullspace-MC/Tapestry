@@ -1,10 +1,10 @@
 package net.nullspace_mc.tapestry.mixin.feature.bettercompletions;
 
 import java.util.List;
-import net.minecraft.server.command.AbstractCommand;
-import net.minecraft.server.command.CommandSource;
+import net.minecraft.server.command.Command;
+import net.minecraft.server.command.source.CommandSource;
 import net.minecraft.server.command.SetBlockCommand;
-import net.nullspace_mc.tapestry.command.TapestryAbstractCommand;
+import net.nullspace_mc.tapestry.command.TapestryCommand;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SetBlockCommand.class)
-public abstract class SetBlockCommandMixin extends AbstractCommand {
+public abstract class SetBlockCommandMixin extends Command {
 
     @Inject(
         method = "getSuggestions",
@@ -22,7 +22,7 @@ public abstract class SetBlockCommandMixin extends AbstractCommand {
     private void getBetterCompletions(CommandSource source, String[] args, CallbackInfoReturnable<List> cir) {
         if (Settings.betterCompletions) {
             if (args.length > 0 && args.length <= 3) {
-                cir.setReturnValue(TapestryAbstractCommand.getCoordinateSuggestions(source, args, 0));
+                cir.setReturnValue(TapestryCommand.suggestCoordinates(source, args, 0));
             }
         }
     }

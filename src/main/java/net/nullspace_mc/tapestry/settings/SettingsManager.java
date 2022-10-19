@@ -6,19 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Collections;
-import java.util.TreeMap;
 import java.util.Map;
-import net.minecraft.server.MinecraftServer;
+import java.util.TreeMap;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import net.minecraft.server.MinecraftServer;
 
 public class SettingsManager {
 
@@ -158,7 +156,7 @@ public class SettingsManager {
 
     private static Map<String, String> readConf() {
         try {
-            File rules_file = MinecraftServer.getServer().getFile("config/tapestry.conf");
+            File rules_file = MinecraftServer.getInstance().getFile("config/tapestry.conf");
             BufferedReader b = new BufferedReader(new FileReader(rules_file));
             String line = "";
             Map<String, String> result = new TreeMap<String, String>();
@@ -198,7 +196,7 @@ public class SettingsManager {
         }
 
         try {
-            File rules_file = MinecraftServer.getServer().getFile("config/tapestry.conf");
+            File rules_file = MinecraftServer.getInstance().getFile("config/tapestry.conf");
             FileWriter fw = new FileWriter(rules_file);
 
             for (String key : values.keySet()) {

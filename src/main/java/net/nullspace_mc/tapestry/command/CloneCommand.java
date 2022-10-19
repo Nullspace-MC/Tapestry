@@ -1,29 +1,31 @@
 package net.nullspace_mc.tapestry.command;
 
-import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.command.AbstractCommand;
-import net.minecraft.server.command.CommandSource;
 import net.minecraft.server.command.exception.CommandException;
 import net.minecraft.server.command.exception.IncorrectUsageException;
-import net.minecraft.util.ScheduledTick;
+import net.minecraft.server.command.source.CommandSource;
+import net.minecraft.server.world.ScheduledTick;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBox;
+
 import net.nullspace_mc.tapestry.helpers.InventoryHelper;
 import net.nullspace_mc.tapestry.helpers.ServerWorldHelper;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
-public class CloneCommand extends TapestryAbstractCommand {
+public class CloneCommand extends TapestryCommand {
 
     @Override
     public String getName() {
@@ -31,7 +33,7 @@ public class CloneCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int getRequiredPermissionLevel() {
         return Settings.commandClone ? 2 : 5;
     }
 
@@ -49,15 +51,15 @@ public class CloneCommand extends TapestryAbstractCommand {
             BlockPos blockPos2 = parseBlockPos(source, args, 3);
             BlockPos destPos = parseBlockPos(source, args, 6);
             StructureBox sourceBox = new StructureBox(Math.min(blockPos1.x, blockPos2.x), Math.min(blockPos1.y, blockPos2.y), Math.min(blockPos1.z, blockPos2.z), Math.max(blockPos1.x, blockPos2.x), Math.max(blockPos1.y, blockPos2.y), Math.max(blockPos1.z, blockPos2.z));
-            StructureBox destBox = new StructureBox(destPos.x, destPos.y, destPos.z, destPos.x + sourceBox.getXSpan() - 1, destPos.y + sourceBox.getYSpan() - 1, destPos.z + sourceBox.getZSpan() - 1);
-            int volume = sourceBox.getXSpan() * sourceBox.getYSpan() * sourceBox.getZSpan();
+            StructureBox destBox = new StructureBox(destPos.x, destPos.y, destPos.z, destPos.x + sourceBox.getSpanX() - 1, destPos.y + sourceBox.getSpanY() - 1, destPos.z + sourceBox.getSpanZ() - 1);
+            int volume = sourceBox.getSpanX() * sourceBox.getSpanY() * sourceBox.getSpanZ();
             if (volume > Settings.fillLimit) {
                 throw new CommandException(String.format("Too many blocks in the specified area (%d > %d)", volume, Settings.fillLimit), new Object[0]);
             } else {
                 boolean bl = false;
                 Block filterBlock = null;
                 int filterMeta = -1;
-                if ((args.length < 11 || !args[10].equals("force") && !args[10].equals("move")) && sourceBox.intersectsWith(destBox)) {
+                if ((args.length < 11 || !args[10].equals("force") && !args[10].equals("move")) && sourceBox.intersects(destBox)) {
                     throw new CommandException("Source and destination can not overlap", new Object[0]);
                 } else {
                     if (args.length >= 11 && args[10].equals("move")) {
@@ -65,7 +67,7 @@ public class CloneCommand extends TapestryAbstractCommand {
                     }
 
                     if (sourceBox.minY >= 0 && sourceBox.maxY < 256 && destBox.minY >= 0 && destBox.maxY < 256) {
-                        World world = source.getWorld();
+                        World world = source.getSourceWorld();
                         if (world.isRegionLoaded(sourceBox.minX, sourceBox.minY, sourceBox.minZ, sourceBox.maxX, sourceBox.maxY, sourceBox.maxZ) && world.isRegionLoaded(destBox.minX, destBox.minY, destBox.minZ, destBox.maxX, destBox.maxY, destBox.maxZ)) {
                             boolean bl2 = false;
                             if (args.length >= 10) {
@@ -76,7 +78,7 @@ public class CloneCommand extends TapestryAbstractCommand {
                                         throw new IncorrectUsageException(getUsage(source), new Object[0]);
                                     }
 
-                                    filterBlock = AbstractCommand.parseBlock(source, args[11]);
+                                    filterBlock = parseBlock(source, args[11]);
                                     if (args.length >= 13) {
                                         filterMeta = parseInt(source, args[12], 0, 15);
                                     }
@@ -102,7 +104,7 @@ public class CloneCommand extends TapestryAbstractCommand {
                                                 NbtCompound compoundTag = new NbtCompound();
                                                 blockEntity.writeNbt(compoundTag);
                                                 list2.add(new CloneCommand.BlockInfo(dest, block, meta, compoundTag));
-                                            } else if (!block.isFullBlock() && !block.renderAsNormalBlock()) {
+                                            } else if (!block.isSolid() && !block.isFullCube()) {
                                                 list3.add(new CloneCommand.BlockInfo(dest, block, meta, null));
                                                 linkedList.addFirst(src);
                                             } else {
@@ -193,7 +195,7 @@ public class CloneCommand extends TapestryAbstractCommand {
                                         while (iter.hasNext()) {
                                             ScheduledTick tick = (ScheduledTick)iter.next();
                                             if (sourceBox.contains(tick.x, tick.y, tick.z)) {
-                                                world.scheduleTick(tick.x + translate.x, tick.y + translate.y, tick.z + translate.x, tick.getBlock(), (int)(tick.time - world.getProperties().getTime()), tick.priority);
+                                                world.scheduleTick(tick.x + translate.x, tick.y + translate.y, tick.z + translate.x, tick.getBlock(), (int)(tick.time - world.getData().getTime()), tick.priority);
                                             }
                                         }
                                     }
@@ -203,7 +205,7 @@ public class CloneCommand extends TapestryAbstractCommand {
                             if (volume <= 0) {
                                 throw new CommandException("No blocks cloned", new Object[0]);
                             } else {
-                                sendFeedback(source, String.format("%d blocks cloned", volume), new Object[0]);
+                                sendSuccess(source, String.format("%d blocks cloned", volume), new Object[0]);
                             }
                         } else {
                             throw new CommandException("Cannot access blocks outside of the world", new Object[0]);
@@ -220,17 +222,17 @@ public class CloneCommand extends TapestryAbstractCommand {
     public List getSuggestions(CommandSource source, String[] args) {
         if (!Settings.commandClone) return Collections.emptyList();
         if (args.length > 0 && args.length <= 3) {
-            return getCoordinateSuggestions(source, args, 0);
+            return suggestCoordinates(source, args, 0);
         } else if (args.length > 3 && args.length <= 6) {
-            return getCoordinateSuggestions(source, args, 3);
+            return suggestCoordinates(source, args, 3);
         } else if (args.length > 6 && args.length <= 9) {
-            return getCoordinateSuggestions(source, args, 6);
+            return suggestCoordinates(source, args, 6);
         } else if (args.length == 10) {
-            return getMatchingArgs(args, new String[]{"replace", "masked", "filtered"});
+            return suggestMatching(args, new String[]{"replace", "masked", "filtered"});
         } else if (args.length == 11) {
-            return getMatchingArgs(args, new String[]{"normal", "force", "move"});
+            return suggestMatching(args, new String[]{"normal", "force", "move"});
         } else {
-            return args.length == 12 && "filtered".equals(args[9]) ? getMatchingArgs(args, Block.REGISTRY.keySet()) : null;
+            return args.length == 12 && "filtered".equals(args[9]) ? suggestMatching(args, Block.REGISTRY.keySet()) : null;
         }
     }
 

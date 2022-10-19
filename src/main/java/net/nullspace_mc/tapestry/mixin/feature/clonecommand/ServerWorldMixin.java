@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ScheduledTick;
-import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.SaveHandler;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldInfo;
-import net.minecraft.world.dimension.Dimension;
-import net.minecraft.world.gen.structure.StructureBox;
-import net.nullspace_mc.tapestry.helpers.ServerWorldHelper;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+
+import net.minecraft.server.world.ScheduledTick;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.profiler.Profiler;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldSettings;
+import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.gen.structure.StructureBox;
+import net.minecraft.world.storage.WorldStorage;
+
+import net.nullspace_mc.tapestry.helpers.ServerWorldHelper;
+
+import net.ornithemc.api.EnvType;
+import net.ornithemc.api.Environment;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin extends World implements ServerWorldHelper {
@@ -28,13 +32,13 @@ public abstract class ServerWorldMixin extends World implements ServerWorldHelpe
     private List currentScheduledTicks;
 
     @Environment(EnvType.CLIENT)
-    public ServerWorldMixin(SaveHandler saveHandler, String levelName, Dimension dimension, WorldInfo levelInfo, Profiler profiler) {
-        super(saveHandler, levelName, dimension, levelInfo, profiler);
+    public ServerWorldMixin(WorldStorage storage, String name, Dimension dimension, WorldSettings settings, Profiler profiler) {
+        super(storage, name, dimension, settings, profiler);
     }
 
     @Environment(EnvType.SERVER)
-    public ServerWorldMixin(SaveHandler saveHandler, String levelName, WorldInfo levelInfo, Dimension dimension, Profiler profiler) {
-        super(saveHandler, levelName, levelInfo, dimension, profiler);
+    public ServerWorldMixin(WorldStorage storage, String name, WorldSettings settings, Dimension dimension, Profiler profiler) {
+        super(storage, name, settings, dimension, profiler);
     }
 
     public List<ScheduledTick>getScheduledTicksInBox(StructureBox box) {

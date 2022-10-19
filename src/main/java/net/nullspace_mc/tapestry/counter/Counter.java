@@ -2,6 +2,7 @@ package net.nullspace_mc.tapestry.counter;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import net.minecraft.server.MinecraftServer;
 
 public class Counter {
@@ -15,20 +16,20 @@ public class Counter {
     }
 
     public void addToCounter(String itemName, int itemCount) {
-        if (itemCounters.isEmpty()) tickStart = MinecraftServer.getServer().getTicks();
+        if (itemCounters.isEmpty()) tickStart = MinecraftServer.getInstance().getTicks();
         if (!itemCounters.containsKey(itemName)) itemCounters.put(itemName, 0);
         itemCounters.put(itemName, itemCounters.get(itemName) + itemCount);
         totalCount += itemCount;
     }
 
     public void resetCounter() {
-        tickStart = MinecraftServer.getServer().getTicks();
+        tickStart = MinecraftServer.getInstance().getTicks();
         itemCounters.clear();
         totalCount = 0;
     }
 
     public int getRunningTime() {
-        return MinecraftServer.getServer().getTicks() - this.tickStart;
+        return MinecraftServer.getInstance().getTicks() - this.tickStart;
     }
 
     public int getTotalCount() {

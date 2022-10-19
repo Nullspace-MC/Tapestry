@@ -5,7 +5,7 @@ import net.minecraft.inventory.Inventory;
 public class InventoryHelper {
     public static void clearInventory(Inventory inv) {
         for (int s = 0; s < inv.getSize(); ++s) {
-            inv.removeStack(s);
+            inv.removeStackQuietly(s);
         }
     }
 }

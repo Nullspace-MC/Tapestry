@@ -1,17 +1,19 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillupdates;
 
-import net.minecraft.block.Block;
-import net.minecraft.server.command.AbstractCommand;
-import net.minecraft.server.command.SetBlockCommand;
-import net.minecraft.world.World;
-import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import net.minecraft.block.Block;
+import net.minecraft.server.command.Command;
+import net.minecraft.server.command.SetBlockCommand;
+import net.minecraft.world.World;
+
+import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
+import net.nullspace_mc.tapestry.settings.Settings;
+
 @Mixin(SetBlockCommand.class)
-public abstract class SetBlockCommandMixin extends AbstractCommand {
+public abstract class SetBlockCommandMixin extends Command {
 
     @Redirect(
             method = "execute",

@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.server.command.CommandSource;
+
 import net.minecraft.server.command.exception.IncorrectUsageException;
+import net.minecraft.server.command.source.CommandSource;
 import net.minecraft.text.LiteralText;
+
 import net.nullspace_mc.tapestry.counter.Counter;
 import net.nullspace_mc.tapestry.counter.CounterRegistry;
 import net.nullspace_mc.tapestry.settings.Settings;
 import net.nullspace_mc.tapestry.util.MathUtil;
 
-public class CounterCommand extends TapestryAbstractCommand {
+public class CounterCommand extends TapestryCommand {
 
     @Override
     public String getName() {
@@ -20,7 +22,7 @@ public class CounterCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int getRequiredPermissionLevel() {
         return Settings.commandCounter ? 2 : 5;
     }
 

@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.io.Charsets;
+
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.entity.living.player.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.village.Village;
-import net.minecraft.village.VillageDoor;
-import net.minecraft.village.VillageState;
-import org.apache.commons.io.Charsets;
+import net.minecraft.world.village.SavedVillageData;
+import net.minecraft.world.village.Village;
+import net.minecraft.world.village.VillageDoor;
 
 public class KaboVillageMarker {
 
     private static HashMap<String, ServerPlayerEntity> players = new HashMap<String, ServerPlayerEntity>();
     private static int id = 0;
     private boolean shouldUpdateClients = false;
-    private MinecraftServer mc = MinecraftServer.getServer();
+    private MinecraftServer mc = MinecraftServer.getInstance();
     private ServerWorld world;
     private int dimension;
     private String dataString;
@@ -71,15 +73,15 @@ public class KaboVillageMarker {
 
     public String buildDataString() {
         String data = "";
-        VillageState villageState = this.world.villageState;
-        List villages = villageState.getVillages();
+        SavedVillageData villageData = this.world.villageData;
+        List villages = villageData.getVillages();
         data = data + this.dimension + ":";
 
         for (Iterator i = villages.iterator(); i.hasNext();) {
             Object villageObj = i.next();
             if (villageObj instanceof Village) {
                 Village village = (Village)villageObj;
-                data = data + village.getRadius() + ";" + village.getMinPos().x + "," + village.getMinPos().y + "," + village.getMinPos().z + ";";
+                data = data + village.getRadius() + ";" + village.getCenter().x + "," + village.getCenter().y + "," + village.getCenter().z + ";";
                 List doors = village.getDoors();
 
                 for (Iterator j = doors.iterator(); j.hasNext();) {

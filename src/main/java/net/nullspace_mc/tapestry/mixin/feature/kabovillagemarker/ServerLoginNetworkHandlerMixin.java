@@ -1,29 +1,30 @@
 package net.nullspace_mc.tapestry.mixin.feature.kabovillagemarker;
 
-import net.minecraft.network.Connection;
-import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
-import net.minecraft.server.PlayerManager;
-import net.minecraft.server.entity.living.player.ServerPlayerEntity;
-import net.minecraft.server.network.handler.ServerLoginNetworkHandler;
-import net.nullspace_mc.tapestry.helpers.KaboVillageMarker;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.apache.commons.io.Charsets;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import net.minecraft.network.Connection;
+import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
+import net.minecraft.server.PlayerManager;
+import net.minecraft.server.entity.living.player.ServerPlayerEntity;
+import net.minecraft.server.network.handler.ServerLoginNetworkHandler;
+
+import net.nullspace_mc.tapestry.settings.Settings;
+
 @Mixin(ServerLoginNetworkHandler.class)
 public abstract class ServerLoginNetworkHandlerMixin {
 
     @Redirect(
-            method = "setUuid",
+            method = "acceptLogin",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/server/PlayerManager;onPlayerConnect(Lnet/minecraft/network/Connection;Lnet/minecraft/server/entity/living/player/ServerPlayerEntity;)V"
+                    target = "Lnet/minecraft/server/PlayerManager;onLogin(Lnet/minecraft/network/Connection;Lnet/minecraft/server/entity/living/player/ServerPlayerEntity;)V"
             )
     )
     private void pollKVMPlayer(PlayerManager pm, Connection connection, ServerPlayerEntity player) {
-        pm.onPlayerConnect(connection, player);
+        pm.onLogin(connection, player);
 
         if (Settings.kaboVillageMarker) {
             try {

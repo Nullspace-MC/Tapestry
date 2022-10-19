@@ -1,17 +1,13 @@
 pluginManagement {
     repositories {
         maven {
+            name = 'Ornithe'
+            url = 'https://maven.ornithemc.net/releases'
+        }
+        maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
         gradlePluginPortal()
-        maven {
-            name = 'Jitpack'
-            url = 'https://jitpack.io'
-        }
-        maven {
-            name = 'Cotton'
-            url = 'https://server.bbkr.space/artifactory/libs-release/'
-        }
     }
 }
