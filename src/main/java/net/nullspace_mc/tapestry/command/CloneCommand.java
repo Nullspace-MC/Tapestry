@@ -104,7 +104,7 @@ public class CloneCommand extends TapestryCommand {
                                                 NbtCompound compoundTag = new NbtCompound();
                                                 blockEntity.writeNbt(compoundTag);
                                                 list2.add(new CloneCommand.BlockInfo(dest, block, meta, compoundTag));
-                                            } else if (!block.isSolid() && !block.isFullCube()) {
+                                            } else if (!block.isOpaque() && !block.isFullCube()) {
                                                 list3.add(new CloneCommand.BlockInfo(dest, block, meta, null));
                                                 linkedList.addFirst(src);
                                             } else {
