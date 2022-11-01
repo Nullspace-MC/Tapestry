@@ -34,7 +34,7 @@ configurations.all {
 processResources {
     inputs.property "version", project.version
 
-    filesMatching("fabric.mod.json") {
+    filesMatching("ornithe.mod.json") {
         expand "version": project.version
     }
 }
