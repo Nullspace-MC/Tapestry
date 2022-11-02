@@ -1,12 +1,5 @@
 package net.nullspace_mc.tapestry.mixin.feature.chunkpattern;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.server.world.chunk.FlatChunkGenerator;
-import net.minecraft.world.gen.layer.FlatWorldLayer;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,6 +8,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.world.chunk.WorldChunkSection;
+import net.minecraft.world.gen.chunk.FlatChunkGenerator;
+
+import net.nullspace_mc.tapestry.settings.Settings;
 
 @Mixin(FlatChunkGenerator.class)
 public abstract class FlatChunkGeneratorMixin {
@@ -31,7 +32,7 @@ public abstract class FlatChunkGeneratorMixin {
             method = "<init>",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/gen/layer/FlatWorldLayer;method_8983()I"
+                    target = "Lnet/minecraft/world/gen/FlatWorldLayer;getBlockMetadata()I"
             )
     )
     private void countFullLayer(World world, long l, boolean bl, String string, CallbackInfo ci) {
@@ -46,10 +47,10 @@ public abstract class FlatChunkGeneratorMixin {
             locals = LocalCapture.CAPTURE_FAILEXCEPTION,
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/chunk/ChunkSection;setBlock(IIILnet/minecraft/block/Block;)V"
+                    target = "Lnet/minecraft/world/chunk/WorldChunkSection;setBlock(IIILnet/minecraft/block/Block;)V"
             )
     )
-    private void swapSetBlock(int chunkX, int chunkZ, CallbackInfoReturnable cir, Chunk chunk, int y, Block block, int csIdx, ChunkSection cs, int x, int z) {
+    private void swapSetBlock(int chunkX, int chunkZ, CallbackInfoReturnable<WorldChunk> cir, WorldChunk chunk, int y, Block block, int csIdx, WorldChunkSection cs, int x, int z) {
         if (Settings.chunkPattern && fullLayers == 2 && y < 2 && ((chunkX ^ chunkZ) & 1) != 0) {
             cs.setBlock(x, y & 15, z, this.blocks[1 - y]);
         } else {
@@ -64,10 +65,10 @@ public abstract class FlatChunkGeneratorMixin {
             method = "getChunk",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/chunk/ChunkSection;setBlock(IIILnet/minecraft/block/Block;)V"
+                    target = "Lnet/minecraft/world/chunk/WorldChunkSection;setBlock(IIILnet/minecraft/block/Block;)V"
             )
     )
-    private void disableSetBlock(ChunkSection cs, int x, int y, int z, Block b) {}
+    private void disableSetBlock(WorldChunkSection cs, int x, int y, int z, Block b) {}
 
     /**
      * Swap layers for setBlockMeta call
@@ -77,10 +78,10 @@ public abstract class FlatChunkGeneratorMixin {
             locals = LocalCapture.CAPTURE_FAILEXCEPTION,
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/chunk/ChunkSection;setBlockMetadata(IIII)V"
+                    target = "Lnet/minecraft/world/chunk/WorldChunkSection;setBlockMetadata(IIII)V"
             )
     )
-    private void swapSetBlockMetadata(int chunkX, int chunkZ, CallbackInfoReturnable cir, Chunk chunk, int y, Block block, int csIdx, ChunkSection cs, int x, int z) {
+    private void swapSetBlockMetadata(int chunkX, int chunkZ, CallbackInfoReturnable<WorldChunk> cir, WorldChunk chunk, int y, Block block, int csIdx, WorldChunkSection cs, int x, int z) {
         if (Settings.chunkPattern && fullLayers == 2 && y < 2 && ((chunkX ^ chunkZ) & 1) != 0) {
             cs.setBlockMetadata(x, y & 15, z, this.blockMetadata[1 - y]);
         } else {
@@ -95,8 +96,8 @@ public abstract class FlatChunkGeneratorMixin {
             method = "getChunk",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/chunk/ChunkSection;setBlockMetadata(IIII)V"
+                    target = "Lnet/minecraft/world/chunk/WorldChunkSection;setBlockMetadata(IIII)V"
             )
     )
-    private void disableSetBlockMetadata(ChunkSection cs, int x, int y, int z, int m) {}
+    private void disableSetBlockMetadata(WorldChunkSection cs, int x, int y, int z, int m) {}
 }

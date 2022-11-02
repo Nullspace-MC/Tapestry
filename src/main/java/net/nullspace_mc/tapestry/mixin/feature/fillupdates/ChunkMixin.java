@@ -1,22 +1,24 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillupdates;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Chunk.class)
+import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityProvider;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.WorldChunk;
+
+import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
+import net.nullspace_mc.tapestry.settings.Settings;
+
+@Mixin(WorldChunk.class)
 public abstract class ChunkMixin {
 
     @Redirect(
-            method = "setBlockWithMetadata",
+            method = "setBlockWithMetadataAt",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/Block;onRemoved(Lnet/minecraft/world/World;IIILnet/minecraft/block/Block;I)V"
@@ -31,7 +33,7 @@ public abstract class ChunkMixin {
     }
 
     @Redirect(
-            method = "setBlockWithMetadata",
+            method = "setBlockWithMetadataAt",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/Block;onAdded(Lnet/minecraft/world/World;III)V"
@@ -44,10 +46,10 @@ public abstract class ChunkMixin {
     }
 
     @Inject(
-            method = "setBlockWithMetadata",
+            method = "setBlockWithMetadataAt",
             at = @At("RETURN")
     )
-    private void startFillUpdates(int x, int y, int z, Block block, int metadata, CallbackInfoReturnable cir) {
+    private void startFillUpdates(int x, int y, int z, Block block, int metadata, CallbackInfoReturnable<Boolean> cir) {
         SetBlockHelper.applyFillUpdatesRule = false;
     }
 }

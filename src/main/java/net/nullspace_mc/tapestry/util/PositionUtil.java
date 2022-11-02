@@ -28,9 +28,9 @@ public class PositionUtil {
      * @return Returns an array of 3 ints, respectively the x, y and z position of the offset.
      */
     public static int[] offset(int x, int y, int z, Direction direction, int amount) {
-        x += direction.getXOffset() * amount;
-        y += direction.getYOffset() * amount;
-        z += direction.getZOffset() * amount;
+        x += direction.getOffsetX() * amount;
+        y += direction.getOffsetY() * amount;
+        z += direction.getOffsetZ() * amount;
         return new int[]{x, y, z};
     }
 }

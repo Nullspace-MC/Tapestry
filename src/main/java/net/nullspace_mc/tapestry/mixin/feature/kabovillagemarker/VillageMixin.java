@@ -1,15 +1,16 @@
 package net.nullspace_mc.tapestry.mixin.feature.kabovillagemarker;
 
-import net.minecraft.village.Village;
-import net.minecraft.world.World;
-import net.nullspace_mc.tapestry.helpers.KaboVillageMarker;
-import net.nullspace_mc.tapestry.helpers.VillageMarkerAccessor;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import net.minecraft.world.World;
+import net.minecraft.world.village.Village;
+
+import net.nullspace_mc.tapestry.helpers.VillageMarkerAccessor;
+import net.nullspace_mc.tapestry.settings.Settings;
 
 @Mixin(Village.class)
 public abstract class VillageMixin {
@@ -20,7 +21,7 @@ public abstract class VillageMixin {
     private boolean shouldUpdateKaboVillageMarker = false;
 
     @Inject(
-            method = "setTicks",
+            method = "tick",
             at = @At("TAIL")
     )
     private void updateKVM(int ticks, CallbackInfo ci) {
@@ -31,10 +32,10 @@ public abstract class VillageMixin {
     }
 
     @Inject(
-            method = "tickDoors",
+            method = "cleanUpDoors",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/village/Village;updateRadius()V"
+                    target = "Lnet/minecraft/world/village/Village;updateCenterAndRadius()V"
             )
     )
     private void scheduleKVMUpdate(CallbackInfo ci) {

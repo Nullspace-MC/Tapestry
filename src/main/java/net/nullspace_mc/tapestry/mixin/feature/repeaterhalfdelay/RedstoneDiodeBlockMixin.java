@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class RedstoneDiodeBlockMixin {
 
     @Redirect(
-            method = "update",
+            method = "updatePowered",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;scheduleTick(IIILnet/minecraft/block/Block;II)V"

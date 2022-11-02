@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.core;
 
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.CommandRegistry;
+import net.minecraft.server.command.handler.CommandManager;
+import net.minecraft.server.command.handler.CommandRegistry;
 import net.nullspace_mc.tapestry.command.CloneCommand;
 import net.nullspace_mc.tapestry.command.CounterCommand;
 import net.nullspace_mc.tapestry.command.FillCommand;

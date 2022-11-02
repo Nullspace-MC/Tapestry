@@ -1,17 +1,18 @@
 package net.nullspace_mc.tapestry.mixin.feature.fillorientationfix;
 
-import net.minecraft.server.command.AbstractCommand;
-import net.minecraft.server.command.CommandSource;
-import net.minecraft.server.command.SetBlockCommand;
-import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.server.command.Command;
+import net.minecraft.server.command.SetBlockCommand;
+import net.minecraft.server.command.source.CommandSource;
+
+import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
+
 @Mixin(SetBlockCommand.class)
-public abstract class SetBlockCommandMixin extends AbstractCommand {
+public abstract class SetBlockCommandMixin extends Command {
 
     @Inject(
             method = "execute",

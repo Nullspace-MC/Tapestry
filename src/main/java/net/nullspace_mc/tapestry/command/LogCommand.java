@@ -3,14 +3,16 @@ package net.nullspace_mc.tapestry.command;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.server.command.CommandSource;
 import net.minecraft.server.command.exception.IncorrectUsageException;
+import net.minecraft.server.command.source.CommandSource;
+
 import net.nullspace_mc.tapestry.loggers.Logger;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
 import net.nullspace_mc.tapestry.settings.Settings;
 
-public class LogCommand extends TapestryAbstractCommand {
+public class LogCommand extends TapestryCommand {
 
     @Override
     public String getName() {
@@ -23,7 +25,7 @@ public class LogCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int getRequiredPermissionLevel() {
         return Settings.commandLog ? 0 : 5;
     }
 

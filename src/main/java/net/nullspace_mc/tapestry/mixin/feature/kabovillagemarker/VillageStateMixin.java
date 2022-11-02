@@ -1,17 +1,18 @@
 package net.nullspace_mc.tapestry.mixin.feature.kabovillagemarker;
 
-import net.minecraft.village.VillageState;
-import net.minecraft.world.World;
-import net.nullspace_mc.tapestry.helpers.KaboVillageMarker;
-import net.nullspace_mc.tapestry.helpers.VillageMarkerAccessor;
-import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(VillageState.class)
+import net.minecraft.world.World;
+import net.minecraft.world.village.SavedVillageData;
+
+import net.nullspace_mc.tapestry.helpers.VillageMarkerAccessor;
+import net.nullspace_mc.tapestry.settings.Settings;
+
+@Mixin(SavedVillageData.class)
 public abstract class VillageStateMixin {
 
     @Shadow
@@ -31,10 +32,10 @@ public abstract class VillageStateMixin {
     }
 
     @Inject(
-            method = "removeVillagesWithNoDoors",
+            method = "removeVillagesWithoutDoors",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/village/VillageState;markDirty()V"
+                    target = "Lnet/minecraft/world/village/SavedVillageData;markDirty()V"
             )
     )
     private void scheduleKVMUpdateRemoveVillagesWithNoDoors(CallbackInfo ci) {
@@ -47,7 +48,7 @@ public abstract class VillageStateMixin {
             method = "addDoorsToVillages",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/village/Village;addDoor(Lnet/minecraft/village/VillageDoor;)V"
+                    target = "Lnet/minecraft/world/village/Village;addDoor(Lnet/minecraft/world/village/VillageDoor;)V"
             )
     )
     private void scheduleKVMUpdateAddDoorsToVillages(CallbackInfo ci) {
@@ -57,7 +58,7 @@ public abstract class VillageStateMixin {
     }
 
     @Inject(
-            method = "addDoor",
+            method = "addNewDoor",
             at = @At(
                     value = "INVOKE",
                     target = "Ljava/util/List;add(Ljava/lang/Object;)Z"

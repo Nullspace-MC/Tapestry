@@ -25,7 +25,7 @@ public abstract class CommandBlockMixin extends BlockWithBlockEntity {
     public abstract int getTickRate(World world);
 
     @Inject(
-            method = "onScheduledTick",
+            method = "tick",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;updateComparators(IIILnet/minecraft/block/Block;)V"

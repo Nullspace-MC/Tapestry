@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class RedstoneWireBlockMixin {
 
     @Inject(
-            method = "update",
+            method = "updatePower",
             at = @At(
                     value = "INVOKE",
                     target = "Ljava/util/Set;clear()V"

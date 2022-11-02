@@ -4,24 +4,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.server.command.AbstractCommand;
-import net.minecraft.server.command.CommandSource;
 import net.minecraft.server.command.exception.CommandException;
 import net.minecraft.server.command.exception.IncorrectUsageException;
-import net.minecraft.text.ClickAction;
+import net.minecraft.server.command.source.CommandSource;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.Formatting;
-import net.minecraft.text.HoverAction;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+
 import net.nullspace_mc.tapestry.settings.ParsedRule;
 import net.nullspace_mc.tapestry.settings.RuleCategory;
 import net.nullspace_mc.tapestry.settings.SettingsManager;
 
-public class TapCommand extends TapestryAbstractCommand {
+public class TapCommand extends TapestryCommand {
 
     @Override
     public String getName() {
@@ -34,7 +32,7 @@ public class TapCommand extends TapestryAbstractCommand {
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int getRequiredPermissionLevel() {
         return 2;
     }
 
@@ -45,10 +43,10 @@ public class TapCommand extends TapestryAbstractCommand {
         String val = rule.getValueString();
         Text out = new LiteralText(" - " + name + " ");
         out.getStyle().setFormatting(Formatting.WHITE);
-        out.getStyle().setClickEvent(new ClickEvent(ClickAction.RUN_COMMAND, "/tap " + name));
+        out.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap " + name));
         Text hoverText = new LiteralText(rule.desc);
         hoverText.getStyle().setFormatting(Formatting.YELLOW);
-        out.getStyle().setHoverEvent(new HoverEvent(HoverAction.SHOW_TEXT, hoverText));
+        out.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText));
 
         for (String option : rule.options) {
             Text opt = new LiteralText("[" + option + "]");
@@ -57,14 +55,14 @@ public class TapCommand extends TapestryAbstractCommand {
             if (option.equalsIgnoreCase(def)) {
                 opt.getStyle().setBold(Boolean.TRUE);
             } else if (option.equalsIgnoreCase(val)) {
-                opt.getStyle().setUnderline(Boolean.TRUE);
+                opt.getStyle().setUnderlined(Boolean.TRUE);
             }
 
             if (!option.equalsIgnoreCase(val)) {
-                opt.getStyle().setClickEvent(new ClickEvent(ClickAction.RUN_COMMAND, "/tap " + name + " " + option));
+                opt.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap " + name + " " + option));
                 Text optHoverText = new LiteralText("Switch to " + option);
                 optHoverText.getStyle().setFormatting(Formatting.WHITE);
-                opt.getStyle().setHoverEvent(new HoverEvent(HoverAction.SHOW_TEXT, optHoverText));
+                opt.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, optHoverText));
             }
 
             out.append(opt);
@@ -125,8 +123,8 @@ public class TapCommand extends TapestryAbstractCommand {
                     category.getStyle().setFormatting(Formatting.AQUA);
                     Text ctgyHoverText = new LiteralText("List all " + ctgyName + " settings");
                     ctgyHoverText.getStyle().setFormatting(Formatting.GRAY);
-                    category.getStyle().setHoverEvent(new HoverEvent(HoverAction.SHOW_TEXT, ctgyHoverText));
-                    category.getStyle().setClickEvent(new ClickEvent(ClickAction.RUN_COMMAND, "/tap list " + ctgyName));
+                    category.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, ctgyHoverText));
+                    category.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap list " + ctgyName));
                     categories.append(category);
                 }
 
@@ -153,31 +151,31 @@ public class TapCommand extends TapestryAbstractCommand {
         if ("use".equalsIgnoreCase(args[0])) {
             if ("default".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToConf();
-                sendFeedback(source, "Set all rules to user defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to user defaults", new Object[0]);
                 return;
             }
 
             if ("vanilla".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToVanilla();
-                sendFeedback(source, "Set all rules to vanilla", new Object[0]);
+                sendSuccess(source, "Set all rules to vanilla", new Object[0]);
                 return;
             }
 
             if ("survival".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToSurvival();
-                sendFeedback(source, "Set all rules to survival defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to survival defaults", new Object[0]);
                 return;
             }
 
             if ("creative".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToCreative();
-                sendFeedback(source, "Set all rules to creative defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to creative defaults", new Object[0]);
                 return;
             }
 
             if ("bugfixes".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToBugFix();
-                sendFeedback(source, "Set all rules to bugfix defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to bugfix defaults", new Object[0]);
                 return;
             }
 
@@ -203,7 +201,7 @@ public class TapCommand extends TapestryAbstractCommand {
                     SettingsManager.addOrSetOverride(current, SettingsManager.getRule(current));
                 }
 
-                sendFeedback(source, "All current rules will be set upon restart", new Object[0]);
+                sendSuccess(source, "All current rules will be set upon restart", new Object[0]);
                 return;
             }
 
@@ -218,7 +216,7 @@ public class TapCommand extends TapestryAbstractCommand {
             boolean success = SettingsManager.addOrSetOverride(args[1], args[2]);
 
             if (success) {
-                sendFeedback(source, SettingsManager.getParsedRule(args[1]).name + " will default to: " + args[2], new Object[0]);
+                sendSuccess(source, SettingsManager.getParsedRule(args[1]).name + " will default to: " + args[2], new Object[0]);
             } else {
                 throw new CommandException(args[2] + " is not a legal value for " + SettingsManager.getParsedRule(args[1]).name, new Object[0]);
             }
@@ -236,14 +234,14 @@ public class TapCommand extends TapestryAbstractCommand {
                     SettingsManager.removeOverride(override);
                 }
 
-                sendFeedback(source, "All rules will not be set upon restart", new Object[0]);
+                sendSuccess(source, "All rules will not be set upon restart", new Object[0]);
                 return;
             }
 
             boolean success = SettingsManager.removeOverride(args[1]);
 
             if (success) {
-                sendFeedback(source, SettingsManager.getParsedRule(args[1]).name + " will not be set upon restart", new Object[0]);
+                sendSuccess(source, SettingsManager.getParsedRule(args[1]).name + " will not be set upon restart", new Object[0]);
             } else {
                 throw new CommandException("Unknown rule: " + args[1], new Object[0]);
             }
@@ -268,8 +266,8 @@ public class TapCommand extends TapestryAbstractCommand {
             setDefault.getStyle().setFormatting(Formatting.AQUA);
             Text setDefaultHoverText = new LiteralText("Click to keep the rule in tapestry.conf to save across restarts");
             setDefaultHoverText.getStyle().setFormatting(Formatting.WHITE);
-            setDefault.getStyle().setHoverEvent(new HoverEvent(HoverAction.SHOW_TEXT, setDefaultHoverText));
-            setDefault.getStyle().setClickEvent(new ClickEvent(ClickAction.SUGGEST_COMMAND, "/tap setDefault " + SettingsManager.getParsedRule(args[0]).name + " " + args[1]));
+            setDefault.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, setDefaultHoverText));
+            setDefault.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tap setDefault " + SettingsManager.getParsedRule(args[0]).name + " " + args[1]));
             successMsg.append(setDefault);
             source.sendMessage(successMsg);
             return;
@@ -283,11 +281,11 @@ public class TapCommand extends TapestryAbstractCommand {
             refreshButton.getStyle().setBold(Boolean.TRUE);
             Text refreshButtonHoverText = new LiteralText("refresh");
             refreshButtonHoverText.getStyle().setFormatting(Formatting.WHITE);
-            refreshButton.getStyle().setHoverEvent(new HoverEvent(HoverAction.SHOW_TEXT, refreshButtonHoverText));
-            refreshButton.getStyle().setClickEvent(new ClickEvent(ClickAction.RUN_COMMAND, "/tap " + args[0]));
+            refreshButton.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, refreshButtonHoverText));
+            refreshButton.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap " + args[0]));
             player.sendMessage(refreshButton);
 
-            ParsedRule rule = SettingsManager.getParsedRule(args[0]);
+            ParsedRule<?> rule = SettingsManager.getParsedRule(args[0]);
 
             player.sendMessage(new LiteralText(rule.desc));
             for (String info : rule.extra) {
@@ -313,8 +311,8 @@ public class TapCommand extends TapestryAbstractCommand {
                 tagText.getStyle().setFormatting(Formatting.AQUA);
                 Text tagHoverText = new LiteralText("list all " + tagName + " rules");
                 tagHoverText.getStyle().setFormatting(Formatting.GRAY);
-                tagText.getStyle().setHoverEvent(new HoverEvent(HoverAction.SHOW_TEXT, tagHoverText));
-                tagText.getStyle().setClickEvent(new ClickEvent(ClickAction.RUN_COMMAND, "/tap list " + tagName));
+                tagText.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tagHoverText));
+                tagText.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap list " + tagName));
                 tags.append(tagText);
             }
 
@@ -344,7 +342,7 @@ public class TapCommand extends TapestryAbstractCommand {
                 Text opt = new LiteralText(o);
 
                 if (o.equals(rule.def)) {
-                    opt.getStyle().setUnderline(Boolean.TRUE);
+                    opt.getStyle().setUnderlined(Boolean.TRUE);
                 }
 
                 if (o.equals(rule.getValueString())) {
@@ -356,8 +354,8 @@ public class TapCommand extends TapestryAbstractCommand {
 
                 Text optHoverText = new LiteralText("Switch to " + o);
                 optHoverText.getStyle().setFormatting(Formatting.GRAY);
-                opt.getStyle().setHoverEvent(new HoverEvent(HoverAction.SHOW_TEXT, optHoverText));
-                opt.getStyle().setClickEvent(new ClickEvent(ClickAction.SUGGEST_COMMAND, "/tap " + SettingsManager.getParsedRule(args[0]).name + " " + o));
+                opt.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, optHoverText));
+                opt.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tap " + SettingsManager.getParsedRule(args[0]).name + " " + o));
                 options.append(opt);
             }
 
@@ -385,11 +383,11 @@ public class TapCommand extends TapestryAbstractCommand {
                 categories[i] = categoryEnums[i].toString().toLowerCase();
             }
 
-            return getMatchingArgs(args, categories);
+            return suggestMatching(args, categories);
         }
 
         if (args.length == 2 && "use".equalsIgnoreCase(args[0])) {
-            return getMatchingArgs(args, new String[] {"survival", "creative", "default", "vanilla", "bugfixes"});
+            return suggestMatching(args, new String[] {"survival", "creative", "default", "vanilla", "bugfixes"});
         }
 
         String tag = null;
@@ -417,7 +415,7 @@ public class TapCommand extends TapestryAbstractCommand {
                 lst.add("list");
             }
 
-            return getMatchingArgs(args, lst.toArray(new String[0]));
+            return suggestMatching(args, lst.toArray(new String[0]));
         }
 
         if (args.length == 2 && !"defaults".equalsIgnoreCase(args[0])) {
@@ -430,7 +428,7 @@ public class TapCommand extends TapestryAbstractCommand {
                 }
 
                 setDefaultOpts[setDefaultOpts.length - 1] = "current";
-                return getMatchingArgs(args, setDefaultOpts);
+                return suggestMatching(args, setDefaultOpts);
             }
 
             if ("removeDefault".equalsIgnoreCase(args[0])) {
@@ -442,14 +440,14 @@ public class TapCommand extends TapestryAbstractCommand {
                 }
 
                 removeDefaultOpts[removeDefaultOpts.length - 1] = "all";
-                return getMatchingArgs(args, removeDefaultOpts);
+                return suggestMatching(args, removeDefaultOpts);
             }
 
-            return getMatchingArgs(args, SettingsManager.getParsedRule(args[0]).options);
+            return suggestMatching(args, SettingsManager.getParsedRule(args[0]).options);
         }
 
         if (args.length == 3 && "setDefault".equalsIgnoreCase(args[0])) {
-            return getMatchingArgs(args, SettingsManager.getParsedRule(args[1]).options);
+            return suggestMatching(args, SettingsManager.getParsedRule(args[1]).options);
         }
 
         return Collections.<String>emptyList();

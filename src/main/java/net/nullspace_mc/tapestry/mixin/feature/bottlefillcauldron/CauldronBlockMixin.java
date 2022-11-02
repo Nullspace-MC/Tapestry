@@ -33,12 +33,12 @@ public abstract class CauldronBlockMixin {
                 this.setLevel(world, x, y, z, ++metadata);
             }
             if (!player.abilities.creativeMode) {
-                stack.count--;
-                if (stack.count <= 0) player.inventory.setStack(player.inventory.selectedSlot, null);
+                stack.size--;
+                if (stack.size <= 0) player.inventory.setStack(player.inventory.selectedSlot, null);
 
                 ItemStack result = new ItemStack(Items.GLASS_BOTTLE, 1, 0);
                 if (!player.inventory.insertStack(result)) world.spawnEntity(new ItemEntity(world, x + 0.5D, y + 0.5D, z + 0.5D, result));
-                else ((ServerPlayerEntity)player).updateScreenHandler(player.playerScreenHandler);
+                else ((ServerPlayerEntity)player).updateScreenHandler(player.playerMenu);
             }
         }
     }
