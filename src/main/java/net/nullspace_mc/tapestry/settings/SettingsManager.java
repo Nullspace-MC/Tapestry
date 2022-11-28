@@ -196,6 +196,10 @@ public class SettingsManager {
         }
 
         try {
+            File config = MinecraftServer.getInstance().getFile("config");
+            if(!config.exists()) {
+                config.mkdir();
+            }
             File rules_file = MinecraftServer.getInstance().getFile("config/tapestry.conf");
             FileWriter fw = new FileWriter(rules_file);
 
