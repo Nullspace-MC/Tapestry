@@ -88,7 +88,7 @@ public class KaboVillageMarker {
                     Object doorObj  = j.next();
                     if (doorObj instanceof VillageDoor) {
                         VillageDoor door = (VillageDoor)doorObj;
-                        data = data + door.posX + "," + door.posY + "," + door.posZ + ";";
+                        data = data + door.x + "," + door.y + "," + door.z + ";";
                     }
                 }
 

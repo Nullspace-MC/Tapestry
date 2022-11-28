@@ -21,7 +21,7 @@ public abstract class CauldronBlockMixin extends Block {
     public void onPlaced(World world, int x, int y, int z, LivingEntity entity, ItemStack stack) {
         if (Settings.placeFilledCauldron && entity instanceof PlayerEntity) {
             try {
-                int i = Integer.parseInt(stack.getName());
+                int i = Integer.parseInt(stack.getHoverName());
                 if (i > 0 && i < 16) {
                     world.setBlockMetadata(x, y, z, i, 4);
                 }

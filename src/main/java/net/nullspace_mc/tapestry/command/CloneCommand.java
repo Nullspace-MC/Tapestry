@@ -43,7 +43,7 @@ public class CloneCommand extends TapestryCommand {
     }
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void run(CommandSource source, String[] args) {
         if (args.length < 9) {
             throw new IncorrectUsageException(getUsage(source), new Object[0]);
         } else {

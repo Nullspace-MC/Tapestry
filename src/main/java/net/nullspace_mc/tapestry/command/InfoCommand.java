@@ -39,7 +39,7 @@ public class InfoCommand extends TapestryCommand {
     }
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void run(CommandSource source, String[] args) {
         if (args[0].equals("block")) {
             if (args.length != 4) throw new IncorrectUsageException(getUsage(source));
             sendBlockInfo(source, args);
@@ -63,7 +63,7 @@ public class InfoCommand extends TapestryCommand {
         BlockPos pos = parseBlockPos(source, args, 1);
         World world = source.getSourceWorld();
         Block block = world.getBlock(pos.x, pos.y, pos.z);
-        source.sendMessage(new LiteralText(String.format("Block > %s : %d", block.getDisplayName(), world.getBlockMetadata(pos.x, pos.y, pos.z))));
+        source.sendMessage(new LiteralText(String.format("Block > %s : %d", block.getName(), world.getBlockMetadata(pos.x, pos.y, pos.z))));
         if (block instanceof BlockWithBlockEntity) {
             BlockEntity blockEntity = world.getBlockEntity(pos.x, pos.y, pos.z);
             source.sendMessage(new LiteralText("Block Entity > " + BlockEntityMixin.getTypeToId().get(blockEntity.getClass())));
@@ -73,7 +73,7 @@ public class InfoCommand extends TapestryCommand {
                 for (int i = 1; i < inv.getSize() + 1; i++) {
                     ItemStack item = inv.getStack(i - 1);
                     if (item != null)   {
-                        bobTheBuilder.append(String.format("[slot %d: %s, count: %d]", i, item.getName(), item.size));
+                        bobTheBuilder.append(String.format("[slot %d: %s, count: %d]", i, item.getDisplayName(), item.size));
                         if (i != inv.getSize()) bobTheBuilder.append(", ");
                     }
                 }
