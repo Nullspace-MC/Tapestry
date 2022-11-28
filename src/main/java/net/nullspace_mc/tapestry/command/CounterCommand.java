@@ -32,7 +32,7 @@ public class CounterCommand extends TapestryCommand {
     }
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void run(CommandSource source, String[] args) {
         if (args.length == 0) throw new IncorrectUsageException(getUsage(source));
         if (!args[0].equalsIgnoreCase("all") && !CounterRegistry.getCounterColors().contains(args[0].toLowerCase())) throw new IncorrectUsageException("Unrecognized counter \"" + args[0] + "\"");
 

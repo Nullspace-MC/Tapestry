@@ -19,7 +19,7 @@ public abstract class CauldronBlockMixin {
     @Shadow public abstract void setLevel(World world, int x, int y, int z, int level);
 
     @Inject(
-            method = "onUse",
+            method = "use",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerInventory;getMainHandStack()Lnet/minecraft/item/ItemStack;"
@@ -37,8 +37,8 @@ public abstract class CauldronBlockMixin {
                 if (stack.size <= 0) player.inventory.setStack(player.inventory.selectedSlot, null);
 
                 ItemStack result = new ItemStack(Items.GLASS_BOTTLE, 1, 0);
-                if (!player.inventory.insertStack(result)) world.spawnEntity(new ItemEntity(world, x + 0.5D, y + 0.5D, z + 0.5D, result));
-                else ((ServerPlayerEntity)player).updateScreenHandler(player.playerMenu);
+                if (!player.inventory.insertStack(result)) world.addEntity(new ItemEntity(world, x + 0.5D, y + 0.5D, z + 0.5D, result));
+                else ((ServerPlayerEntity)player).setMenu(player.playerMenu);
             }
         }
     }

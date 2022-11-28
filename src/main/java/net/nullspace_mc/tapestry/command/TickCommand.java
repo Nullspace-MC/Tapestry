@@ -29,7 +29,7 @@ public class TickCommand extends TapestryCommand {
     }
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void run(CommandSource source, String[] args) {
         if (args.length == 0 | args.length > 2) throw new IncorrectUsageException(getUsage(source));
         if (args[0].equals("rate")) {
             if (args.length == 2) {

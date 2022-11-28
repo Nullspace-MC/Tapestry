@@ -55,7 +55,7 @@ public class MobCapLogger extends Logger {
         int mobCount = this.getMobCount(mobType, world);
         int mobCap = this.getMobCap(mobType, world);
         Text tally = new LiteralText(String.format("%s: %d/%d", label, mobCount, mobCap));
-        tally.getStyle().setFormatting(color);
+        tally.getStyle().setColor(color);
         return tally;
     }
 

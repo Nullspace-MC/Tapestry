@@ -15,7 +15,7 @@ import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 public abstract class SetBlockCommandMixin extends Command {
 
     @Inject(
-            method = "execute",
+            method = "run",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;setBlockWithMetadata(IIILnet/minecraft/block/Block;II)Z"

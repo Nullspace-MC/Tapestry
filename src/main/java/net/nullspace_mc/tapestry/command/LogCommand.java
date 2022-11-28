@@ -30,7 +30,7 @@ public class LogCommand extends TapestryCommand {
     }
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void run(CommandSource source, String[] args) {
         if (!(source instanceof PlayerEntity)) return;
         if (args.length == 0) throw new IncorrectUsageException(getUsage(source));
         if (!LoggerRegistry.getAllLoggersName().contains(args[0]))

@@ -42,15 +42,15 @@ public class TapCommand extends TapestryCommand {
         String def = rule.def;
         String val = rule.getValueString();
         Text out = new LiteralText(" - " + name + " ");
-        out.getStyle().setFormatting(Formatting.WHITE);
+        out.getStyle().setColor(Formatting.WHITE);
         out.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap " + name));
         Text hoverText = new LiteralText(rule.desc);
-        hoverText.getStyle().setFormatting(Formatting.YELLOW);
+        hoverText.getStyle().setColor(Formatting.YELLOW);
         out.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText));
 
         for (String option : rule.options) {
             Text opt = new LiteralText("[" + option + "]");
-            opt.getStyle().setFormatting(val.equalsIgnoreCase(def) ? Formatting.GRAY : (option.equalsIgnoreCase(def) ? Formatting.YELLOW : Formatting.DARK_GREEN));
+            opt.getStyle().setColor(val.equalsIgnoreCase(def) ? Formatting.GRAY : (option.equalsIgnoreCase(def) ? Formatting.YELLOW : Formatting.DARK_GREEN));
 
             if (option.equalsIgnoreCase(def)) {
                 opt.getStyle().setBold(Boolean.TRUE);
@@ -61,7 +61,7 @@ public class TapCommand extends TapestryCommand {
             if (!option.equalsIgnoreCase(val)) {
                 opt.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap " + name + " " + option));
                 Text optHoverText = new LiteralText("Switch to " + option);
-                optHoverText.getStyle().setFormatting(Formatting.WHITE);
+                optHoverText.getStyle().setColor(Formatting.WHITE);
                 opt.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, optHoverText));
             }
 
@@ -75,7 +75,7 @@ public class TapCommand extends TapestryCommand {
         if (source instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)source;
             Text titleText = new LiteralText(title + ":");
-            titleText.getStyle().setFormatting(Formatting.WHITE);
+            titleText.getStyle().setColor(Formatting.WHITE);
             titleText.getStyle().setBold(Boolean.TRUE);
             player.sendMessage(titleText);
 
@@ -92,7 +92,7 @@ public class TapCommand extends TapestryCommand {
     }
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void run(CommandSource source, String[] args) {
         if (SettingsManager.locked) {
             listRules(source, "Tapestry locked with the following rules", SettingsManager.findNonDefault());
             return;
@@ -105,7 +105,7 @@ public class TapCommand extends TapestryCommand {
 
             if (source instanceof PlayerEntity) {
                 Text categoriesHeader = new LiteralText("Browse Categories:");
-                categoriesHeader.getStyle().setFormatting(Formatting.WHITE);
+                categoriesHeader.getStyle().setColor(Formatting.WHITE);
                 source.sendMessage(categoriesHeader);
                 Text categories = new LiteralText("");
                 boolean delimit = false;
@@ -113,16 +113,16 @@ public class TapCommand extends TapestryCommand {
                 for (RuleCategory ctgy : RuleCategory.values()) {
                     if (delimit) {
                         Text delim = new LiteralText(" ");
-                        delim.getStyle().setFormatting(Formatting.WHITE);
+                        delim.getStyle().setColor(Formatting.WHITE);
                         categories.append(delim);
                     }
 
                     delimit = true;
                     String ctgyName = ctgy.name().toLowerCase();
                     Text category = new LiteralText("[" + ctgyName + "]");
-                    category.getStyle().setFormatting(Formatting.AQUA);
+                    category.getStyle().setColor(Formatting.AQUA);
                     Text ctgyHoverText = new LiteralText("List all " + ctgyName + " settings");
-                    ctgyHoverText.getStyle().setFormatting(Formatting.GRAY);
+                    ctgyHoverText.getStyle().setColor(Formatting.GRAY);
                     category.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, ctgyHoverText));
                     category.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap list " + ctgyName));
                     categories.append(category);
@@ -261,11 +261,11 @@ public class TapCommand extends TapestryCommand {
             }
 
             Text successMsg = new LiteralText(SettingsManager.getParsedRule(args[0]).name + ": " + SettingsManager.getRule(args[0]) + ", ");
-            successMsg.getStyle().setFormatting(Formatting.WHITE);
+            successMsg.getStyle().setColor(Formatting.WHITE);
             Text setDefault = new LiteralText("[change permanently?]");
-            setDefault.getStyle().setFormatting(Formatting.AQUA);
+            setDefault.getStyle().setColor(Formatting.AQUA);
             Text setDefaultHoverText = new LiteralText("Click to keep the rule in tapestry.conf to save across restarts");
-            setDefaultHoverText.getStyle().setFormatting(Formatting.WHITE);
+            setDefaultHoverText.getStyle().setColor(Formatting.WHITE);
             setDefault.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, setDefaultHoverText));
             setDefault.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tap setDefault " + SettingsManager.getParsedRule(args[0]).name + " " + args[1]));
             successMsg.append(setDefault);
@@ -277,10 +277,10 @@ public class TapCommand extends TapestryCommand {
             PlayerEntity player = (PlayerEntity)source;
             player.sendMessage(new LiteralText(""));
             Text refreshButton = new LiteralText(args[0]);
-            refreshButton.getStyle().setFormatting(Formatting.WHITE);
+            refreshButton.getStyle().setColor(Formatting.WHITE);
             refreshButton.getStyle().setBold(Boolean.TRUE);
             Text refreshButtonHoverText = new LiteralText("refresh");
-            refreshButtonHoverText.getStyle().setFormatting(Formatting.WHITE);
+            refreshButtonHoverText.getStyle().setColor(Formatting.WHITE);
             refreshButton.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, refreshButtonHoverText));
             refreshButton.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap " + args[0]));
             player.sendMessage(refreshButton);
@@ -290,27 +290,27 @@ public class TapCommand extends TapestryCommand {
             player.sendMessage(new LiteralText(rule.desc));
             for (String info : rule.extra) {
                 Text infoText = new LiteralText(" " + info);
-                infoText.getStyle().setFormatting(Formatting.GRAY);
+                infoText.getStyle().setColor(Formatting.GRAY);
                 player.sendMessage(infoText);
             }
 
             Text tags = new LiteralText("Tags :");
-            tags.getStyle().setFormatting(Formatting.WHITE);
+            tags.getStyle().setColor(Formatting.WHITE);
             boolean delimit = false;
 
             for (RuleCategory ctgy : rule.category) {
                 if (delimit) {
                     Text delim = new LiteralText(", ");
-                    delim.getStyle().setFormatting(Formatting.WHITE);
+                    delim.getStyle().setColor(Formatting.WHITE);
                     tags.append(delim);
                 }
 
                 delimit = true;
                 String tagName = ctgy.name().toLowerCase();
                 Text tagText = new LiteralText("[" + tagName + "]");
-                tagText.getStyle().setFormatting(Formatting.AQUA);
+                tagText.getStyle().setColor(Formatting.AQUA);
                 Text tagHoverText = new LiteralText("list all " + tagName + " rules");
-                tagHoverText.getStyle().setFormatting(Formatting.GRAY);
+                tagHoverText.getStyle().setColor(Formatting.GRAY);
                 tagText.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tagHoverText));
                 tagText.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tap list " + tagName));
                 tags.append(tagText);
@@ -318,23 +318,23 @@ public class TapCommand extends TapestryCommand {
 
             player.sendMessage(tags);
             Text current = new LiteralText("Current value: ");
-            current.getStyle().setFormatting(Formatting.WHITE);
+            current.getStyle().setColor(Formatting.WHITE);
             Text value = new LiteralText(String.format("%s (%s value)", rule.getValueString(), rule.getValueString().equalsIgnoreCase(rule.def) ? "default" : "modified"));
-            value.getStyle().setFormatting(rule.getValueString().equalsIgnoreCase("true") ? Formatting.GREEN : Formatting.DARK_RED);
+            value.getStyle().setColor(rule.getValueString().equalsIgnoreCase("true") ? Formatting.GREEN : Formatting.DARK_RED);
             value.getStyle().setBold(Boolean.TRUE);
             current.append(value);
             player.sendMessage(current);
             Text options = new LiteralText("Options: ");
-            options.getStyle().setFormatting(Formatting.WHITE);
+            options.getStyle().setColor(Formatting.WHITE);
             Text optionsLeftBracket = new LiteralText("[ ");
-            optionsLeftBracket.getStyle().setFormatting(Formatting.YELLOW);
+            optionsLeftBracket.getStyle().setColor(Formatting.YELLOW);
             options.append(optionsLeftBracket);
             delimit = false;
 
             for (String o : rule.options) {
                 if (delimit) {
                     Text delim = new LiteralText(" ");
-                    delim.getStyle().setFormatting(Formatting.WHITE);
+                    delim.getStyle().setColor(Formatting.WHITE);
                     options.append(delim);
                 }
 
@@ -347,20 +347,20 @@ public class TapCommand extends TapestryCommand {
 
                 if (o.equals(rule.getValueString())) {
                     opt.getStyle().setBold(Boolean.TRUE);
-                    opt.getStyle().setFormatting(Formatting.GREEN);
+                    opt.getStyle().setColor(Formatting.GREEN);
                 } else {
-                    opt.getStyle().setFormatting(Formatting.YELLOW);
+                    opt.getStyle().setColor(Formatting.YELLOW);
                 }
 
                 Text optHoverText = new LiteralText("Switch to " + o);
-                optHoverText.getStyle().setFormatting(Formatting.GRAY);
+                optHoverText.getStyle().setColor(Formatting.GRAY);
                 opt.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, optHoverText));
                 opt.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tap " + SettingsManager.getParsedRule(args[0]).name + " " + o));
                 options.append(opt);
             }
 
             Text optionsRightBracket = new LiteralText(" ]");
-            optionsRightBracket.getStyle().setFormatting(Formatting.YELLOW);
+            optionsRightBracket.getStyle().setColor(Formatting.YELLOW);
             options.append(optionsRightBracket);
             player.sendMessage(options);
         } else {
