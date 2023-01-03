@@ -23,7 +23,7 @@ public abstract class CauldronBlockMixin extends Block {
             try {
                 int i = Integer.parseInt(stack.getHoverName());
                 if (i > 0 && i < 16) {
-                    world.setBlockMetadata(x, y, z, i, 4);
+                    world.setBlockMetadata(x, y, z, i, 3);
                 }
             } catch (NumberFormatException ignored){}
         }
