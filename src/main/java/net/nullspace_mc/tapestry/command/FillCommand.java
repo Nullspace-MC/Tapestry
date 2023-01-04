@@ -122,9 +122,7 @@ public class FillCommand extends TapestryCommand {
                                     }
                                 } else if (x != minPos.x && x != maxPos.x && y != minPos.y && y != maxPos.y && z != minPos.z && z != maxPos.z) {
                                     if (args[8].equals("hollow")) {
-                                        SetBlockHelper.applyFillOrientationFixRule = true;
-                                        SetBlockHelper.applyFillUpdatesRule = true;
-                                        world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
+                                        setBlock(world, x, y, z, Blocks.AIR, 0);
                                         list.add(pos);
                                     }
                                     continue;
@@ -137,15 +135,11 @@ public class FillCommand extends TapestryCommand {
                                     InventoryHelper.clearInventory((Inventory)blockEntity);
                                 }
 
-                                SetBlockHelper.applyFillOrientationFixRule = true;
-                                SetBlockHelper.applyFillUpdatesRule = true;
-                                world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
+                                setBlock(world, x, y, z, Blocks.AIR, 0);
                                 if (block == Blocks.AIR) ++volume;
                             }
 
-                            SetBlockHelper.applyFillOrientationFixRule = true;
-                            SetBlockHelper.applyFillUpdatesRule = true;
-                            if (world.setBlockWithMetadata(x, y, z, block, meta, SetBlockFlags.UPDATE_CLIENTS)) {
+                            if (setBlock(world, x, y, z, block, meta)) {
                                 list.add(pos);
                                 ++volume;
                                 if (hasTag) {
@@ -181,6 +175,19 @@ public class FillCommand extends TapestryCommand {
                 throw new CommandException("Cannot place blocks outside of the world", new Object[0]);
             }
         }
+    }
+
+    private boolean setBlock(World world, int x, int y, int z, Block block, int metadata) {
+        int flags = SetBlockFlags.UPDATE_CLIENTS;
+
+        if (Settings.fillUpdates) {
+            flags |= SetBlockFlags.UPDATE_NEIGHBORS; // enabled UPDATE_NEIGHBORS flag
+        }
+
+        SetBlockHelper.applyFillOrientationFixRule = true;
+        SetBlockHelper.applyFillUpdatesRule = true;
+
+        return world.setBlockWithMetadata(x, y, z, block, metadata, flags);
     }
 
     @Override
