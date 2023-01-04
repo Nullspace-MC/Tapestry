@@ -21,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import net.nullspace_mc.tapestry.helpers.InventoryHelper;
+import net.nullspace_mc.tapestry.helpers.SetBlockFlags;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
@@ -123,7 +124,7 @@ public class FillCommand extends TapestryCommand {
                                     if (args[8].equals("hollow")) {
                                         SetBlockHelper.applyFillOrientationFixRule = true;
                                         SetBlockHelper.applyFillUpdatesRule = true;
-                                        world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, 2);
+                                        world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
                                         list.add(pos);
                                     }
                                     continue;
@@ -138,13 +139,13 @@ public class FillCommand extends TapestryCommand {
 
                                 SetBlockHelper.applyFillOrientationFixRule = true;
                                 SetBlockHelper.applyFillUpdatesRule = true;
-                                world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, 2);
+                                world.setBlockWithMetadata(x, y, z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
                                 if (block == Blocks.AIR) ++volume;
                             }
 
                             SetBlockHelper.applyFillOrientationFixRule = true;
                             SetBlockHelper.applyFillUpdatesRule = true;
-                            if (world.setBlockWithMetadata(x, y, z, block, meta, 2)) {
+                            if (world.setBlockWithMetadata(x, y, z, block, meta, SetBlockFlags.UPDATE_CLIENTS)) {
                                 list.add(pos);
                                 ++volume;
                                 if (hasTag) {

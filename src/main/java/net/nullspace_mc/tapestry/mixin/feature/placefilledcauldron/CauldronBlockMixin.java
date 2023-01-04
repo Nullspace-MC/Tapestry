@@ -7,6 +7,7 @@ import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.nullspace_mc.tapestry.helpers.SetBlockFlags;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -23,7 +24,7 @@ public abstract class CauldronBlockMixin extends Block {
             try {
                 int i = Integer.parseInt(stack.getHoverName());
                 if (i > 0 && i < 16) {
-                    world.setBlockMetadata(x, y, z, i, 3);
+                    world.setBlockMetadata(x, y, z, i, SetBlockFlags.UPDATE_CLIENTS | SetBlockFlags.UPDATE_NEIGHBORS);
                 }
             } catch (NumberFormatException ignored){}
         }

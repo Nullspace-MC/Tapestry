@@ -22,6 +22,7 @@ import net.minecraft.world.gen.structure.StructureBox;
 
 import net.nullspace_mc.tapestry.helpers.InventoryHelper;
 import net.nullspace_mc.tapestry.helpers.ServerWorldHelper;
+import net.nullspace_mc.tapestry.helpers.SetBlockFlags;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
@@ -127,7 +128,7 @@ public class CloneCommand extends TapestryCommand {
                                     }
                                     SetBlockHelper.applyFillOrientationFixRule = true;
                                     SetBlockHelper.applyFillUpdatesRule = true;
-                                    world.setBlockWithMetadata(blockPos.x, blockPos.y, blockPos.z, Blocks.AIR, 0, 2);
+                                    world.setBlockWithMetadata(blockPos.x, blockPos.y, blockPos.z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
                                 }
                             }
 
@@ -148,7 +149,7 @@ public class CloneCommand extends TapestryCommand {
                                 }
                                 SetBlockHelper.applyFillOrientationFixRule = true;
                                 SetBlockHelper.applyFillUpdatesRule = true;
-                                world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, Blocks.AIR, 0, 2);
+                                world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
                             }
 
                             volume = 0;
@@ -158,7 +159,7 @@ public class CloneCommand extends TapestryCommand {
                                 info = (CloneCommand.BlockInfo)iter.next();
                                 SetBlockHelper.applyFillOrientationFixRule = true;
                                 SetBlockHelper.applyFillUpdatesRule = true;
-                                if (world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, info.block, info.meta, 2)) {
+                                if (world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, info.block, info.meta, SetBlockFlags.UPDATE_CLIENTS)) {
                                     ++volume;
                                 }
                             }
@@ -175,7 +176,7 @@ public class CloneCommand extends TapestryCommand {
                                 }
                                 SetBlockHelper.applyFillOrientationFixRule = true;
                                 SetBlockHelper.applyFillUpdatesRule = true;
-                                world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, info.block, info.meta, 2);
+                                world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, info.block, info.meta, SetBlockFlags.UPDATE_CLIENTS);
                             }
 
                             if (Settings.fillUpdates) {
