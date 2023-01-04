@@ -26,7 +26,7 @@ public abstract class SetBlockCommandMixin extends Command {
         SetBlockHelper.applyFillUpdatesRule = true;
 
         if (!Settings.fillUpdates) {
-            flags &= ~SetBlockFlags.UPDATE_NEIGHBORS;
+            flags &= ~SetBlockFlags.UPDATE_NEIGHBORS; // disable UPDATE_NEIGHBORS flag
         }
 
         return world.setBlockWithMetadata(x, y, z, block, metadata, flags);
