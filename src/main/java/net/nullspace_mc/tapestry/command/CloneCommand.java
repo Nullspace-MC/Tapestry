@@ -126,9 +126,7 @@ public class CloneCommand extends TapestryCommand {
                                     if (blockEntity instanceof Inventory) {
                                         InventoryHelper.clearInventory((Inventory)blockEntity);
                                     }
-                                    SetBlockHelper.applyFillOrientationFixRule = true;
-                                    SetBlockHelper.applyFillUpdatesRule = true;
-                                    world.setBlockWithMetadata(blockPos.x, blockPos.y, blockPos.z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
+                                    setBlock(world, blockPos.x, blockPos.y, blockPos.z, Blocks.AIR, 0);
                                 }
                             }
 
@@ -147,9 +145,7 @@ public class CloneCommand extends TapestryCommand {
                                 if (blockEntity instanceof Inventory) {
                                     InventoryHelper.clearInventory((Inventory)blockEntity);
                                 }
-                                SetBlockHelper.applyFillOrientationFixRule = true;
-                                SetBlockHelper.applyFillUpdatesRule = true;
-                                world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, Blocks.AIR, 0, SetBlockFlags.UPDATE_CLIENTS);
+                                setBlock(world, info.pos.x, info.pos.y, info.pos.z, Blocks.AIR, 0);
                             }
 
                             volume = 0;
@@ -157,9 +153,7 @@ public class CloneCommand extends TapestryCommand {
 
                             while (iter.hasNext()) {
                                 info = (CloneCommand.BlockInfo)iter.next();
-                                SetBlockHelper.applyFillOrientationFixRule = true;
-                                SetBlockHelper.applyFillUpdatesRule = true;
-                                if (world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, info.block, info.meta, SetBlockFlags.UPDATE_CLIENTS)) {
+                                if (setBlock(world, info.pos.x, info.pos.y, info.pos.z, info.block, info.meta)) {
                                     ++volume;
                                 }
                             }
@@ -174,9 +168,7 @@ public class CloneCommand extends TapestryCommand {
                                     blockEntity.readNbt(info.nbt);
                                     blockEntity.markDirty();
                                 }
-                                SetBlockHelper.applyFillOrientationFixRule = true;
-                                SetBlockHelper.applyFillUpdatesRule = true;
-                                world.setBlockWithMetadata(info.pos.x, info.pos.y, info.pos.z, info.block, info.meta, SetBlockFlags.UPDATE_CLIENTS);
+                                setBlock(world, info.pos.x, info.pos.y, info.pos.z, info.block, info.meta);
                             }
 
                             if (Settings.fillUpdates) {
@@ -217,6 +209,19 @@ public class CloneCommand extends TapestryCommand {
                 }
             }
         }
+    }
+
+    private boolean setBlock(World world, int x, int y, int z, Block block, int metadata) {
+        int flags = SetBlockFlags.UPDATE_CLIENTS;
+
+        if (Settings.fillUpdates) {
+            flags |= SetBlockFlags.UPDATE_NEIGHBORS; // enabled UPDATE_NEIGHBORS flag
+        }
+
+        SetBlockHelper.applyFillOrientationFixRule = true;
+        SetBlockHelper.applyFillUpdatesRule = true;
+
+        return world.setBlockWithMetadata(x, y, z, block, metadata, flags);
     }
 
     @Override
