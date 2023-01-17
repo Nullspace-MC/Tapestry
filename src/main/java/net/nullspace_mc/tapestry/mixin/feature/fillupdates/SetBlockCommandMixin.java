@@ -8,7 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.server.command.Command;
 import net.minecraft.server.command.SetBlockCommand;
 import net.minecraft.world.World;
-
+import net.nullspace_mc.tapestry.helpers.SetBlockFlags;
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
@@ -24,6 +24,11 @@ public abstract class SetBlockCommandMixin extends Command {
     )
     private boolean disableUpdate(World world, int x, int y, int z, Block block, int metadata, int flags) {
         SetBlockHelper.applyFillUpdatesRule = true;
-        return world.setBlockWithMetadata(x, y, z, block, metadata, Settings.fillUpdates ? 3 : 2);
+
+        if (!Settings.fillUpdates) {
+            flags &= ~SetBlockFlags.UPDATE_NEIGHBORS; // disable UPDATE_NEIGHBORS flag
+        }
+
+        return world.setBlockWithMetadata(x, y, z, block, metadata, flags);
     }
 }
