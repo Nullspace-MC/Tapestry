@@ -5,13 +5,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingLiquidBlock;
+import net.minecraft.block.material.LiquidMaterial;
 import net.minecraft.world.World;
 import net.nullspace_mc.tapestry.settings.Settings;
 
 @Mixin(FlowingLiquidBlock.class)
-public class FlowingFluidBlockMixin {
+public class FlowingLiquidBlockMixin {
 
     @Inject(
             method = "blocksSpreading",
@@ -19,6 +21,9 @@ public class FlowingFluidBlockMixin {
             cancellable = true
     )
     private void makeBlocksNonBreakableByWater(World world, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
-        if (Settings.liquidDamageDisabled) cir.setReturnValue(world.getBlock(x, y, z) != Blocks.AIR);
+        if (Settings.liquidDamageDisabled) {
+            Block block = world.getBlock(x, y, z);
+            cir.setReturnValue(block != Blocks.AIR && block.getMaterial() instanceof LiquidMaterial);
+        }
     }
 }

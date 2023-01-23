@@ -38,7 +38,7 @@
     "feature.kabovillagemarker.ServerWorldMixin",
     "feature.kabovillagemarker.VillageMixin",
     "feature.kabovillagemarker.VillageStateMixin",
-    "feature.liquiddamagedisabled.FlowingFluidBlockMixin",
+    "feature.liquiddamagedisabled.FlowingLiquidBlockMixin",
     "feature.placefilledcauldron.CauldronBlockMixin",
     "feature.randomredstonedust.RedstoneWireBlockMixin",
     "feature.randomtickspeed.ServerWorldMixin",
