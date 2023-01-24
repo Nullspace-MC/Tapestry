@@ -23,7 +23,7 @@ public class FlowingLiquidBlockMixin {
     private void makeBlocksNonBreakableByWater(World world, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
         if (Settings.liquidDamageDisabled) {
             Block block = world.getBlock(x, y, z);
-            cir.setReturnValue(block != Blocks.AIR && block.getMaterial() instanceof LiquidMaterial);
+            cir.setReturnValue(block != Blocks.AIR && !(block.getMaterial() instanceof LiquidMaterial));
         }
     }
 }
