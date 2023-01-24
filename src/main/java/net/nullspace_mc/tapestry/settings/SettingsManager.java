@@ -24,13 +24,13 @@ public class SettingsManager {
 
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public static final TreeMap<String, ParsedRule> rules = new TreeMap<String, ParsedRule>();
+    public static final TreeMap<String, ParsedRule<?>> rules = new TreeMap<>();
 
     public static void parseRules() {
         for (Field f : Settings.class.getDeclaredFields()) {
             Rule r = f.getAnnotation(Rule.class);
             if (r == null) continue;
-            ParsedRule pr = new ParsedRule(r, f);
+            ParsedRule<?> pr = new ParsedRule<>(r, f);
             rules.put(pr.name.toLowerCase(), pr);
         }
     }
@@ -41,7 +41,7 @@ public class SettingsManager {
 
 
     public static String getRule(String ruleName) {
-        ParsedRule pr = rules.get(ruleName.toLowerCase());
+        ParsedRule<?> pr = rules.get(ruleName.toLowerCase());
 
         if (pr == null) {
             return "false";
@@ -54,7 +54,7 @@ public class SettingsManager {
         }
     }
 
-    public static ParsedRule getParsedRule(String ruleName) {
+    public static ParsedRule<?> getParsedRule(String ruleName) {
         return rules.get(ruleName.toLowerCase());
     }
 
@@ -65,7 +65,7 @@ public class SettingsManager {
     public static String[] findNonDefault() {
         List<String> nonDefault = new LinkedList<String>();
 
-        for (ParsedRule rule : rules.values()) {
+        for (ParsedRule<?> rule : rules.values()) {
             if (!rule.getValueString().equalsIgnoreCase(rule.def)) {
                 nonDefault.add(rule.name);
             }
@@ -79,7 +79,7 @@ public class SettingsManager {
         String actualFilter = filter == null ? null : filter.toLowerCase();
         List<String> filtered = new LinkedList<String>();
 
-        for (Map.Entry<String, ParsedRule> rule : rules.entrySet()) {
+        for (Map.Entry<String, ParsedRule<?>> rule : rules.entrySet()) {
             if (actualFilter == null || rule.getKey().contains(actualFilter)) {
                 filtered.add(rule.getValue().name);
                 continue;
@@ -97,7 +97,7 @@ public class SettingsManager {
     }
 
     public static void resetToVanilla() {
-        for (ParsedRule rule : rules.values()) {
+        for (ParsedRule<?> rule : rules.values()) {
             rule.setValue(rule.def);
         }
     }
@@ -109,7 +109,7 @@ public class SettingsManager {
 
     public static void resetToSurvival() {
         resetToVanilla();
-        for (ParsedRule rule : rules.values()) {
+        for (ParsedRule<?> rule : rules.values()) {
             if (rule.field.isAnnotationPresent(RuleDefaults.Survival.class)) {
                 rule.setValue(rule.field.getAnnotation(RuleDefaults.Survival.class).value());
             }
@@ -118,7 +118,7 @@ public class SettingsManager {
 
     public static void resetToCreative() {
         resetToVanilla();
-        for (ParsedRule rule : rules.values()) {
+        for (ParsedRule<?> rule : rules.values()) {
             if (rule.field.isAnnotationPresent(RuleDefaults.Creative.class)) {
                 rule.setValue(rule.field.getAnnotation(RuleDefaults.Creative.class).value());
             }
@@ -127,7 +127,7 @@ public class SettingsManager {
 
     public static void resetToBugFix() {
         resetToVanilla();
-        for (ParsedRule rule : rules.values()) {
+        for (ParsedRule<?> rule : rules.values()) {
             if (rule.field.isAnnotationPresent(RuleDefaults.BugFix.class)) {
                 rule.setValue(rule.field.getAnnotation(RuleDefaults.BugFix.class).value());
             }

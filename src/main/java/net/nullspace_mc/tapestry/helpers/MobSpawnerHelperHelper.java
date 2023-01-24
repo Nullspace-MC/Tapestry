@@ -1,7 +1,6 @@
 package net.nullspace_mc.tapestry.helpers;
 
 import java.util.HashMap;
-import net.minecraft.entity.living.mob.MobSpawnerHelper;
 import net.minecraft.server.world.ServerWorld;
 
 public class MobSpawnerHelperHelper {

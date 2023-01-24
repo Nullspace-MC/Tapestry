@@ -23,7 +23,6 @@ public class MobCapLogger extends Logger {
         return "mobcap";
     }
 
-    @SuppressWarnings("unchecked")
     public Text tickLogger(MinecraftServer server, ServerPlayerEntity player) {
         // get world
         String worldString = this.getChannelSubscriptions().get(player.getName());

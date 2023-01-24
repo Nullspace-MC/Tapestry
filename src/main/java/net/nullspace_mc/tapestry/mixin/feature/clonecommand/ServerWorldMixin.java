@@ -10,42 +10,24 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import net.minecraft.server.world.ScheduledTick;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldSettings;
-import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.gen.structure.StructureBox;
-import net.minecraft.world.storage.WorldStorage;
 
 import net.nullspace_mc.tapestry.helpers.ServerWorldHelper;
 
-import net.ornithemc.api.EnvType;
-import net.ornithemc.api.Environment;
-
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin extends World implements ServerWorldHelper {
+public class ServerWorldMixin implements ServerWorldHelper {
 
     @Shadow
-    private TreeSet scheduledTicksInOrder;
+    private TreeSet<ScheduledTick> scheduledTicksInOrder;
 
     @Shadow
-    private List currentScheduledTicks;
-
-    @Environment(EnvType.CLIENT)
-    public ServerWorldMixin(WorldStorage storage, String name, Dimension dimension, WorldSettings settings, Profiler profiler) {
-        super(storage, name, dimension, settings, profiler);
-    }
-
-    @Environment(EnvType.SERVER)
-    public ServerWorldMixin(WorldStorage storage, String name, WorldSettings settings, Dimension dimension, Profiler profiler) {
-        super(storage, name, settings, dimension, profiler);
-    }
+    private List<ScheduledTick> currentScheduledTicks;
 
     public List<ScheduledTick>getScheduledTicksInBox(StructureBox box) {
         ArrayList<ScheduledTick> ticks = null;
 
         for (int v = 0; v < 2; ++v) {
-            Iterator iter;
+            Iterator<ScheduledTick> iter;
             if (v == 0) {
                 iter = this.scheduledTicksInOrder.iterator();
             } else {

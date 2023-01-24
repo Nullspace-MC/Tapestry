@@ -1,6 +1,5 @@
 package net.nullspace_mc.tapestry.mixin.feature.fortressspawningfix;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +20,7 @@ import net.nullspace_mc.tapestry.settings.Settings;
 public abstract class StructureFeatureMixin extends Generator {
 
     @Shadow
-    private Map structures;
+    private Map<Long, StructureStart> structures;
 
     @Invoker("loadSavedData")
     protected abstract void invokeLoadSavedData(World world);
@@ -38,12 +37,10 @@ public abstract class StructureFeatureMixin extends Generator {
     private void fixBBCheck(final int x, final int y, final int z, final CallbackInfoReturnable<Boolean> cir) {
         if(Settings.fortressSpawningFix) {
             this.invokeLoadSavedData(this.world);
-            final Iterator structIter = this.structures.values().iterator();
-            StructureStart struct;
+
             boolean intersects = false;
 
-            while(structIter.hasNext()) {
-                struct = (StructureStart)structIter.next();
+            for (StructureStart struct : this.structures.values()) {
                 if(struct.isValid() && struct.getBoundingBox().intersects(x, z, x, z)) {
                     intersects = true;
                     break;

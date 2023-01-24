@@ -37,7 +37,7 @@ public class TapCommand extends TapestryCommand {
     }
 
     private Text displayInteractiveSetting(String ruleName) {
-        ParsedRule rule = SettingsManager.getParsedRule(ruleName);
+        ParsedRule<?> rule = SettingsManager.getParsedRule(ruleName);
         String name = rule.name;
         String def = rule.def;
         String val = rule.getValueString();
@@ -370,7 +370,7 @@ public class TapCommand extends TapestryCommand {
     }
 
     @Override
-    public List getSuggestions(CommandSource source, String[] args) {
+    public List<String> getSuggestions(CommandSource source, String[] args) {
         if (SettingsManager.locked) {
             return Collections.<String>emptyList();
         }

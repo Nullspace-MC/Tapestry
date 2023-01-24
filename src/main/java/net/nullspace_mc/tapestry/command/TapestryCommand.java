@@ -1,8 +1,7 @@
 package net.nullspace_mc.tapestry.command;
 
+import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.server.command.Command;
@@ -52,7 +51,7 @@ public abstract class TapestryCommand extends Command {
         }
 
         if (hit == null) {
-            return Lists.newArrayList("~");
+            return Arrays.asList("~");
         } else {
             int i = args.length - 1;
             String s;
@@ -67,8 +66,18 @@ public abstract class TapestryCommand extends Command {
                 return null;
             }
 
-            return Lists.newArrayList(new String[] {s});
+            return Arrays.asList(s);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<String> suggestMatching(String[] args, String... suggestions) {
+        return Command.suggestMatching(args, suggestions);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static List<String> suggestMatching(String[] args, Iterable suggestions) {
+        return Command.suggestMatching(args, suggestions);
     }
 
     /**

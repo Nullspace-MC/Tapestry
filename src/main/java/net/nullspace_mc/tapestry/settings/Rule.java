@@ -49,5 +49,5 @@ import java.lang.annotation.Target;
     /**
      * The class containing the validator method called when the rule is changed
      */
-    Class<? extends Validator>[] validator() default {};
+    Class<? extends Validator<?>>[] validator() default {};
 }

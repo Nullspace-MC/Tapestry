@@ -54,7 +54,7 @@ public class LogCommand extends TapestryCommand {
     }
 
     @Override
-    public List getSuggestions(CommandSource source, String[] args) {
+    public List<String> getSuggestions(CommandSource source, String[] args) {
         if (!Settings.commandLog) return Collections.emptyList();
         ArrayList<String> suggestions = new ArrayList<>();
         String prefix = args[args.length-1].toLowerCase();

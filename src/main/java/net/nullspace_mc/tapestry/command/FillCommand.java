@@ -156,11 +156,11 @@ public class FillCommand extends TapestryCommand {
                     }
                 }
 
-                Iterator iterator = list.iterator();
+                Iterator<BlockPos> iterator = list.iterator();
 
                 if (Settings.fillUpdates) {
                     while (iterator.hasNext()) {
-                        BlockPos pos = (BlockPos)iterator.next();
+                        BlockPos pos = iterator.next();
                         Block affectedBlock = world.getBlock(pos.x, pos.y, pos.z);
                         world.updateNeighbors(pos.x, pos.y, pos.z, affectedBlock);
                     }
@@ -191,7 +191,7 @@ public class FillCommand extends TapestryCommand {
     }
 
     @Override
-    public List getSuggestions(CommandSource source, String[] args) {
+    public List<String> getSuggestions(CommandSource source, String[] args) {
         if (!Settings.commandFill) return Collections.emptyList();
         if (args.length > 0 && args.length <= 3) {
             return suggestCoordinates(source, args, 0);

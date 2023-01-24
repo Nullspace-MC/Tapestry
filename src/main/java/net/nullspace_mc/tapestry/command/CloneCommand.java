@@ -1,5 +1,6 @@
 package net.nullspace_mc.tapestry.command;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -46,12 +47,12 @@ public class CloneCommand extends TapestryCommand {
     @Override
     public void run(CommandSource source, String[] args) {
         if (args.length < 9) {
-            throw new IncorrectUsageException(getUsage(source), new Object[0]);
+            throw new IncorrectUsageException(getUsage(source));
         } else {
-            BlockPos blockPos1 = parseBlockPos(source, args, 0);
-            BlockPos blockPos2 = parseBlockPos(source, args, 3);
+            BlockPos srcPos1 = parseBlockPos(source, args, 0);
+            BlockPos srcPos2 = parseBlockPos(source, args, 3);
             BlockPos destPos = parseBlockPos(source, args, 6);
-            StructureBox sourceBox = new StructureBox(Math.min(blockPos1.x, blockPos2.x), Math.min(blockPos1.y, blockPos2.y), Math.min(blockPos1.z, blockPos2.z), Math.max(blockPos1.x, blockPos2.x), Math.max(blockPos1.y, blockPos2.y), Math.max(blockPos1.z, blockPos2.z));
+            StructureBox sourceBox = new StructureBox(Math.min(srcPos1.x, srcPos2.x), Math.min(srcPos1.y, srcPos2.y), Math.min(srcPos1.z, srcPos2.z), Math.max(srcPos1.x, srcPos2.x), Math.max(srcPos1.y, srcPos2.y), Math.max(srcPos1.z, srcPos2.z));
             StructureBox destBox = new StructureBox(destPos.x, destPos.y, destPos.z, destPos.x + sourceBox.getSpanX() - 1, destPos.y + sourceBox.getSpanY() - 1, destPos.z + sourceBox.getSpanZ() - 1);
             int volume = sourceBox.getSpanX() * sourceBox.getSpanY() * sourceBox.getSpanZ();
             if (volume > Settings.fillLimit) {
@@ -86,9 +87,9 @@ public class CloneCommand extends TapestryCommand {
                                 }
                             }
 
-                            List<CloneCommand.BlockInfo> list1 = Lists.newArrayList();
-                            List<CloneCommand.BlockInfo> list2 = Lists.newArrayList();
-                            List<CloneCommand.BlockInfo> list3 = Lists.newArrayList();
+                            List<CloneCommand.BlockInfo> list1 = new ArrayList<>();
+                            List<CloneCommand.BlockInfo> list2 = new ArrayList<>();
+                            List<CloneCommand.BlockInfo> list3 = new ArrayList<>();
                             LinkedList<BlockPos> linkedList = Lists.newLinkedList();
                             BlockPos translate = new BlockPos(destBox.minX - sourceBox.minX, destBox.minY - sourceBox.minY, destBox.minZ - sourceBox.minZ);
 
@@ -118,7 +119,7 @@ public class CloneCommand extends TapestryCommand {
                             }
 
                             if (bl) {
-                                Iterator iter;
+                                Iterator<BlockPos> iter;
                                 BlockPos blockPos;
                                 for(iter = linkedList.iterator(); iter.hasNext();) {
                                     blockPos = (BlockPos)iter.next();
@@ -130,13 +131,13 @@ public class CloneCommand extends TapestryCommand {
                                 }
                             }
 
-                            List<CloneCommand.BlockInfo> list4 = Lists.newArrayList();
+                            List<CloneCommand.BlockInfo> list4 = new ArrayList<>();
                             list4.addAll(list1);
                             list4.addAll(list2);
                             list4.addAll(list3);
                             List<CloneCommand.BlockInfo> list5 = Lists.reverse(list4);
 
-                            Iterator iter;
+                            Iterator<CloneCommand.BlockInfo> iter;
                             CloneCommand.BlockInfo info;
                             BlockEntity blockEntity;
                             for (iter = list5.iterator(); iter.hasNext();) {
@@ -153,7 +154,7 @@ public class CloneCommand extends TapestryCommand {
 
                             while (iter.hasNext()) {
                                 info = (CloneCommand.BlockInfo)iter.next();
-                                if (setBlock(world, info.pos.x, info.pos.y, info.pos.z, info.block, info.meta)) {
+                                if (setBlock(world, info.pos.x, info.pos.y, info.pos.z, info.block, info.metadata)) {
                                     ++volume;
                                 }
                             }
@@ -168,7 +169,7 @@ public class CloneCommand extends TapestryCommand {
                                     blockEntity.readNbt(info.nbt);
                                     blockEntity.markDirty();
                                 }
-                                setBlock(world, info.pos.x, info.pos.y, info.pos.z, info.block, info.meta);
+                                setBlock(world, info.pos.x, info.pos.y, info.pos.z, info.block, info.metadata);
                             }
 
                             if (Settings.fillUpdates) {
@@ -183,10 +184,10 @@ public class CloneCommand extends TapestryCommand {
                                     List<ScheduledTick> scheduledTicks = ((ServerWorldHelper)world).getScheduledTicksInBox(sourceBox);
 
                                     if (scheduledTicks != null) {
-                                        iter = scheduledTicks.iterator();
+                                        Iterator<ScheduledTick> ticks = scheduledTicks.iterator();
 
-                                        while (iter.hasNext()) {
-                                            ScheduledTick tick = (ScheduledTick)iter.next();
+                                        while (ticks.hasNext()) {
+                                            ScheduledTick tick = ticks.next();
                                             if (sourceBox.contains(tick.x, tick.y, tick.z)) {
                                                 world.scheduleTick(tick.x + translate.x, tick.y + translate.y, tick.z + translate.x, tick.getBlock(), (int)(tick.time - world.getData().getTime()), tick.priority);
                                             }
@@ -225,7 +226,7 @@ public class CloneCommand extends TapestryCommand {
     }
 
     @Override
-    public List getSuggestions(CommandSource source, String[] args) {
+    public List<String> getSuggestions(CommandSource source, String[] args) {
         if (!Settings.commandClone) return Collections.emptyList();
         if (args.length > 0 && args.length <= 3) {
             return suggestCoordinates(source, args, 0);
@@ -245,13 +246,13 @@ public class CloneCommand extends TapestryCommand {
     static class BlockInfo {
         public final BlockPos pos;
         public final Block block;
-        public final int meta;
+        public final int metadata;
         public final NbtCompound nbt;
 
         public BlockInfo(BlockPos p, Block b, int m, NbtCompound n) {
             this.pos = p;
             this.block = b;
-            this.meta = m;
+            this.metadata = m;
             this.nbt = n;
         }
     }
