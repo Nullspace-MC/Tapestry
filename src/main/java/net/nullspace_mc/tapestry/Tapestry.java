@@ -1,11 +1,11 @@
 package net.nullspace_mc.tapestry;
 
-import net.nullspace_mc.tapestry.counter.CounterRegistry;
-import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
-import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
-import net.nullspace_mc.tapestry.settings.SettingsManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import net.nullspace_mc.tapestry.counter.CounterRegistry;
+import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
+import net.nullspace_mc.tapestry.settings.SettingsManager;
 
 public class Tapestry {
 

@@ -30,9 +30,9 @@ public class ParsedRule<T> {
             throw new AssertionError(e);
         }
 
-        for (Class<? extends Validator> v : r.validator()) {
+        for (Class<? extends Validator<?>> v : r.validator()) {
             try {
-                Constructor<? extends Validator> constructor = v.getDeclaredConstructor();
+                Constructor<? extends Validator<?>> constructor = v.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 validators.add((Validator<T>)constructor.newInstance());
             } catch (ReflectiveOperationException e) {
