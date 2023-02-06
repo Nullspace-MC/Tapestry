@@ -74,7 +74,7 @@ public class FillCommand extends TapestryCommand {
                 NbtCompound compoundTag = new NbtCompound();
                 boolean hasTag = false;
                 if (args.length >= 10 && block.hasBlockEntity()) {
-                    String tagString = parseText(source, args, 9).getString();
+                    String tagString = parseText(source, args, 9).getContent();
 
                     try {
                         NbtElement element = StringNbtReader.parse(tagString);

@@ -45,7 +45,8 @@
     "feature.repeaterhalfdelay.RedstoneDiodeBlockMixin",
     "feature.repeatingcommandblock.CommandBlockMixin",
     "feature.tcpnodelay.RemoteChannelHandlerMixin",
-    "loggers.mobcap.MobSpawnerHelperMixin",
+    "loggers.mobcap.NaturalSpawnerAccessor",
+    "loggers.mobcap.ServerWorldAccessor",
     "tick.MinecraftServerMixin"
   ],
   "injectors": {
