@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class ServerPlayNetworkHandlerMixin {
 
     @Redirect(
-            method = "onPlayerMove",
+            method = "handlePlayerMove",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/server/entity/living/player/ServerPlayerEntity;isSleeping()Z",

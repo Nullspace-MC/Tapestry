@@ -19,7 +19,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
     private MinecraftServer server;
 
     @Inject(
-            method = "onCustomPayload",
+            method = "handleCustomPayload",
             at = @At("HEAD")
     )
     private void processKVMAnswer(CustomPayloadC2SPacket packet, CallbackInfo ci) {
