@@ -4,6 +4,7 @@
   "package": "net.nullspace_mc.tapestry.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "core.BootstrapMixin",
     "core.CommandManagerMixin",
     "core.MinecraftServerMixin",
     "counter.HopperBlockEntityMixin",
@@ -42,7 +43,7 @@
     "feature.placefilledcauldron.CauldronBlockMixin",
     "feature.randomredstonedust.RedstoneWireBlockMixin",
     "feature.randomtickspeed.ServerWorldMixin",
-    "feature.repeaterhalfdelay.RedstoneDiodeBlockMixin",
+    "feature.repeaterhalfdelay.DiodeBlockMixin",
     "feature.repeatingcommandblock.CommandBlockMixin",
     "feature.tcpnodelay.RemoteChannelHandlerMixin",
     "loggers.mobcap.NaturalSpawnerAccessor",

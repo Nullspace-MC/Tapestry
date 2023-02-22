@@ -69,7 +69,7 @@ public class KaboVillageMarker {
 
     public String buildDataString() {
         String data = "";
-        SavedVillageData villageData = this.world.villageData;
+        SavedVillageData villageData = this.world.villages;
         @SuppressWarnings("unchecked")
         List<Village> villages = villageData.getVillages();
         data += this.dimension + ":";

@@ -30,7 +30,7 @@ public abstract class StructureFeatureMixin extends Generator {
      * box for the purpose of fortress mob nether brick spawning
      */
     @Inject(
-            method = "isInsideStructureBox",
+            method = "isInsideStructureBounds",
             at = @At("HEAD"),
             cancellable = true
     )
@@ -41,7 +41,7 @@ public abstract class StructureFeatureMixin extends Generator {
             boolean intersects = false;
 
             for (StructureStart struct : this.structures.values()) {
-                if(struct.isValid() && struct.getBoundingBox().intersects(x, z, x, z)) {
+                if(struct.isValid() && struct.getBounds().intersects(x, z, x, z)) {
                     intersects = true;
                     break;
                 }

@@ -30,11 +30,11 @@ public abstract class CommandBlockMixin extends BlockWithBlockEntity {
             method = "tick",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;updateComparators(IIILnet/minecraft/block/Block;)V"
+                    target = "Lnet/minecraft/world/World;updateNeighborComparators(IIILnet/minecraft/block/Block;)V"
             )
     )
     private void makeCommandBlockRepeating(World world, int x, int y, int z, Random random, CallbackInfo ci) {
-        if (world.isReceivingPower(x, y, z) && Settings.repeatingCommandBlock && world.getBlock(x, y - 1, z) == Blocks.DIAMOND_ORE)
+        if (world.hasNeighborSignal(x, y, z) && Settings.repeatingCommandBlock && world.getBlock(x, y - 1, z) == Blocks.DIAMOND_ORE)
             world.scheduleTick(x, y, z, this, this.getTickRate(world));
     }
 }

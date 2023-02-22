@@ -6,10 +6,10 @@ import java.util.List;
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.server.command.Command;
 import net.minecraft.server.command.source.CommandSource;
-import net.minecraft.util.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.HitResult;
 
 public abstract class TapestryCommand extends Command {
 

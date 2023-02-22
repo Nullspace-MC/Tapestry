@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.mixin.feature.clonecommand;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -21,31 +21,22 @@ public class ServerWorldMixin implements ServerWorldHelper {
     private TreeSet<ScheduledTick> scheduledTicksInOrder;
 
     @Shadow
-    private List<ScheduledTick> currentScheduledTicks;
+    private List<ScheduledTick> scheduledTicksThisTick;
 
-    public List<ScheduledTick>getScheduledTicksInBox(StructureBox box) {
+    public List<ScheduledTick> collectScheduledTicks(StructureBox bounds) {
         ArrayList<ScheduledTick> ticks = null;
 
-        for (int v = 0; v < 2; ++v) {
-            Iterator<ScheduledTick> iter;
-            if (v == 0) {
-                iter = this.scheduledTicksInOrder.iterator();
-            } else {
-                iter = this.currentScheduledTicks.iterator();
-            }
-
-            while (iter.hasNext()) {
-                ScheduledTick tick = (ScheduledTick)iter.next();
-                if (tick.x >= box.minX && tick.x <= box.maxX && tick.y >= box.minY && tick.y <= box.maxY && tick.z >= box.minZ && tick.z <= box.maxZ) {
-                    if (ticks == null) {
-                        ticks = new ArrayList<ScheduledTick>();
-                    }
-
-                    ticks.add(tick);
-                }
-            }
-        }
+        collectScheduledTicks(this.scheduledTicksInOrder, ticks, bounds);
+        collectScheduledTicks(this.scheduledTicksThisTick, ticks, bounds);
 
         return ticks;
+    }
+
+    private static void collectScheduledTicks(Iterable<ScheduledTick> src, Collection<ScheduledTick> dst, StructureBox bounds) {
+        for (ScheduledTick tick : src) {
+            if (tick.x >= bounds.minX && tick.x <= bounds.maxX && tick.y >= bounds.minY && tick.y <= bounds.maxY && tick.z >= bounds.minZ && tick.z <= bounds.maxZ) {
+                dst.add(tick);
+            }
+        }
     }
 }

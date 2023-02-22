@@ -18,7 +18,7 @@ public abstract class CommandBlockMixin {
     public abstract void tick(World world, int x, int y, int z, Random rand);
 
     @Redirect(
-            method = "update",
+            method = "neighborChanged",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;scheduleTick(IIILnet/minecraft/block/Block;I)V"

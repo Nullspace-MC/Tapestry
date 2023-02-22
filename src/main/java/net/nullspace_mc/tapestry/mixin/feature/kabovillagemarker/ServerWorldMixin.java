@@ -16,26 +16,19 @@ import net.nullspace_mc.tapestry.helpers.KaboVillageMarker;
 import net.nullspace_mc.tapestry.helpers.VillageMarkerAccessor;
 import net.nullspace_mc.tapestry.settings.Settings;
 
-import net.ornithemc.api.EnvType;
-import net.ornithemc.api.Environment;
-
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin extends World implements VillageMarkerAccessor {
 
     private final KaboVillageMarker villageMarker = new KaboVillageMarker((ServerWorld)((World)this));
 
+    // constructor only needed to make compiler happy, mixin will ignore it
+    private ServerWorldMixin(WorldStorage storage, String name, WorldSettings settings, Dimension dimension, Profiler profiler) {
+    	super(storage, name, settings, dimension, profiler);
+    }
+
+    @Override
     public KaboVillageMarker getVillageMarker() {
         return this.villageMarker;
-    }
-
-    @Environment(EnvType.CLIENT)
-    public ServerWorldMixin(WorldStorage storage, String name, Dimension dimension, WorldSettings settings, Profiler profiler) {
-        super(storage, name, dimension, settings, profiler);
-    }
-
-    @Environment(EnvType.SERVER)
-    public ServerWorldMixin(WorldStorage storage, String name, WorldSettings settings, Dimension dimension, Profiler profiler) {
-        super(storage, name, settings, dimension, profiler);
     }
 
     @Inject(

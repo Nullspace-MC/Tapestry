@@ -1,0 +1,31 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "net.nullspacemc",
+		"id": "tapestry",
+		"version": "${version}",
+		"metadata": {
+			"name": "Tapestry",
+			"description": "A Fabric-Carpet-like mod for old Minecraft versions",
+			"contributors": {
+				"Pineapplecake": "Owner"
+			},
+			"contact": {
+				"issues": "https://github.com/Nullspace-MC/Tapestry/issues",
+				"sources": "https://github.com/Nullspace-MC/Tapestry"
+			}
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.17.6-"
+			},
+			{
+				"id": "minecraft",
+				"versions": "1.7.x"
+			}
+		]
+	},
+	"mixin": "tapestry.mixins.json"
+}

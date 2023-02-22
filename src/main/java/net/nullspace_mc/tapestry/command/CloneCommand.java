@@ -70,7 +70,7 @@ public class CloneCommand extends TapestryCommand {
 
                     if (sourceBox.minY >= 0 && sourceBox.maxY < 256 && destBox.minY >= 0 && destBox.maxY < 256) {
                         World world = source.getSourceWorld();
-                        if (world.isRegionLoaded(sourceBox.minX, sourceBox.minY, sourceBox.minZ, sourceBox.maxX, sourceBox.maxY, sourceBox.maxZ) && world.isRegionLoaded(destBox.minX, destBox.minY, destBox.minZ, destBox.maxX, destBox.maxY, destBox.maxZ)) {
+                        if (world.isAreaLoaded(sourceBox.minX, sourceBox.minY, sourceBox.minZ, sourceBox.maxX, sourceBox.maxY, sourceBox.maxZ) && world.isAreaLoaded(destBox.minX, destBox.minY, destBox.minZ, destBox.maxX, destBox.maxY, destBox.maxZ)) {
                             boolean bl2 = false;
                             if (args.length >= 10) {
                                 if (args[9].equals("masked")) {
@@ -181,7 +181,7 @@ public class CloneCommand extends TapestryCommand {
                                 }
 
                                 if (world instanceof ServerWorldHelper) {
-                                    List<ScheduledTick> scheduledTicks = ((ServerWorldHelper)world).getScheduledTicksInBox(sourceBox);
+                                    List<ScheduledTick> scheduledTicks = ((ServerWorldHelper)world).collectScheduledTicks(sourceBox);
 
                                     if (scheduledTicks != null) {
                                         Iterator<ScheduledTick> ticks = scheduledTicks.iterator();
