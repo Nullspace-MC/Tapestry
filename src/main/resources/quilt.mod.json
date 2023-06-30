@@ -16,6 +16,9 @@
 			}
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"init": "net.nullspace_mc.tapestry.Tapestry"
+		},
 		"depends": [
 			{
 				"id": "quilt_loader",
@@ -24,6 +27,14 @@
 			{
 				"id": "minecraft",
 				"versions": "1.7.x"
+			},
+			{
+				"id": "osl-entrypoints",
+				"versions": ">=0.1.0"
+			},
+			{
+				"id": "osl-lifecycle-events",
+				"versions": ">=0.1.0"
 			}
 		]
 	},

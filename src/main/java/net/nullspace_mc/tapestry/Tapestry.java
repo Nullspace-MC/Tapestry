@@ -7,23 +7,26 @@ import net.nullspace_mc.tapestry.counter.CounterRegistry;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
 import net.nullspace_mc.tapestry.settings.SettingsManager;
 
-public class Tapestry {
+import net.ornithemc.osl.entrypoints.api.ModInitializer;
+import net.ornithemc.osl.lifecycle.api.server.MinecraftServerEvents;
+
+public class Tapestry implements ModInitializer {
 
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public static void initialize() {
+    @Override
+    public void init() {
         LOGGER.info("Initializing");
         SettingsManager.parseRules();
         LoggerRegistry.registerAllLoggers();
         CounterRegistry.setupCounters();
-    }
 
-    public static void onStart() {
-        LOGGER.info("Applying rules from tapestry.conf");
-        SettingsManager.applyConf();
-    }
-
-    public static void onTick() {
-        LoggerRegistry.tickLoggers();
+        MinecraftServerEvents.START.register(server -> {
+            LOGGER.info("Applying rules from tapestry.conf");
+            SettingsManager.applyConf();
+        });
+        MinecraftServerEvents.TICK_START.register(server -> {
+            LoggerRegistry.tickLoggers();
+        });
     }
 }

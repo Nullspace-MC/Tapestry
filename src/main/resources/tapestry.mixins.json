@@ -4,9 +4,7 @@
   "package": "net.nullspace_mc.tapestry.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "core.BootstrapMixin",
     "core.CommandManagerMixin",
-    "core.MinecraftServerMixin",
     "counter.HopperBlockEntityMixin",
     "feature.alwayseatcake.CakeBlockMixin",
     "feature.arrowspersist.ArrowEntityMixin",

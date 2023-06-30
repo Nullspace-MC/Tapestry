@@ -23,6 +23,10 @@ dependencies {
 	nests libs.nests // remove this line if not using nests
 
 	modImplementation libs.quilt.loader
+
+	modImplementation libs.osl.core
+	modImplementation libs.osl.entrypoints
+	modImplementation libs.osl.lifecycle.events
 }
 
 processResources {
