@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.nullspace_mc.tapestry.counter.CounterRegistry;
+import net.nullspace_mc.tapestry.helpers.KaboVillageMarker;
 import net.nullspace_mc.tapestry.loggers.LoggerRegistry;
 import net.nullspace_mc.tapestry.settings.SettingsManager;
 
@@ -20,6 +21,7 @@ public class Tapestry implements ModInitializer {
         SettingsManager.parseRules();
         LoggerRegistry.registerAllLoggers();
         CounterRegistry.setupCounters();
+        KaboVillageMarker.init();
 
         MinecraftServerEvents.START.register(server -> {
             LOGGER.info("Applying rules from tapestry.conf");

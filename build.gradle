@@ -27,6 +27,7 @@ dependencies {
 	modImplementation libs.osl.core
 	modImplementation libs.osl.entrypoints
 	modImplementation libs.osl.lifecycle.events
+	modImplementation libs.osl.networking
 }
 
 processResources {

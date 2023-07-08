@@ -2,11 +2,12 @@
 # The latest versions are available at https://lambdaurora.dev/tools/import_quilt.html
 minecraft = "1.7.2"
 quilt_loader = "0.18.10"
-feather_mappings = "1.7.2+build.10"
+feather_mappings = "1.7.2+build.11"
 nests = "1.7.2+build.1"
-osl_core = "0.1.0"
-osl_entrypoints = "0.1.0+mc13w16a-04192037#1.13.2"
-osl_lifecycle_events = "0.1.0+mc13w16a-04192037#1.13"
+osl_core = "0.3.0"
+osl_entrypoints = "0.1.2+mc13w16a-04192037#1.13.2"
+osl_lifecycle_events = "0.3.0+mc13w36a-09051446#1.13"
+osl_networking = "0.3.0+mc13w41a#14w20b"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -16,6 +17,7 @@ nests = { module = "net.ornithemc:nests", version.ref = "nests" }
 osl_core = { module = "net.ornithemc.osl:core", version.ref = "osl_core" }
 osl_entrypoints = { module = "net.ornithemc.osl:entrypoints", version.ref = "osl_entrypoints" }
 osl_lifecycle_events = { module = "net.ornithemc.osl:lifecycle-events", version.ref = "osl_lifecycle_events" }
+osl_networking = { module = "net.ornithemc.osl:networking", version.ref = "osl_networking" }
 
 [plugins]
 quilt_loom = { id = "org.quiltmc.loom", version = "1.2.+" }

@@ -30,11 +30,15 @@
 			},
 			{
 				"id": "osl-entrypoints",
-				"versions": ">=0.1.0"
+				"versions": ">=0.1.2"
 			},
 			{
 				"id": "osl-lifecycle-events",
-				"versions": ">=0.1.0"
+				"versions": ">=0.3.0"
+			},
+			{
+				"id": "osl-networking",
+				"versions": ">=0.3.0"
 			}
 		]
 	},

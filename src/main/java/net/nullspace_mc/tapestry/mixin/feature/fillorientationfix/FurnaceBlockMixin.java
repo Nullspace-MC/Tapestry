@@ -19,18 +19,18 @@ public abstract class FurnaceBlockMixin extends BlockWithBlockEntity {
     }
 
     @Shadow
-    protected abstract void updateState(World world, int x, int y, int z);
+    protected abstract void updateFacing(World world, int x, int y, int z);
 
     @Redirect(
             method = "onAdded",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/FurnaceBlock;updateState(Lnet/minecraft/world/World;III)V"
+                    target = "Lnet/minecraft/block/FurnaceBlock;updateFacing(Lnet/minecraft/world/World;III)V"
             )
     )
     private void fixOrientation(FurnaceBlock furnaceBlock, World world, int x, int y, int z) {
         if (!SetBlockHelper.applyFillOrientationFixRule || !Settings.fillOrientationFix) {
-            this.updateState(world, x, y, z);
+            this.updateFacing(world, x, y, z);
         }
     }
 }
