@@ -1,13 +1,15 @@
 plugins {
 	id 'maven-publish'
-	alias libs.plugins.quilt.loom
-	alias libs.plugins.ploceus
+    id 'fabric-loom' version '1.3.+'
+    id 'ploceus' version '1.3.+'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name
+base {
+    archivesName = project.archives_base_name
+}
 version = project.version
 group = project.maven_group
 
@@ -15,25 +17,25 @@ repositories {
 }
 
 dependencies {
-	minecraft libs.minecraft
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.layered {
-		mappings variantOf(libs.feather.mappings) { classifier 'v2' }
-		ploceus.nestedMappings(it) // remove this line if not using nests
+		mappings "net.ornithemc:feather:${project.minecraft_version}+build.${project.feather_build}:v2"
+		addLayer ploceus.nestedMappings() // remove this line if not using nests
 	}
-	nests libs.nests // remove this line if not using nests
+	nests "net.ornithemc:nests:${project.minecraft_version}+build.${project.nests_build}" // remove this line if not using nests
 
-	modImplementation libs.quilt.loader
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation libs.osl.core
-	modImplementation libs.osl.entrypoints
-	modImplementation libs.osl.lifecycle.events
-	modImplementation libs.osl.networking
+	modImplementation "net.ornithemc.osl:core:${project.osl_core_version}"
+	modImplementation "net.ornithemc.osl:entrypoints:${project.osl_entrypoints_version}"
+	modImplementation "net.ornithemc.osl:lifecycle-events:${project.osl_lifecycle_events_version}"
+	modImplementation "net.ornithemc.osl:networking:${project.osl_networking_version}"
 }
 
 processResources {
 	inputs.property "version", version
 
-	filesMatching("quilt.mod.json") {
+	filesMatching("fabric.mod.json") {
 		expand "version": version
 	}
 }
@@ -63,7 +65,7 @@ java {
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${archivesBaseName}" }
+		rename { "${it}_${base.archivesName.get()}" }
 	}
 }
 
