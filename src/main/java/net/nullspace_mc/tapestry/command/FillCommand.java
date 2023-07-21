@@ -65,7 +65,7 @@ public class FillCommand extends TapestryCommand {
 
                 for (int z = minPos.z; z < maxPos.z + 16; z += 16) {
                     for (int x = minPos.x; x < maxPos.x + 16; x += 16) {
-                        if (!world.isLoaded(x, maxPos.y - minPos.y, z)) {
+                        if (!world.isChunkLoaded(x, maxPos.y - minPos.y, z)) {
                             throw new CommandException("Cannot place blocks outside of the world", new Object[0]);
                         }
                     }

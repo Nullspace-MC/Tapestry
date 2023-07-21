@@ -2,18 +2,18 @@ package net.nullspace_mc.tapestry.mixin.feature.repeaterhalfdelay;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.RedstoneDiodeBlock;
+import net.minecraft.block.DiodeBlock;
 import net.minecraft.world.World;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(RedstoneDiodeBlock.class)
-public class RedstoneDiodeBlockMixin {
+@Mixin(DiodeBlock.class)
+public class DiodeBlockMixin {
 
     @Redirect(
-            method = "updatePowered",
+            method = "checkOutputState",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;scheduleTick(IIILnet/minecraft/block/Block;II)V"

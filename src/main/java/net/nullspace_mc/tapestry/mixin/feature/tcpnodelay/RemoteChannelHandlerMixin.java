@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 import net.nullspace_mc.tapestry.settings.Settings;
 
-@Mixin(targets = "net.minecraft.server.network.ServerNetworkIo$1")
+@Mixin(targets = "net.minecraft.server.network.ConnectionListener$1")
 public class RemoteChannelHandlerMixin {
     
     @SuppressWarnings("unchecked")

@@ -6,5 +6,5 @@ import net.minecraft.server.world.ScheduledTick;
 import net.minecraft.world.gen.structure.StructureBox;
 
 public interface ServerWorldHelper {
-    public List<ScheduledTick> getScheduledTicksInBox(StructureBox box);
+    public List<ScheduledTick> collectScheduledTicks(StructureBox bounds);
 }
