@@ -11,8 +11,6 @@ import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.storage.WorldStorage;
 import net.nullspace_mc.tapestry.Tapestry;
-import net.nullspace_mc.tapestry.helpers.ChunkMapHelper;
-import net.nullspace_mc.tapestry.helpers.ServerChunkCacheHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,10 +37,9 @@ public abstract class ServerWorldMixin extends World {
 	public void redirectSave(CallbackInfo ci) {
 		if (Settings.saveUnloadChunks) {
 			if (this.chunkSource.canSave()) {
-				List chunks = ((ServerChunkCacheHelper) this.chunkCache).getChunks();
+				List<WorldChunk> chunks = ((ServerChunkCacheAccessor) this.chunkCache).getChunks();
 
-				for (Object o : chunks) {
-					WorldChunk chunk = (WorldChunk) o;
+				for (WorldChunk chunk : chunks) {
 					if (!isLoaded(chunk.chunkX, chunk.chunkZ)) {
 						this.chunkCache.scheduleUnload(chunk.chunkX, chunk.chunkZ);
 					}
@@ -53,6 +50,6 @@ public abstract class ServerWorldMixin extends World {
 
 	private boolean isLoaded(int x, int z) {
 		long chunk = (long)x + 2147483647L | (long)z + 2147483647L << 32;
-		return ((ChunkMapHelper)this.chunkMap).getChunks().get(chunk) != null;
+		return ((ChunkMapAccessor)this.chunkMap).getChunks().get(chunk) != null;
 	}
 }
