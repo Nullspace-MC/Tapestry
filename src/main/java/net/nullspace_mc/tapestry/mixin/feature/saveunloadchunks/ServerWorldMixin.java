@@ -41,17 +41,12 @@ public abstract class ServerWorldMixin extends World {
 			if (this.chunkSource.canSave()) {
 				List chunks = ((ServerChunkCacheHelper) this.chunkCache).getChunks();
 
-				int unloadedChunks = 0;
-
 				for (Object o : chunks) {
 					WorldChunk chunk = (WorldChunk) o;
 					if (!isLoaded(chunk.chunkX, chunk.chunkZ)) {
 						this.chunkCache.scheduleUnload(chunk.chunkX, chunk.chunkZ);
-						unloadedChunks++;
 					}
 				}
-
-				Tapestry.LOGGER.info("[DIM " + this.dimension.id + "] Executed 1.7.5-like save (" + unloadedChunks + " chunks unloaded)");
 			}
 		}
 	}
