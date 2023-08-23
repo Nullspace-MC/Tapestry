@@ -161,6 +161,12 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `false`
 
+`saveUnloadChunks`
+* Enables chunk unloading when the world is saved
+* Behaves like 1.7.5+
+* Type: `boolean`
+* Default: `false`
+
 `tcpNoDelay`
 * Forces connections to send small packets immediately instead of buffering them
 * Reduces latency in some cases
