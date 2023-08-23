@@ -232,6 +232,13 @@ public class Settings {
     public static boolean repeatingCommandBlock = false;
 
     @Rule(
+            desc = "Enables chunk unloading when the world is saved",
+            extra = "Behaves like 1.7.5+",
+            category = {RuleCategory.FEATURE, RuleCategory.SURVIVAL}
+    )
+    public static boolean saveUnloadChunks = false;
+
+    @Rule(
             desc = "Forces connections to send small packets immediately instead of buffering them",
             extra = "Reduces latency in some cases",
             category = {RuleCategory.FIX}
