@@ -32,7 +32,7 @@ public abstract class FlatChunkGeneratorMixin {
             method = "<init>",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/gen/FlatWorldLayer;getBlockMetadata()I"
+                    target = "Lnet/minecraft/world/gen/chunk/FlatWorldLayer;getBlockMetadata()I"
             )
     )
     private void countFullLayer(World world, long l, boolean bl, String string, CallbackInfo ci) {

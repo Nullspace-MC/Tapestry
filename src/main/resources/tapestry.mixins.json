@@ -31,6 +31,8 @@
     "feature.fortressspawningfix.StructureFeatureMixin",
     "feature.infocommand.BlockEntityMixin",
     "feature.instantcommandblock.CommandBlockMixin",
+    "feature.instantfall.FallingBlockMixin",
+    "feature.instantscheduling.ServerWorldMixin",
     "feature.kabovillagemarker.ServerWorldMixin",
     "feature.kabovillagemarker.VillageMixin",
     "feature.kabovillagemarker.VillageStateMixin",

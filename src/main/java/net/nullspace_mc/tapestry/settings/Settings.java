@@ -163,6 +163,18 @@ public class Settings {
     public static boolean instantCommandBlock = false;
 
     @Rule(
+            desc = "Causes gravity-affected blocks to fall instantly",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean instantFall = false;
+
+    @Rule(
+            desc = "Instantly executes scheduled ticks",
+            category = RuleCategory.CREATIVE
+    )
+    public static boolean instantScheduling = false;
+
+    @Rule(
             desc = "Enables interoperability with KaboPC's Village Marker Mod",
             extra = "Players must relog for changes to take effect",
             category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
