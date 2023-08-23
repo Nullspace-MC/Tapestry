@@ -1,5 +1,7 @@
 package net.nullspace_mc.tapestry.settings;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.nullspace_mc.tapestry.Tapestry;
 import net.nullspace_mc.tapestry.helpers.TickSpeedHelper;
 
 /**
@@ -177,10 +179,25 @@ public class Settings {
     @Rule(
             desc = "Enables interoperability with KaboPC's Village Marker Mod",
             extra = "Players must relog for changes to take effect",
-            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
+            category = {RuleCategory.CREATIVE, RuleCategory.FEATURE},
+            validator = KVMValidator.class
     )
     @RuleDefaults.Creative
     public static boolean kaboVillageMarker = false;
+
+    static class KVMValidator extends Validator<Boolean> {
+		@Override
+		boolean validate(Boolean value) {
+			if (value == Boolean.TRUE) {
+				if (FabricLoader.getInstance().isModLoaded("kabo-village-marker")) {
+					Tapestry.LOGGER.info("The \'kaboVillageMarker\' setting is not compatible with the Kabo Village Marker Ornithe mod, and will be disabled.");
+					Tapestry.LOGGER.info("If you wish to use the original Village Marker mod, remove the Kabo Village Marker Ornithe mod.");
+					return false;
+				}
+			}
+			return value;
+		}
+    }
 
     @Rule(
             desc = "Disables fluid flowing breaking blocks",
