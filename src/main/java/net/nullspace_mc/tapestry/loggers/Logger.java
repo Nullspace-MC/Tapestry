@@ -34,13 +34,17 @@ public abstract class Logger {
         return playersSubscribed.contains(playerName);
     }
 
-    public void subscibePlayer(String playerName) {
+    public void subscribePlayer(String playerName) {
         playersSubscribed.add(playerName);
     }
 
     public void unsubscribePlayer(String playerName) {
         playersSubscribed.remove(playerName);
         channelSubscriptions.remove(playerName);
+    }
+
+    public Set<String> getPlayersSubscribed() {
+        return playersSubscribed;
     }
 
     public Set<String> getAvailableChannels() {
@@ -57,7 +61,7 @@ public abstract class Logger {
 
     public void onLogCommand(String playerName) {
         if (isPlayerSubscribed(playerName)) unsubscribePlayer(playerName);
-        else subscibePlayer(playerName);
+        else subscribePlayer(playerName);
     }
 
     public void onLogCommand(String playerName, String channel) {
@@ -65,7 +69,7 @@ public abstract class Logger {
             channelSubscriptions.put(playerName, channel);
 
         else if (!isPlayerSubscribed(playerName)) { // Player isn't logged
-            subscibePlayer(playerName);
+            subscribePlayer(playerName);
             channelSubscriptions.put(playerName, channel);
         }
 
