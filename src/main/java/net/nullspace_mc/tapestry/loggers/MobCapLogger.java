@@ -47,7 +47,7 @@ public class MobCapLogger extends Logger {
         mobCapMsg.append(new LiteralText(" "));
         mobCapMsg.append(genMobTally("W", MobCategory.WATER_CREATURE, world, Formatting.AQUA));
         mobCapMsg.append(new LiteralText(" "));
-        mobCapMsg.append(genMobTally("A", MobCategory.WATER_CREATURE, world, Formatting.YELLOW));
+        mobCapMsg.append(genMobTally("A", MobCategory.AMBIENT, world, Formatting.YELLOW));
 
         return mobCapMsg;
     }

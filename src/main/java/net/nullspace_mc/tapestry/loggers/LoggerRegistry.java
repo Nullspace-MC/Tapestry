@@ -21,6 +21,8 @@ public class LoggerRegistry {
     public static void registerAllLoggers() {
         registerLogger(new MobCapLogger());
         registerLogger(new TPSLogger());
+        registerLogger(new ProjectileLogger());
+        registerLogger(new TNTLogger());
     }
 
     private static void registerLogger(Logger logger) {
@@ -48,6 +50,7 @@ public class LoggerRegistry {
             for(Logger logger : LoggerRegistry.loggerRegistry.values()) {
                 if(logger.isPlayerSubscribed(player.getName())) {
                     Text logMessage = logger.tickLogger(server, player);
+                    if (logMessage == null) continue;
                     player.networkHandler.sendPacket(new ChatMessageS2CPacket(logMessage));
                 }
             }
