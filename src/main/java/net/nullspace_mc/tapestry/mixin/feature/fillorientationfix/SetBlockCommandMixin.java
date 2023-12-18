@@ -4,15 +4,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import net.minecraft.server.command.Command;
+import net.minecraft.server.command.AbstractCommand;
 import net.minecraft.server.command.SetBlockCommand;
 import net.minecraft.server.command.source.CommandSource;
 
 import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 
 @Mixin(SetBlockCommand.class)
-public abstract class SetBlockCommandMixin extends Command {
+public abstract class SetBlockCommandMixin extends AbstractCommand {
 
     @Inject(
             method = "run",

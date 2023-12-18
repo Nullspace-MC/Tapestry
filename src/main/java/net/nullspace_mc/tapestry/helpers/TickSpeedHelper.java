@@ -1,7 +1,7 @@
 package net.nullspace_mc.tapestry.helpers;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.Command;
+import net.minecraft.server.command.AbstractCommand;
 import net.minecraft.server.command.source.CommandSource;
 
 public class TickSpeedHelper {
@@ -34,7 +34,7 @@ public class TickSpeedHelper {
         double warpMSPT = (double)elapsedTimeMillis / (double)warpedTicks;
         double warpTPS = 1000D / warpMSPT;
 
-        Command.sendSuccess(warper, String.format("Tick warp finished with %.1f tps (%.2f mspt)", warpTPS, warpMSPT), new Object[0]);
+        AbstractCommand.sendSuccess(warper, String.format("Tick warp finished with %.1f tps (%.2f mspt)", warpTPS, warpMSPT), new Object[0]);
 
         warping = false;
         warper = null;

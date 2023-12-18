@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import net.minecraft.block.Block;
-import net.minecraft.server.command.Command;
+import net.minecraft.server.command.AbstractCommand;
 import net.minecraft.server.command.SetBlockCommand;
 import net.minecraft.world.World;
 import net.nullspace_mc.tapestry.helpers.SetBlockFlags;
@@ -13,7 +13,7 @@ import net.nullspace_mc.tapestry.helpers.SetBlockHelper;
 import net.nullspace_mc.tapestry.settings.Settings;
 
 @Mixin(SetBlockCommand.class)
-public abstract class SetBlockCommandMixin extends Command {
+public abstract class SetBlockCommandMixin extends AbstractCommand {
 
     @Redirect(
             method = "run",
