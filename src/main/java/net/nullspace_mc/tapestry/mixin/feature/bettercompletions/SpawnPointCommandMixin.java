@@ -6,8 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import net.minecraft.server.command.Command;
+import net.minecraft.server.command.AbstractCommand;
 import net.minecraft.server.command.SpawnPointCommand;
 import net.minecraft.server.command.source.CommandSource;
 
@@ -15,7 +14,7 @@ import net.nullspace_mc.tapestry.command.TapestryCommand;
 import net.nullspace_mc.tapestry.settings.Settings;
 
 @Mixin(SpawnPointCommand.class)
-public abstract class SpawnPointCommandMixin extends Command {
+public abstract class SpawnPointCommandMixin extends AbstractCommand {
 
     @Inject(
         method = "getSuggestions",

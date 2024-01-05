@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.server.command.Command;
+import net.minecraft.server.command.AbstractCommand;
 import net.minecraft.server.command.source.CommandSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.HitResult;
 
-public abstract class TapestryCommand extends Command {
+public abstract class TapestryCommand extends AbstractCommand {
 
     /**
      * Parse an x, y, z triple from command arguments
@@ -72,12 +72,12 @@ public abstract class TapestryCommand extends Command {
 
     @SuppressWarnings("unchecked")
     public static List<String> suggestMatching(String[] args, String... suggestions) {
-        return Command.suggestMatching(args, suggestions);
+        return AbstractCommand.suggestMatching(args, suggestions);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static List<String> suggestMatching(String[] args, Iterable suggestions) {
-        return Command.suggestMatching(args, suggestions);
+        return AbstractCommand.suggestMatching(args, suggestions);
     }
 
     /**
@@ -85,8 +85,8 @@ public abstract class TapestryCommand extends Command {
      */
     @Override
     public int compareTo(Object object) {
-        if(object instanceof Command) {
-            return super.compareTo((Command)object);
+        if(object instanceof AbstractCommand) {
+            return super.compareTo((AbstractCommand)object);
         }
         throw new IllegalStateException();
     }

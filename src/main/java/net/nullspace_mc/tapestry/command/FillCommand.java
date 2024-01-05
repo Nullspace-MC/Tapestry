@@ -13,7 +13,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtException;
-import net.minecraft.nbt.StringNbtReader;
+import net.minecraft.nbt.SnbtParser;
 import net.minecraft.server.command.exception.CommandException;
 import net.minecraft.server.command.exception.IncorrectUsageException;
 import net.minecraft.server.command.source.CommandSource;
@@ -77,7 +77,7 @@ public class FillCommand extends TapestryCommand {
                     String tagString = parseText(source, args, 9).getContent();
 
                     try {
-                        NbtElement element = StringNbtReader.parse(tagString);
+                        NbtElement element = SnbtParser.parse(tagString);
                         if (!(element instanceof NbtCompound)) {
                             throw new NbtException("Not a valid tag");
                         }
