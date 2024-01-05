@@ -41,7 +41,7 @@ public abstract class ServerWorldMixin extends World {
 
 				for (WorldChunk chunk : chunks) {
 					if (!isLoaded(chunk.chunkX, chunk.chunkZ)) {
-						this.chunkCache.scheduleUnload(chunk.chunkX, chunk.chunkZ);
+						this.chunkCache.unloadChunk(chunk.chunkX, chunk.chunkZ);
 					}
 				}
 			}
