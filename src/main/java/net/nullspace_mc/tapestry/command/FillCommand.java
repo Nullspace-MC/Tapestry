@@ -45,7 +45,7 @@ public class FillCommand extends TapestryCommand {
     @Override
     public void run(CommandSource source, String[] args) {
         if (args.length < 7) {
-            throw new IncorrectUsageException(getUsage(source), new Object[0]);
+            throw new IncorrectUsageException(getUsage(source));
         } else {
             BlockPos blockPos1 = parseBlockPos(source, args, 0);
             BlockPos blockPos2 = parseBlockPos(source, args, 3);
@@ -59,14 +59,14 @@ public class FillCommand extends TapestryCommand {
             BlockPos maxPos = new BlockPos(Math.max(blockPos1.x, blockPos2.x), Math.max(blockPos1.y, blockPos2.y), Math.max(blockPos1.z, blockPos2.z));
             int volume = (maxPos.x-minPos.x + 1)*(maxPos.y-minPos.y + 1)*(maxPos.z-minPos.z + 1);
             if (volume > Settings.fillLimit) {
-                throw new CommandException(String.format("Too many blocks in the specified area (%d > %d)", volume, Settings.fillLimit), new Object[0]);
+                throw new CommandException(String.format("Too many blocks in the specified area (%d > %d)", volume, Settings.fillLimit));
             } else if (minPos.y >= 0 && maxPos.y < 256) {
                 World world = source.getSourceWorld();
 
                 for (int z = minPos.z; z < maxPos.z + 16; z += 16) {
                     for (int x = minPos.x; x < maxPos.x + 16; x += 16) {
                         if (!world.isChunkLoaded(x, maxPos.y - minPos.y, z)) {
-                            throw new CommandException("Cannot place blocks outside of the world", new Object[0]);
+                            throw new CommandException("Cannot place blocks outside of the world");
                         }
                     }
                 }
@@ -85,7 +85,7 @@ public class FillCommand extends TapestryCommand {
                         compoundTag = (NbtCompound)element;
                         hasTag = true;
                     } catch (NbtException e) {
-                        throw new CommandException(String.format("Data tag parsing failed: %s", e.getMessage()), new Object[0]);
+                        throw new CommandException(String.format("Data tag parsing failed: %s", e.getMessage()));
                     }
                 }
 
@@ -167,12 +167,12 @@ public class FillCommand extends TapestryCommand {
                 }
 
                 if (volume <= 0) {
-                    throw new CommandException("No blocks filled", new Object[0]);
+                    throw new CommandException("No blocks filled");
                 } else {
-                    sendSuccess(source, String.format("%d blocks filled", volume), new Object[0]);
+                    sendSuccess(source, String.format("%d blocks filled", volume));
                 }
             } else {
-                throw new CommandException("Cannot place blocks outside of the world", new Object[0]);
+                throw new CommandException("Cannot place blocks outside of the world");
             }
         }
     }

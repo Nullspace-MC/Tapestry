@@ -2,6 +2,7 @@ package net.nullspace_mc.tapestry.mixin.feature.saveunloadchunks;
 
 import net.minecraft.server.ChunkMap;
 import net.minecraft.util.Long2ObjectHashMap;
+import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -9,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface ChunkMapAccessor {
 
 	@Accessor("chunksByPos")
-	Long2ObjectHashMap getChunks();
+	Long2ObjectHashMap<WorldChunk> getChunks();
 }

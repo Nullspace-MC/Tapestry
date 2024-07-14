@@ -10,7 +10,6 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.storage.WorldStorage;
-import net.nullspace_mc.tapestry.Tapestry;
 import net.nullspace_mc.tapestry.settings.Settings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

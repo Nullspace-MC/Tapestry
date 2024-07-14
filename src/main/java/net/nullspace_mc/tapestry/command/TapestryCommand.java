@@ -69,25 +69,4 @@ public abstract class TapestryCommand extends AbstractCommand {
             return Arrays.asList(s);
         }
     }
-
-    @SuppressWarnings("unchecked")
-    public static List<String> suggestMatching(String[] args, String... suggestions) {
-        return AbstractCommand.suggestMatching(args, suggestions);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static List<String> suggestMatching(String[] args, Iterable suggestions) {
-        return AbstractCommand.suggestMatching(args, suggestions);
-    }
-
-    /**
-     * Added so the compiler would stop crying
-     */
-    @Override
-    public int compareTo(Object object) {
-        if(object instanceof AbstractCommand) {
-            return super.compareTo((AbstractCommand)object);
-        }
-        throw new IllegalStateException();
-    }
 }

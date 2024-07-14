@@ -22,9 +22,9 @@ public abstract class SpreadPlayersCommandMixin extends AbstractCommand {
             } else if (args.length == 2) {
                 return TapestryCommand.suggestCoordinates(source, args, -1);
             } else if (args.length == 5) {
-                return TapestryCommand.suggestMatching(args, new String[]{"true", "false"});
+                return suggestMatching(args, "true", "false");
             } else if (args.length >= 6) {
-                return TapestryCommand.suggestMatching(args, MinecraftServer.getInstance().getPlayerNames());
+                return suggestMatching(args, MinecraftServer.getInstance().getPlayerNames());
             }
         }
         return null;

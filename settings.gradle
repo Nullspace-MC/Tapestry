@@ -5,8 +5,12 @@ pluginManagement {
 		        url = 'https://maven.fabricmc.net/'
 		}
 		maven {
-			name = 'Ornithe'
+			name = 'Ornithe Releases'
 			url = 'https://maven.ornithemc.net/releases'
+		}
+		maven {
+			name = 'Ornithe Snapshots'
+			url = 'https://maven.ornithemc.net/snapshots'
 		}
 		gradlePluginPortal()
 	}

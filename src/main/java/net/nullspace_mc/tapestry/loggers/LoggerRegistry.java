@@ -44,9 +44,7 @@ public class LoggerRegistry {
     }
 
     private static void updateHudLoggers(MinecraftServer server) {
-        for (Object element : server.getPlayerManager().players) {
-            if (!(element instanceof ServerPlayerEntity)) continue;
-            ServerPlayerEntity player = (ServerPlayerEntity) element;
+        for (ServerPlayerEntity player : server.getPlayerManager().players) {
             for(Logger logger : LoggerRegistry.loggerRegistry.values()) {
                 if(logger.isPlayerSubscribed(player.getName())) {
                     Text logMessage = logger.tickLogger(server, player);

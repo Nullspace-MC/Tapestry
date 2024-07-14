@@ -56,13 +56,13 @@ public class CloneCommand extends TapestryCommand {
             StructureBox destBox = new StructureBox(destPos.x, destPos.y, destPos.z, destPos.x + sourceBox.getSpanX() - 1, destPos.y + sourceBox.getSpanY() - 1, destPos.z + sourceBox.getSpanZ() - 1);
             int volume = sourceBox.getSpanX() * sourceBox.getSpanY() * sourceBox.getSpanZ();
             if (volume > Settings.fillLimit) {
-                throw new CommandException(String.format("Too many blocks in the specified area (%d > %d)", volume, Settings.fillLimit), new Object[0]);
+                throw new CommandException(String.format("Too many blocks in the specified area (%d > %d)", volume, Settings.fillLimit));
             } else {
                 boolean bl = false;
                 Block filterBlock = null;
                 int filterMeta = -1;
                 if ((args.length < 11 || !args[10].equals("force") && !args[10].equals("move")) && sourceBox.intersects(destBox)) {
-                    throw new CommandException("Source and destination can not overlap", new Object[0]);
+                    throw new CommandException("Source and destination can not overlap");
                 } else {
                     if (args.length >= 11 && args[10].equals("move")) {
                         bl = true;
@@ -77,7 +77,7 @@ public class CloneCommand extends TapestryCommand {
                                     bl2 = true;
                                 } else if (args[9].equals("filtered")) {
                                     if (args.length < 12) {
-                                        throw new IncorrectUsageException(getUsage(source), new Object[0]);
+                                        throw new IncorrectUsageException(getUsage(source));
                                     }
 
                                     filterBlock = parseBlock(source, args[11]);
@@ -197,15 +197,15 @@ public class CloneCommand extends TapestryCommand {
                             }
 
                             if (volume <= 0) {
-                                throw new CommandException("No blocks cloned", new Object[0]);
+                                throw new CommandException("No blocks cloned");
                             } else {
-                                sendSuccess(source, String.format("%d blocks cloned", volume), new Object[0]);
+                                sendSuccess(source, String.format("%d blocks cloned", volume));
                             }
                         } else {
-                            throw new CommandException("Cannot access blocks outside of the world", new Object[0]);
+                            throw new CommandException("Cannot access blocks outside of the world");
                         }
                     } else {
-                        throw new CommandException("Cannot access blocks outside of the world", new Object[0]);
+                        throw new CommandException("Cannot access blocks outside of the world");
                     }
                 }
             }
@@ -235,9 +235,9 @@ public class CloneCommand extends TapestryCommand {
         } else if (args.length > 6 && args.length <= 9) {
             return suggestCoordinates(source, args, 6);
         } else if (args.length == 10) {
-            return suggestMatching(args, new String[]{"replace", "masked", "filtered"});
+            return suggestMatching(args, "replace", "masked", "filtered");
         } else if (args.length == 11) {
-            return suggestMatching(args, new String[]{"normal", "force", "move"});
+            return suggestMatching(args, "normal", "force", "move");
         } else {
             return args.length == 12 && "filtered".equals(args[9]) ? suggestMatching(args, Block.REGISTRY.keySet()) : null;
         }

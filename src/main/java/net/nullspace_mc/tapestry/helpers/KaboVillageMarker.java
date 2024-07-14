@@ -64,13 +64,11 @@ public class KaboVillageMarker {
     public String buildDataString() {
         String data = "";
         SavedVillageData villageData = this.world.villages;
-        @SuppressWarnings("unchecked")
         List<Village> villages = villageData.getVillages();
         data += this.dimension + ":";
 
         for (Village village : villages) {
             data += village.getRadius() + ";" + village.getCenter().x + "," + village.getCenter().y + "," + village.getCenter().z + ";";
-            @SuppressWarnings("unchecked")
             List<VillageDoor> doors = village.getDoors();
             
             for (VillageDoor door : doors) {
@@ -99,9 +97,7 @@ public class KaboVillageMarker {
 
             String playerName = new String(data);
 
-            for (Object o : server.getPlayerManager().players) {
-                ServerPlayerEntity p = (ServerPlayerEntity)o; // thanks proguard
-
+            for (ServerPlayerEntity p : server.getPlayerManager().players) {
                 if (p.getUuid().toString().equals(playerName)) {
                     players.put(playerName, player);
                 }

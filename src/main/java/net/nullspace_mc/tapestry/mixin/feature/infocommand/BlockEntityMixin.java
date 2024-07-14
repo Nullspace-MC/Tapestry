@@ -11,7 +11,7 @@ import net.minecraft.block.entity.BlockEntity;
 public interface BlockEntityMixin {
 
     @Accessor("TYPE_TO_ID")
-    static Map<Class<?>, String> getTypeToId() {
+    static Map<Class<? extends BlockEntity>, String> getTypeToId() {
         return null;
     }
 }
