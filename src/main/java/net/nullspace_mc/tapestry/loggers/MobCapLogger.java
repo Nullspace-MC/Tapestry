@@ -18,7 +18,7 @@ import net.nullspace_mc.tapestry.mixin.loggers.mobcap.ServerWorldAccessor;
 public class MobCapLogger extends Logger {
 
     public MobCapLogger() {
-        super(new LinkedHashSet<String>(Arrays.asList(new String[]{"dynamic", "overworld", "nether", "end"})), false);
+        super(new LinkedHashSet<String>(Arrays.asList("dynamic", "overworld", "nether", "end")), false);
     }
 
     public String getName() {

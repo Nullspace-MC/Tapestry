@@ -18,7 +18,7 @@ public abstract class PlaySoundCommandMixin extends AbstractCommand {
     public List<String> getSuggestions(CommandSource source, String[] args) {
         if (Settings.betterCompletions) {
             if (args.length == 2) {
-                return TapestryCommand.suggestMatching(args, MinecraftServer.getInstance().getPlayerNames());
+                return suggestMatching(args, MinecraftServer.getInstance().getPlayerNames());
             } else if (args.length > 2 && args.length <= 5) {
                 return TapestryCommand.suggestCoordinates(source, args, 2);
             }

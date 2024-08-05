@@ -34,7 +34,7 @@ public class TickSpeedHelper {
         double warpMSPT = (double)elapsedTimeMillis / (double)warpedTicks;
         double warpTPS = 1000D / warpMSPT;
 
-        AbstractCommand.sendSuccess(warper, String.format("Tick warp finished with %.1f tps (%.2f mspt)", warpTPS, warpMSPT), new Object[0]);
+        AbstractCommand.sendSuccess(warper, String.format("Tick warp finished with %.1f tps (%.2f mspt)", warpTPS, warpMSPT));
 
         warping = false;
         warper = null;

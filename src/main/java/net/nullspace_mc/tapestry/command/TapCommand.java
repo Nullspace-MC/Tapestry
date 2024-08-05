@@ -140,7 +140,7 @@ public class TapCommand extends TapestryCommand {
         }
 
         if (args.length == 1 && "use".equalsIgnoreCase(args[0])) {
-            throw new IncorrectUsageException("/tap use <preset>", new Object[0]);
+            throw new IncorrectUsageException("/tap use <preset>");
         }
 
         if ("defaults".equalsIgnoreCase(args[0])) {
@@ -151,35 +151,35 @@ public class TapCommand extends TapestryCommand {
         if ("use".equalsIgnoreCase(args[0])) {
             if ("default".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToConf();
-                sendSuccess(source, "Set all rules to user defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to user defaults");
                 return;
             }
 
             if ("vanilla".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToVanilla();
-                sendSuccess(source, "Set all rules to vanilla", new Object[0]);
+                sendSuccess(source, "Set all rules to vanilla");
                 return;
             }
 
             if ("survival".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToSurvival();
-                sendSuccess(source, "Set all rules to survival defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to survival defaults");
                 return;
             }
 
             if ("creative".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToCreative();
-                sendSuccess(source, "Set all rules to creative defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to creative defaults");
                 return;
             }
 
             if ("bugfixes".equalsIgnoreCase(args[1])) {
                 SettingsManager.resetToBugFix();
-                sendSuccess(source, "Set all rules to bugfix defaults", new Object[0]);
+                sendSuccess(source, "Set all rules to bugfix defaults");
                 return;
             }
 
-            throw new IncorrectUsageException("/tap use <preset>", new Object[0]);
+            throw new IncorrectUsageException("/tap use <preset>");
         }
 
         if (args.length >= 2 && "list".equalsIgnoreCase(args[0])) {
@@ -201,24 +201,24 @@ public class TapCommand extends TapestryCommand {
                     SettingsManager.addOrSetOverride(current, SettingsManager.getRule(current));
                 }
 
-                sendSuccess(source, "All current rules will be set upon restart", new Object[0]);
+                sendSuccess(source, "All current rules will be set upon restart");
                 return;
             }
 
             if (args.length >= 2 && !SettingsManager.hasRule(args[1])) {
-                throw new CommandException("Unknown rule: " + args[1], new Object[0]);
+                throw new CommandException("Unknown rule: " + args[1]);
             }
 
             if (args.length != 3) {
-                throw new IncorrectUsageException("/tap setDefault <rule|current> [value]", new Object[0]);
+                throw new IncorrectUsageException("/tap setDefault <rule|current> [value]");
             }
 
             boolean success = SettingsManager.addOrSetOverride(args[1], args[2]);
 
             if (success) {
-                sendSuccess(source, SettingsManager.getParsedRule(args[1]).name + " will default to: " + args[2], new Object[0]);
+                sendSuccess(source, SettingsManager.getParsedRule(args[1]).name + " will default to: " + args[2]);
             } else {
-                throw new CommandException(args[2] + " is not a legal value for " + SettingsManager.getParsedRule(args[1]).name, new Object[0]);
+                throw new CommandException(args[2] + " is not a legal value for " + SettingsManager.getParsedRule(args[1]).name);
             }
 
             return;
@@ -234,23 +234,23 @@ public class TapCommand extends TapestryCommand {
                     SettingsManager.removeOverride(override);
                 }
 
-                sendSuccess(source, "All rules will not be set upon restart", new Object[0]);
+                sendSuccess(source, "All rules will not be set upon restart");
                 return;
             }
 
             boolean success = SettingsManager.removeOverride(args[1]);
 
             if (success) {
-                sendSuccess(source, SettingsManager.getParsedRule(args[1]).name + " will not be set upon restart", new Object[0]);
+                sendSuccess(source, SettingsManager.getParsedRule(args[1]).name + " will not be set upon restart");
             } else {
-                throw new CommandException("Unknown rule: " + args[1], new Object[0]);
+                throw new CommandException("Unknown rule: " + args[1]);
             }
 
             return;
         }
 
         if (!SettingsManager.hasRule(args[0])) {
-            throw new CommandException("Unknown rule: " + args[0], new Object[0]);
+            throw new CommandException("Unknown rule: " + args[0]);
         }
 
         if (args.length == 2) {

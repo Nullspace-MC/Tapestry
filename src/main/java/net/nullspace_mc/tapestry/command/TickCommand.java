@@ -35,11 +35,11 @@ public class TickCommand extends TapestryCommand {
             if (args.length == 2) {
                 TickSpeedHelper.setTickRate(parseDouble(source, args[1], 0.05D));
             }
-            sendSuccess(source, String.format("Current tick rate is %.1f", TickSpeedHelper.tickRate), new Object[0]);
+            sendSuccess(source, String.format("Current tick rate is %.1f", TickSpeedHelper.tickRate));
         } else if (args[0].equals("warp")) {
             long ticksToWarp = args.length == 2 ? (args[1].equalsIgnoreCase("stop") ? 0 : (long)parseInt(source, args[1], 0)) : (TickSpeedHelper.warping ? 0L : -1L);
             if (ticksToWarp != 0) {
-                sendSuccess(source, "Started tick warp", new Object[0]);
+                sendSuccess(source, "Started tick warp");
             }
             TickSpeedHelper.startTickWarp(source, ticksToWarp);
         } else throw new IncorrectUsageException(getUsage(source));
