@@ -162,6 +162,7 @@ public class Settings {
             extra = "A command block will run instantly if it is on top of a redstone ore block",
             category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
+    @RuleDefaults.Creative
     public static boolean instantCommandBlock = false;
 
     @Rule(
@@ -239,6 +240,7 @@ public class Settings {
             extra = "A repeater's delay is halved if it is on top of a redstone ore block",
             category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
+    @RuleDefaults.Creative
     public static boolean repeaterHalfDelay = false;
 
     @Rule(
@@ -246,6 +248,7 @@ public class Settings {
             extra = "A command block will run every tick if it is on top of a diamond ore block",
             category = {RuleCategory.CREATIVE, RuleCategory.FEATURE}
     )
+    @RuleDefaults.Creative
     public static boolean repeatingCommandBlock = false;
 
     @Rule(
