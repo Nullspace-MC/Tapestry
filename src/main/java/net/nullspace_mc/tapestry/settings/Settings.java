@@ -118,6 +118,13 @@ public class Settings {
     public static boolean explosionBlockBreaking = true;
 
     @Rule(
+            desc = "Speeds up the time it takes to send map data packets",
+            extra = "Only affects item frame maps",
+            category = {RuleCategory.FEATURE}
+    )
+    public static boolean fasterItemFrameMaps = false;
+
+    @Rule(
             desc = "Volume limit of the fill/clone commands",
             category = RuleCategory.CREATIVE,
             options = {"32768", "250000", "1000000"},
