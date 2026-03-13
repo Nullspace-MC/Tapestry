@@ -20,6 +20,7 @@
     "feature.clonecommand.ServerWorldMixin",
     "feature.creativenoclip.ServerPlayNetworkHandlerMixin",
     "feature.explosionblockbreaking.ExplosionMixin",
+    "feature.fasteritemframemaps.EntityTrackerEntryMixin",
     "feature.fillorientationfix.ChestBlockMixin",
     "feature.fillorientationfix.ChunkMixin",
     "feature.fillorientationfix.DispenserBlockMixin",
@@ -48,6 +49,7 @@
     "feature.tcpnodelay.RemoteChannelHandlerMixin",
     "loggers.mobcap.NaturalSpawnerAccessor",
     "loggers.mobcap.ServerWorldAccessor",
+    "loggers.projectiles.ArrowEntityMixin",
     "loggers.projectiles.ThrownEntityMixin",
     "loggers.tnt.PrimedTntEntityMixin",
     "tick.MinecraftServerMixin"

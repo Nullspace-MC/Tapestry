@@ -85,6 +85,12 @@ A Fabric-Carpet-like mod for old Minecraft versions
 * Type: `boolean`
 * Default: `true`
 
+`fasterItemFrameMaps`
+* Speeds up the time it takes to send map data packets
+* Only affects item frame maps
+* Type: `boolean`
+* Default: `false`
+
 `fillLimit`
 * Volume limit of the fill/clone commands
 * Type: `int`

@@ -26,7 +26,7 @@
 	],
 
 	"depends": {
-		"minecraft": "1.7.2",
+		"minecraft": ">=1.7.2 <=1.7.4",
 		"osl-entrypoints": ">=0.2.0",
 		"osl-lifecycle-events": ">=0.4.0",
 		"osl-networking": ">=0.4.0"
