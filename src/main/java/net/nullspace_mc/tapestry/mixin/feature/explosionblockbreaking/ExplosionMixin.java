@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.explosion.Explosion;
 
 import net.nullspace_mc.tapestry.settings.Settings;
@@ -17,7 +17,7 @@ import net.nullspace_mc.tapestry.settings.Settings;
 public class ExplosionMixin {
 
     @Shadow
-    private List<Vec3i> damagedBlocks;
+    private List<BlockPos> damagedBlocks;
 
     @Inject(
             method = "damageBlocks",

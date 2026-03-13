@@ -6,9 +6,9 @@ import java.util.List;
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.server.command.AbstractCommand;
 import net.minecraft.server.command.source.CommandSource;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.HitResult;
 
 public abstract class TapestryCommand extends AbstractCommand {
@@ -22,9 +22,9 @@ public abstract class TapestryCommand extends AbstractCommand {
      * @return Returns a BlockPos corresponding to the coordinates specified in the command
      */
     public static BlockPos parseBlockPos(CommandSource source, String[] args, int startIdx) {
-        int x = source.getSourceBlockPos().x;
-        int y = source.getSourceBlockPos().y;
-        int z = source.getSourceBlockPos().z;
+        int x = source.getCommandSourceBlockPos().x;
+        int y = source.getCommandSourceBlockPos().y;
+        int z = source.getCommandSourceBlockPos().z;
         x = MathHelper.floor(parseCoordinate(source, (double)x, args[startIdx]));
         y = MathHelper.floor(parseCoordinate(source, (double)y, args[startIdx + 1], 0, 255));
         z = MathHelper.floor(parseCoordinate(source, (double)z, args[startIdx + 2]));
@@ -44,10 +44,10 @@ public abstract class TapestryCommand extends AbstractCommand {
         if (source instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)source;
             double range = player.abilities.creativeMode ? 5.0D : 4.5D;
-            Vec3d playerLook = player.getCameraRotation().normalize();
-            Vec3d playerPos = source.getSourceWorld().getVec3dCache().create(player.x, player.y + player.getEyeHeight(), player.z);
-            Vec3d targetPos = source.getSourceWorld().getVec3dCache().create(playerPos.x + range*playerLook.x, playerPos.y + range*playerLook.y, playerPos.z + range*playerLook.z);
-            hit = source.getSourceWorld().rayTrace(playerPos, targetPos, false, true, false);
+            Vec3d playerLook = player.getLookVector().normalize();
+            Vec3d playerPos = source.getCommandSourceWorld().getVec3dPool().create(player.x, player.y + player.getEyeHeight(), player.z);
+            Vec3d targetPos = source.getCommandSourceWorld().getVec3dPool().create(playerPos.x + range*playerLook.x, playerPos.y + range*playerLook.y, playerPos.z + range*playerLook.z);
+            hit = source.getCommandSourceWorld().rayTrace(playerPos, targetPos, false, true, false);
         }
 
         if (hit == null) {

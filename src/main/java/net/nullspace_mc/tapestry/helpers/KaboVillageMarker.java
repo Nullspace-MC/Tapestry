@@ -14,14 +14,17 @@ import net.minecraft.world.village.VillageDoor;
 
 import net.nullspace_mc.tapestry.settings.Settings;
 
+import net.ornithemc.osl.core.api.util.NamespacedIdentifier;
+import net.ornithemc.osl.networking.api.ChannelRegistry;
+import net.ornithemc.osl.networking.api.StringChannelIdentifierParser;
 import net.ornithemc.osl.networking.api.server.ServerConnectionEvents;
 import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
 
 public class KaboVillageMarker {
 
-    private static final String POLL_CHANNEL = "KVM|Poll";
-    private static final String ANSWER_CHANNEL = "KVM|Answer";
-    private static final String DATA_CHANNEL = "KVM|Data";
+    private static final NamespacedIdentifier POLL_CHANNEL = ChannelRegistry.register(StringChannelIdentifierParser.fromString("KVM|Poll"));
+    private static final NamespacedIdentifier ANSWER_CHANNEL = ChannelRegistry.register(StringChannelIdentifierParser.fromString("KVM|Answer"));
+    private static final NamespacedIdentifier DATA_CHANNEL = ChannelRegistry.register(StringChannelIdentifierParser.fromString("KVM|Data"));
 
     private static HashMap<String, ServerPlayerEntity> players = new HashMap<>();
     private static int id = 0;
@@ -55,7 +58,7 @@ public class KaboVillageMarker {
         }
 
         for (String dataString : dataStringList) {
-            ServerPlayNetworking.doSend(players.values(), DATA_CHANNEL, dataString.getBytes(Charsets.UTF_8));
+            ServerPlayNetworking.sendNoCheck(players.values(), DATA_CHANNEL, dataString.getBytes(Charsets.UTF_8));
         }
 
         this.shouldUpdateClients = false;
@@ -84,26 +87,24 @@ public class KaboVillageMarker {
     public static void init() {
         ServerConnectionEvents.LOGIN.register((server, player) -> {
             if (Settings.kaboVillageMarker) {
-                ServerPlayNetworking.doSend(player, POLL_CHANNEL, new byte[0]);
+                ServerPlayNetworking.sendNoCheck(player, POLL_CHANNEL, new byte[0]);
             }
         });
         ServerConnectionEvents.DISCONNECT.register((server, player) -> {
             players.remove(player.getUuid().toString(), player);
         });
-        ServerPlayNetworking.registerListenerRaw(ANSWER_CHANNEL, (server, handler, player, data) -> {
+        ServerPlayNetworking.registerLegacyListener(ANSWER_CHANNEL, (context, data) -> {
             if (!Settings.kaboVillageMarker) {
-                return false;
+                return;
             }
 
             String playerName = new String(data);
 
-            for (ServerPlayerEntity p : server.getPlayerManager().players) {
+            for (ServerPlayerEntity p : context.server().getPlayerManager().players) {
                 if (p.getUuid().toString().equals(playerName)) {
-                    players.put(playerName, player);
+                    players.put(playerName, context.player());
                 }
             }
-
-            return true;
         });
     }
 }

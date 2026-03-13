@@ -2,7 +2,7 @@ package net.nullspace_mc.tapestry.mixin.loggers.projectiles;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.thrown.ThrownEntity;
+import net.minecraft.entity.projectile.ThrownEntity;
 import net.minecraft.world.World;
 import net.nullspace_mc.tapestry.loggers.helpers.ProjectileLoggerHelper;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,17 +1,26 @@
 plugins {
 	id 'maven-publish'
-    id 'fabric-loom' version '1.7-SNAPSHOT'
-    id 'ploceus' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.15-SNAPSHOT'
+    id 'ploceus' version '1.15-SNAPSHOT'
 }
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
 
 base {
     archivesName = project.archives_base_name
 }
 version = project.version
 group = project.maven_group
+
+loom {
+	runs {
+		client {
+			programArgs "--userProperties", "{}"
+		}
+	}
+}
+
+ploceus {
+	setIntermediaryGeneration(2)
+}
 
 repositories {
 }
@@ -27,7 +36,6 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	ploceus.dependOsl(project.osl_version)
-	ploceus.addCommonLibraries()
 }
 
 processResources {
@@ -43,7 +51,7 @@ processResources {
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-	if (JavaVersion.current().isJava9Compatible()) it.options.release = 8
+	it.options.release = 8
 }
 
 java {

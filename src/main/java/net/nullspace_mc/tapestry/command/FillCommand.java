@@ -61,7 +61,7 @@ public class FillCommand extends TapestryCommand {
             if (volume > Settings.fillLimit) {
                 throw new CommandException(String.format("Too many blocks in the specified area (%d > %d)", volume, Settings.fillLimit));
             } else if (minPos.y >= 0 && maxPos.y < 256) {
-                World world = source.getSourceWorld();
+                World world = source.getCommandSourceWorld();
 
                 for (int z = minPos.z; z < maxPos.z + 16; z += 16) {
                     for (int x = minPos.x; x < maxPos.x + 16; x += 16) {

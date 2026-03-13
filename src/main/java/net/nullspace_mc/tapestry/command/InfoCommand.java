@@ -61,7 +61,7 @@ public class InfoCommand extends TapestryCommand {
 
     private void sendBlockInfo(CommandSource source, String[] args) {
         BlockPos pos = parseBlockPos(source, args, 1);
-        World world = source.getSourceWorld();
+        World world = source.getCommandSourceWorld();
         Block block = world.getBlock(pos.x, pos.y, pos.z);
         source.sendMessage(new LiteralText(String.format("Block > %s : %d", block.getName(), world.getBlockMetadata(pos.x, pos.y, pos.z))));
         if (block instanceof BlockWithBlockEntity) {
@@ -71,7 +71,7 @@ public class InfoCommand extends TapestryCommand {
                 Inventory inv = (Inventory) blockEntity;
                 StringBuilder bobTheBuilder = new StringBuilder("Inventory > ");
                 for (int i = 1; i < inv.getSize() + 1; i++) {
-                    ItemStack item = inv.getStack(i - 1);
+                    ItemStack item = inv.getItem(i - 1);
                     if (item != null)   {
                         bobTheBuilder.append(String.format("[slot %d: %s, count: %d]", i, item.getDisplayName(), item.size));
                         if (i != inv.getSize()) bobTheBuilder.append(", ");

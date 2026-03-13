@@ -30,7 +30,7 @@ public abstract class StructureFeatureMixin extends Generator {
      * box for the purpose of fortress mob nether brick spawning
      */
     @Inject(
-            method = "isInsideStructureBounds",
+            method = "isInsideBounds",
             at = @At("HEAD"),
             cancellable = true
     )
