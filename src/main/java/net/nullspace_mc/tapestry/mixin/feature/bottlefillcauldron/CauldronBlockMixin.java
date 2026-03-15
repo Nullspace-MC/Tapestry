@@ -22,11 +22,11 @@ public abstract class CauldronBlockMixin {
             method = "use",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerInventory;getMainHandStack()Lnet/minecraft/item/ItemStack;"
+                    target = "Lnet/minecraft/entity/living/player/PlayerInventory;getSelectedItem()Lnet/minecraft/item/ItemStack;"
             )
     )
     private void onUse(World world, int x, int y, int z, PlayerEntity player, int dir, float dx, float dy, float dz, CallbackInfoReturnable<Boolean> cir) {
-        ItemStack stack = player.inventory.getMainHandStack();
+        ItemStack stack = player.inventory.getSelectedItem();
         if (Settings.bottleFillCauldron && stack != null && stack.getItem() == Items.POTION && stack.getDamage() == 0) {
             int metadata = world.getBlockMetadata(x, y, z);
             if (metadata < 3) {
@@ -34,10 +34,10 @@ public abstract class CauldronBlockMixin {
             }
             if (!player.abilities.creativeMode) {
                 stack.size--;
-                if (stack.size <= 0) player.inventory.setStack(player.inventory.selectedSlot, null);
+                if (stack.size <= 0) player.inventory.setItem(player.inventory.selectedSlot, null);
 
                 ItemStack result = new ItemStack(Items.GLASS_BOTTLE, 1, 0);
-                if (!player.inventory.insertStack(result)) world.addEntity(new ItemEntity(world, x + 0.5D, y + 0.5D, z + 0.5D, result));
+                if (!player.inventory.addItem(result)) world.addEntity(new ItemEntity(world, x + 0.5D, y + 0.5D, z + 0.5D, result));
                 else ((ServerPlayerEntity)player).setMenu(player.playerMenu);
             }
         }

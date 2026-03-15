@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class ServerWorldMixin {
 
     @Redirect(
-            method = "Lnet/minecraft/server/world/ServerWorld;scheduleTick(IIILnet/minecraft/block/Block;II)V",
+            method = "scheduleTick(IIILnet/minecraft/block/Block;II)V",
             at = @At(
                     value = "FIELD",
                     target = "Lnet/minecraft/server/world/ServerWorld;doTicksImmediately:Z"

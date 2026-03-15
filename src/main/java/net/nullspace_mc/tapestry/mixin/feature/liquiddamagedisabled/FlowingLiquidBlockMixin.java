@@ -16,7 +16,7 @@ import net.nullspace_mc.tapestry.settings.Settings;
 public class FlowingLiquidBlockMixin {
 
     @Inject(
-            method = "blocksSpreading",
+            method = "isLiquidBlocking",
             at = @At("HEAD"),
             cancellable = true
     )

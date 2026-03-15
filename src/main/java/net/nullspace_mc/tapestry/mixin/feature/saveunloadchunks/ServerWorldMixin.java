@@ -35,7 +35,7 @@ public abstract class ServerWorldMixin extends World {
 	@Inject(method = "save", at = @At(value = "TAIL"))
 	public void redirectSave(CallbackInfo ci) {
 		if (Settings.saveUnloadChunks) {
-			if (this.chunkSource.canSave()) {
+			if (this.chunkSource.shouldSave()) {
 				List<WorldChunk> chunks = ((ServerChunkCacheAccessor) this.chunkCache).getChunks();
 
 				for (WorldChunk chunk : chunks) {

@@ -32,7 +32,7 @@ public abstract class VillageStateMixin {
     }
 
     @Inject(
-            method = "removeVillagesWithoutDoors",
+            method = "removeEmptyVillages",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/village/SavedVillageData;markDirty()V"
@@ -45,7 +45,7 @@ public abstract class VillageStateMixin {
     }
 
     @Inject(
-            method = "addDoorsToVillages",
+            method = "addPendingDoors",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/village/Village;addDoor(Lnet/minecraft/world/village/VillageDoor;)V"
@@ -58,7 +58,7 @@ public abstract class VillageStateMixin {
     }
 
     @Inject(
-            method = "addNewDoor",
+            method = "addDoor",
             at = @At(
                     value = "INVOKE",
                     target = "Ljava/util/List;add(Ljava/lang/Object;)Z"

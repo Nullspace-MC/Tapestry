@@ -69,7 +69,7 @@ public class CloneCommand extends TapestryCommand {
                     }
 
                     if (sourceBox.minY >= 0 && sourceBox.maxY < 256 && destBox.minY >= 0 && destBox.maxY < 256) {
-                        World world = source.getSourceWorld();
+                        World world = source.getCommandSourceWorld();
                         if (world.isAreaLoaded(sourceBox.minX, sourceBox.minY, sourceBox.minZ, sourceBox.maxX, sourceBox.maxY, sourceBox.maxZ) && world.isAreaLoaded(destBox.minX, destBox.minY, destBox.minZ, destBox.maxX, destBox.maxY, destBox.maxZ)) {
                             boolean bl2 = false;
                             if (args.length >= 10) {
@@ -106,7 +106,7 @@ public class CloneCommand extends TapestryCommand {
                                                 NbtCompound compoundTag = new NbtCompound();
                                                 blockEntity.writeNbt(compoundTag);
                                                 list2.add(new CloneCommand.BlockInfo(dest, block, meta, compoundTag));
-                                            } else if (!block.isOpaque() && !block.isFullCube()) {
+                                            } else if (!block.isOpaque() && !block.isCube()) {
                                                 list3.add(new CloneCommand.BlockInfo(dest, block, meta, null));
                                                 linkedList.addFirst(src);
                                             } else {

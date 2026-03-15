@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import net.nullspace_mc.tapestry.settings.Settings;
@@ -26,7 +26,7 @@ public class RedstoneWireBlockMixin {
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void MakeRedstoneDustRandom(World x, int y, int z, int par4, CallbackInfo ci, ArrayList<Vec3i> list) {
+    private void MakeRedstoneDustRandom(World x, int y, int z, int par4, CallbackInfo ci, ArrayList<BlockPos> list) {
         if (Settings.randomRedstoneDust) Collections.shuffle(list);
     }
 }

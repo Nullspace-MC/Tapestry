@@ -16,7 +16,7 @@ public abstract class ArrowEntityMixin extends Entity {
     private boolean inGround;
 
     @Shadow
-    private int lifeTicks;
+    private int inBlockTicks;
 
     protected ArrowEntityMixin(World world) {
         super(world);
@@ -28,7 +28,7 @@ public abstract class ArrowEntityMixin extends Entity {
      */
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/ArrowEntity;remove()V"))
     private void conditionalRemove(ArrowEntity a) {
-        if (!this.inGround || (this.lifeTicks == 1200 && !Settings.arrowsPersist)) {
+        if (!this.inGround || (this.inBlockTicks == 1200 && !Settings.arrowsPersist)) {
             this.remove();
         }
     }

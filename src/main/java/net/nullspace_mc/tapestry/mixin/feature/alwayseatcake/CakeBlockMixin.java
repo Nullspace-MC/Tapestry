@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class CakeBlockMixin {
 
     @Redirect(
-            method = "tryEatCake",
+            method = "eat",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/living/player/PlayerEntity;canEat(Z)Z"
